@@ -8,6 +8,6 @@ namespace Event_Management_App.DataManager.IDAL
 
         public GetAllBookedDetails PopulateEventData(int ID);
 
-        public GetAllBookedDetails AddbookEventData(GetAllBookedDetails bookmodel, BookedEventsModel oData);
+        public GetAllBookedDetails AddbookEventData(GetAllBookedDetails oData);
     }
 }

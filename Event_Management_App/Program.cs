@@ -55,17 +55,16 @@ namespace Event_Management_App
 
             //app.UseMvcWithDefaultRoute();
 
-            app.UseSession();
-
 
             app.UseHttpsRedirection();
 
             app.UseStaticFiles();
 
+            app.UseSession();
+
             app.UseRouting();
 
             app.UseAuthorization();
-
 
             app.MapControllerRoute(
                 name: "default",

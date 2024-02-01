@@ -155,7 +155,7 @@
             url: "/CustomerBooking/CustomerListEvent",
             success: function (data) {
 
-                debugger;
+                //debugger;
                 datatable = $('#myTable').DataTable({
                     data: data,
                     columns: [
@@ -207,7 +207,7 @@
     }
 
     function populateBookData(ID) {
-        debugger;
+        //debugger;
 
         $.ajax({
 
@@ -215,7 +215,7 @@
             url: "/CustomerBooking/Populate/" + ID,
 
             success: function (event) {
-                debugger;
+               // debugger;
 
                 // Populate the form with the received employee details
                 $('#Id').val(event.AddEventModel.Id);
@@ -238,12 +238,13 @@
 
 
     function updateBook() {
-        debugger;
+      
 
         var bookData = {
 
             AddEventModel: {
                 Id: $('#Id').val(),
+                Amount: $('#Amount').val(),
             },
 
             BookedEventsModel: {
@@ -253,19 +254,8 @@
             }
         }
 
-
-        // var bookId = {
-        //     Id: $('#Id').val(),
-        // }
-
-        // var bookData = {
-        //     Deposit: $('#Deposit').val(),
-        //     Date: $('#Date').val(),
-        //     Time: $('#Time').val(),
-        // }
-
         console.log(bookData);
-        debugger;
+        //debugger;
 
         $.ajax({
             type: "POST",

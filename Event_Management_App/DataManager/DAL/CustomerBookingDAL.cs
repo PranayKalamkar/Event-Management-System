@@ -80,22 +80,22 @@ namespace Event_Management_App.DataManager.DAL
             return bookmodel;
         }
 
-        public GetAllBookedDetails AddbookEventData(GetAllBookedDetails bookmodel, BookedEventsModel oData)
+        public GetAllBookedDetails AddbookEventData(GetAllBookedDetails oData)
         {
             _dBManager.InitDbCommand("InsertbookEvent", CommandType.StoredProcedure);
 
-            _dBManager.AddCMDParam("@a_Deposit", bookmodel.BookedEventsModel.Deposit);
-            _dBManager.AddCMDParam("@a_Balance", bookmodel.BookedEventsModel.Balance);
-            _dBManager.AddCMDParam("@a_Date", bookmodel.BookedEventsModel.Date);
-            _dBManager.AddCMDParam("@a_Time", bookmodel.BookedEventsModel.Time);
-            _dBManager.AddCMDParam("@a_Status", bookmodel.BookedEventsModel.Status);
-            _dBManager.AddCMDParam("@a_addEvent", bookmodel.BookedEventsModel.Addevent_id);
-            _dBManager.AddCMDParam("@a_signup", oData.Signup_id);
+            _dBManager.AddCMDParam("@a_Deposit", oData.BookedEventsModel.Deposit);
+            _dBManager.AddCMDParam("@a_Balance", oData.BookedEventsModel.Balance);
+            _dBManager.AddCMDParam("@a_Date", oData.BookedEventsModel.Date);
+            _dBManager.AddCMDParam("@a_Time", oData.BookedEventsModel.Time);
+            _dBManager.AddCMDParam("@a_Status", oData.BookedEventsModel.Status);
+            _dBManager.AddCMDParam("@a_addEvent", oData.BookedEventsModel.Addevent_id);
+            _dBManager.AddCMDParam("@a_signup", oData.BookedEventsModel.Signup_id);
 
 
             _dBManager.ExecuteNonQuery();
 
-            return bookmodel;
+            return oData;
         }
     }
 }
