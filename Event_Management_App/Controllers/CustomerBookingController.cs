@@ -30,12 +30,6 @@ namespace Event_Management_App.Controllers
 
         public IActionResult Booked([FromBody] GetAllBookedDetails oData)
         {
-            //bookmodel = new GetAllBookedDetails();
-
-            //oData = new BookedEventsModel();
-
-            //oData.Addevent_id = bookmodel.AddEventModel.Id;
-
             int? testid = HttpContext.Session.GetInt32("Id");
 
             oData.BookedEventsModel.Signup_id = testid.Value;

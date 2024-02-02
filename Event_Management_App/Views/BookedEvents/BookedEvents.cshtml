@@ -9,11 +9,11 @@
 
     <h1>@ViewData["title"]</h1>
 
-    @*     <p>
-    <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#addEvent">
-    AddEvent
-    </button>
-    </p> *@
+    <p>
+        <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#addEvent">
+            AddEvent
+        </button>
+    </p>
 </div>
 
 
@@ -84,7 +84,7 @@
                         { data: 'BookedEventsModel.Date' },
                         { data: 'BookedEventsModel.Time' },
                         { data: 'BookedEventsModel.Status' },
-                        
+
                         {
                             data: null,
                             render: function (data, type, row) {

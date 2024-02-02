@@ -215,7 +215,7 @@
             url: "/CustomerBooking/Populate/" + ID,
 
             success: function (event) {
-               // debugger;
+                // debugger;
 
                 // Populate the form with the received employee details
                 $('#Id').val(event.AddEventModel.Id);
@@ -236,9 +236,8 @@
         });
     }
 
-
     function updateBook() {
-      
+        debugger;
 
         var bookData = {
 
@@ -251,11 +250,23 @@
                 Deposit: $('#Deposit').val(),
                 Date: $('#Date').val(),
                 Time: $('#Time').val(),
+                Addevent_id: $('#Id').val(),
             }
         }
 
+
+        // var bookId = {
+        //     Id: $('#Id').val(),
+        // }
+
+        // var bookData = {
+        //     Deposit: $('#Deposit').val(),
+        //     Date: $('#Date').val(),
+        //     Time: $('#Time').val(),
+        // }
+
         console.log(bookData);
-        //debugger;
+        debugger;
 
         $.ajax({
             type: "POST",
@@ -269,18 +280,14 @@
 
                 $('#bookEvent').modal('hide');
 
+                // Swal.fire({
+                //     title: "Good job!",
+                //     text: "Event saved successfully!",
+                //     icon: "success",
+                //     button: "Ok",
+                // });
 
-                if (data.status === "success") {
-                    Swal.fire({
-                        title: "Good job!",
-                        text: "Event saved successfully!",
-                        icon: "success",
-                        button: "Ok",
-                    });
-                }
-                else if (data.status === "warning") {
-                    alert(data.message);
-                }
+                alert("Event Booked Successfully!");
 
                 datatable.destroy();
                 bookEventList();
@@ -296,6 +303,69 @@
             }
         });
     }
+
+
+    // function updateBook() {
+
+
+    //     var bookData = {
+
+    //         AddEventModel: {
+    //             Id: $('#Id').val(),
+    //             Amount: $('#Amount').val(),
+    //         },
+
+    //         BookedEventsModel: {
+    //             Deposit: $('#Deposit').val(),
+    //             Date: $('#Date').val(),
+    //             Time: $('#Time').val(),
+    //             Addevent_id: $('#Id').val(),
+    //         }
+    //     }
+
+    //     console.log(bookData);
+    //     //debugger;
+
+    //     $.ajax({
+    //         type: "POST",
+    //         url: "/CustomerBooking/Booked",
+    //         data: JSON.stringify(bookData),
+    //         contentType: 'application/json',
+    //         processData: false,
+    //         cache: false,
+
+    //         success: function (data) {
+
+    //             $('#bookEvent').modal('hide');
+
+
+
+    //             Swal.fire({
+    //                 title: "Good job!",
+    //                 text: "Event saved successfully!",
+    //                 icon: "success",
+    //                 button: "Ok",
+    //             });
+
+
+    //             alert("Event Booked Successfully!");
+
+    //             datatable.destroy();
+
+    //             bookEventLists();
+
+    //             window.location.href = '/Customer/Customer';
+
+    //         },
+    //         error: function (errormessage) {
+    //             Swal.fire({
+    //                 title: "Error saving event!",
+    //                 text: "close",
+    //                 icon: "Error"
+    //             });
+    //         }
+    //     });
+    // }
 
 
 </script>
