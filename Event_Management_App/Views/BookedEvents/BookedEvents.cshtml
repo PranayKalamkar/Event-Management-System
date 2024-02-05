@@ -7,7 +7,9 @@
 
 <div class="col-xl-12" style=" display: flex; justify-content: space-between;">
 
-    <h1>@ViewData["title"]</h1>
+    <div class="title">
+        <span class="text">@ViewData["title"]</span>
+    </div>
 
     <p>
         <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#addEvent">
@@ -17,93 +19,55 @@
 </div>
 
 
-
-<div class="table-responsive">
-    <div class="card-body">
-        <table class="table table-bordered" id="myTable" style="width:100% !important">
-            <thead>
-                <tr>
-                    <th>@Html.DisplayNameFor(model => model.BookedEventsModel.Id)</th>
-                    <th>@Html.DisplayNameFor(model => model.SignUpModel.Username)</th>
-                    <th>@Html.DisplayNameFor(model => model.SignUpModel.Email)</th>
-                    <th>@Html.DisplayNameFor(model => model.AddEventModel.Category)</th>
-                    <th>@Html.DisplayNameFor(model => model.AddEventModel.Location)</th>
-                    <th>@Html.DisplayNameFor(model => model.AddEventModel.Capacity)</th>
-                    <th>@Html.DisplayNameFor(model => model.AddEventModel.Amount)</th>
-                    <th>@Html.DisplayNameFor(model => model.AddEventModel.Contact)</th>
-                    <th>@Html.DisplayNameFor(model => model.AddEventModel.ImageFile)</th>
-                    <th>@Html.DisplayNameFor(model => model.BookedEventsModel.Deposit)</th>
-                    <th>@Html.DisplayNameFor(model => model.BookedEventsModel.Balance)</th>
-                    <th>@Html.DisplayNameFor(model => model.BookedEventsModel.Date)</th>
-                    <th>@Html.DisplayNameFor(model => model.BookedEventsModel.Time)</th>
-                    <th>@Html.DisplayNameFor(model => model.BookedEventsModel.Status)</th>
-                    <th>Actions</th>
-                </tr>
-            </thead>
-        </table>
+<div class="container">
+    <div id="cardContainer" class="row">
+        <!-- Cards will be appended here -->
     </div>
 </div>
+
+
 
 <script>
 
     $(document).ready(function () {
-
         getAddEventList();
     });
 
-    var datatable;
-
     function getAddEventList() {
         $.ajax({
-
             type: "Get",
             url: "/BookedEvents/BookedEventsList",
             success: function (data) {
-
-                debugger;
-                datatable = $('#myTable').DataTable({
-                    data: data,
-                    columns: [
-                        { data: 'BookedEventsModel.Id' },
-                        { data: 'SignUpModel.Username' },
-                        { data: 'SignUpModel.Email' },
-                        { data: 'AddEventModel.Category' },
-                        { data: 'AddEventModel.Location' },
-                        { data: 'AddEventModel.Capacity' },
-                        { data: 'AddEventModel.Amount' },
-                        { data: 'AddEventModel.Contact' },
-                        {
-                            data: 'AddEventModel.ImagePath', // Assume the data has a property named imageUrl that contains the image path
-                            render: function (data, type, row) {
-                                // Return an img tag with the image source and some attributes
-                                return '<img src="/addeventimages/' + data + '" class="rounded-image" width="50" height="50" alt="Image" />';
-                            }
-                        },
-                        { data: 'BookedEventsModel.Deposit' },
-                        { data: 'BookedEventsModel.Balance' },
-                        { data: 'BookedEventsModel.Date' },
-                        { data: 'BookedEventsModel.Time' },
-                        { data: 'BookedEventsModel.Status' },
-
-                        {
-                            data: null,
-                            render: function (data, type, row) {
-
-                                return '<div class="btn-group" role="group" aria-label="Basic mixed styles example"><button type="button" onclick="populateEventData(' + row.Id + ')" class="btn btn-warning" data-bs-toggle="modal" data-bs-target="#updateEvent"><i class="fa-solid fa-pen"></i></button><button type="button" onclick="deleteEventData(' + row.Id + ')" class="btn btn-danger" ><i class="fa-solid fa-trash"></i></button><button type="button" onclick="viewEventData(' + row.Id + ')" class="btn btn-info" data-bs-toggle="modal" data-bs-target="#viewAddEventModal"><i class="fa-solid fa-eye"></i></button></div>';
-
-                            }
-                        },
-
-                    ]
+                var cardContainer = $('#cardContainer');
+                data.forEach(function (item) {
+                    var card = `
+                                <div class="col-md-4 mb-4">
+                                    <div class="card h-100 p-3">
+                                        <img src="/addeventimages/${item.AddEventModel.ImagePath}" class="card-img-top" alt="Image">
+                                        <div class="card-body">
+                                            <h5 class="card-title">${item.AddEventModel.Category}</h5>
+                                            <p class="card-text">Location: ${item.AddEventModel.Location}</p>
+                                            <p class="card-text">Deposit: ${item.BookedEventsModel.Deposit}</p>
+                                            <p class="card-text">Balance: ${item.BookedEventsModel.Balance}</p>
+                                            <p class="card-text">Date: ${item.BookedEventsModel.Date}</p>
+                                            <p class="card-text">Time: ${item.BookedEventsModel.Time}</p>
+                                            <p class="card-text">Status: ${item.BookedEventsModel.Status}</p>
+                                            <a href="#" class="btn btn-primary" onclick="viewEventData(${item.BookedEventsModel.Id})">View</a>
+                                            <a href="#" class="btn btn-warning" onclick="populateEventData(${item.BookedEventsModel.Id})">Edit</a>
+                                            <a href="#" class="btn btn-danger" onclick="deleteEventData(${item.BookedEventsModel.Id})">Delete</a>
+                                        </div>
+                                    </div>
+                                </div>
+                            `;
+                    cardContainer.append(card);
                 });
-
             },
             error: function (textStatus, errorThrown) {
-                Success = false;
+                console.log('Error: ' + textStatus);
             }
-
         });
     }
+
 
 
 </script>
