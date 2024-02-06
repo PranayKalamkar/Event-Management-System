@@ -6,9 +6,9 @@
 }
 
 <div class="col-xl-12" style=" display: flex; justify-content: space-between;">
-    <div class="title">
-        <span class="text">@ViewData["title"]</span>
-    </div>
+
+    <h2>@ViewData["title"]</h2>
+
     <p>
         <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#addEvent">
             AddEvent
@@ -189,7 +189,7 @@
                         <div class="col-md-6">
                             <div class="mb-3">
                                 <label for="ImageFile" class="form-label">Image : </label>
-                                <input id="ImageFile" type="file" name="ImageFile" class="form-control" onchange="previewImage(this)" autocomplete="off" required />
+                                <input id="u_ImageFile" type="file" name="ImageFile" class="form-control" onchange="previewImage(this)" autocomplete="off" required />
                             </div>
                         </div>
                         <div class="col-md-6">
@@ -290,18 +290,13 @@
                     <div class="row">
                         <div class="col-md-6">
                             <div class="mb-3">
-                                <label for="ImageFile" class="form-label">ImageFile : </label>
-                                <input id="ImageFile" type="text" name="ImageFile" class="form-control" onchange="previewImage(this)" autocomplete="off" hidden />
+                                <label for="ImageFile" class="form-label">Venue : </label>
+                                <input id="v_ImageFile" type="text" name="ImageFile" class="form-control" onchange="previewImage(this)" autocomplete="off" hidden />
                                 <div class="mb-3" style="display: flex; flex-direction: column;">
                                     <img id="imagePreviewView" src="#" alt="Image Preview" style="max-width: 30%; max-height: 150px; margin-top: 10px; display: none;">
                                 </div>
                             </div>
                         </div>
-                        @* <div class="col-md-6">
-                        <div class="mb-3" style="display: flex; flex-direction: column;">
-                        <img id="imagePreviewView" src="#" alt="Image Preview" style="max-width: 30%; max-height: 150px; margin-top: 10px; display: none;">
-                        </div>
-                        </div> *@
                     </div>
 
                 </form>
@@ -333,21 +328,21 @@
                 var cardContainer = $('#cardContainer');
                 data.forEach(function (item) {
                     var card = `
-                                         <div class="col-md-4 mb-4">
-                                               <div class="card h-100 mb-4">
-                                                     <img src="/addeventimages/${item.ImagePath}" class="card-img-top" alt="Image">
-                                                           <div class="card-body">
-                                                              <h5 class="card-title">${item.Category}</h5>
-                                                              <p class="card-text">Location: ${item.Location}</p>
-                                                              <p class="card-text">Amount: ${item.Amount}</p>
-                                                               <p class="card-text">Descirption: ${item.Description}</p>
-                                                                         <a class="btn btn-info" onclick="viewEventData(${item.Id})" data-bs-toggle="modal" data-bs-target="#viewAddEventModal">View</a>
-                                                                         <a class="btn btn-warning" onclick="populateEventData(${item.Id})" data-bs-toggle="modal" data-bs-target="#updateEvent">Edit</a>
-                                                                         <a class="btn btn-danger" onclick="deleteEventData(${item.Id})">Delete</a>
-                                                            </div>
-                                               </div>
-                                          </div>
-                                        `;
+                                             <div class="col-md-4 mb-4">
+                                                   <div class="card h-100 mb-4">
+                                                         <img src="/addeventimages/${item.ImagePath}" class="card-img-top" alt="Image">
+                                                               <div class="card-body">
+                                                                  <h5 class="card-title">${item.Category}</h5>
+                                                                  <p class="card-text">Location: ${item.Location}</p>
+                                                                  <p class="card-text">Amount: ${item.Amount}</p>
+                                                                   <p class="card-text">Descirption: ${item.Description}</p>
+                                                                             <a class="btn btn-info" onclick="viewEventData(${item.Id})" data-bs-toggle="modal" data-bs-target="#viewAddEventModal">View</a>
+                                                                             <a class="btn btn-warning" onclick="populateEventData(${item.Id})" data-bs-toggle="modal" data-bs-target="#updateEvent">Edit</a>
+                                                                             <a class="btn btn-danger" onclick="deleteEventData(${item.Id})">Delete</a>
+                                                                </div>
+                                                   </div>
+                                              </div>
+                                            `;
                     cardContainer.append(card);
                 });
             },
@@ -434,7 +429,7 @@
     //function for populating update data
     function populateEventData(Id) {
 
-        debugger;
+        // debugger;
 
         $.ajax({
 
@@ -442,7 +437,7 @@
             url: "/AddEvent/Populate/" + Id,
 
             success: function (addevent) {
-                debugger;
+                // debugger;
 
                 // Populate the form with the received employee details
                 $('#u_Id').val(addevent.Id);
@@ -489,7 +484,7 @@
         var formData = new FormData();
         formData.append("ID", eventAddID.id);
         formData.append("model", JSON.stringify(addEventData));
-        formData.append("file", $("#ImageFile")[0].files[0]);
+        formData.append("file", $("#u_ImageFile")[0].files[0]);
 
         debugger;
 
@@ -503,27 +498,18 @@
 
             success: function (data) {
 
-                if (data === "Index") {
-                    Swal.fire({
-                        title: "Event updated successfully!",
-                        text: "close",
-                        icon: "success"
-                    });
+                $('#updateEvent').modal('hide');
 
-                    $('#updateEvent').modal('hide');
-                    // datatable.destroy();
-                    // Remove all cards from the container
-                    $('#cardContainer').empty();
-                    getAddEventList();
+                Swal.fire({
+                    title: "Event updated successfully!",
+                    text: "close",
+                    icon: "success"
+                });
 
-                } else {
-                    Swal.fire({
-                        title: "Error updating event!",
-                        text: "close",
-                        icon: "Error"
-                    });
-
-                }
+                // datatable.destroy();
+                // Remove all cards from the container
+                $('#cardContainer').empty();
+                getAddEventList();
             },
             error: function (errormessage) {
                 Swal.fire({

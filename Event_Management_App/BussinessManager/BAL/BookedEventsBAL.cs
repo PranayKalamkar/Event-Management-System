@@ -18,5 +18,10 @@ namespace Event_Management_App.BussinessManager.BAL
         {
             return _IBookedEventDAL.GetBookedEvents();
         }
+
+        public GetAllBookedDetails PopulateEventData(int ID)
+        {
+            return _IBookedEventDAL.PopulateEventData(ID);
+        }
     }
 }

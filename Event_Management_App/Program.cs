@@ -68,12 +68,13 @@ namespace Event_Management_App
 
             app.MapControllerRoute(
                 name: "default",
-            //pattern: "{controller=Home}/{action=Index}/{id?}");
-            //pattern: "{controller=AddEvent}/{action=AddEvent}/{id?}");
-            //pattern: "{controller=User}/{action=Login}/{id?}");
+        //pattern: "{controller=Home}/{action=Index}/{id?}");
+        //pattern: "{controller=AddEvent}/{action=AddEvent}/{id?}");
+        //pattern: "{controller=User}/{action=Login}/{id?}");
         //pattern: "{controller=User}/{action=SignUp}/{id?}");
         pattern: "{controller=AdminDashboard}/{action=Dashboard}/{id?}");
             //pattern: "{controller=UserPage}/{action=UserPage}/{id?}");
+
 
             app.Run();
         }

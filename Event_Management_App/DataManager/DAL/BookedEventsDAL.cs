@@ -77,5 +77,39 @@ namespace Event_Management_App.DataManager.DAL
             return existingImage;
         }
 
+        public GetAllBookedDetails PopulateEventData(int ID)
+        {
+            _dBManager.InitDbCommand("PopulateBookedEvents", CommandType.StoredProcedure);
+
+            GetAllBookedDetails bookeventmodel = null;
+
+            _dBManager.AddCMDParam("@p_Id", ID);
+
+            DataSet ds = _dBManager.ExecuteDataSet();
+
+            foreach (DataRow item in ds.Tables[0].Rows)
+            {
+                bookeventmodel = new GetAllBookedDetails();
+                bookeventmodel.SignUpModel = new SignUpModel();
+                bookeventmodel.AddEventModel = new AddEventModel();
+                bookeventmodel.BookedEventsModel = new BookedEventsModel();
+
+                bookeventmodel.SignUpModel.Username = item["Username"].ConvertDBNullToString();
+                bookeventmodel.SignUpModel.Email = item["Email"].ConvertDBNullToString();
+                bookeventmodel.AddEventModel.Category = item["Category"].ConvertDBNullToString();
+                bookeventmodel.AddEventModel.Location = item["Location"].ConvertDBNullToString();
+                bookeventmodel.AddEventModel.Capacity = item["Capacity"].ConvertDBNullToString();
+                bookeventmodel.AddEventModel.Amount = item["Amount"].ConvertDBNullToString();
+                bookeventmodel.AddEventModel.Contact = item["Contact"].ConvertDBNullToString();
+                bookeventmodel.AddEventModel.ImagePath = item["ImagePath"].ConvertDBNullToString();
+                bookeventmodel.BookedEventsModel.Deposit = item["Deposit"].ConvertDBNullToString();
+                bookeventmodel.BookedEventsModel.Balance = item["Balance"].ConvertDBNullToString();
+                bookeventmodel.BookedEventsModel.Date = item["Date"].ConvertDBNullToString();
+                bookeventmodel.BookedEventsModel.Time = item["Time"].ConvertDBNullToString();
+                bookeventmodel.BookedEventsModel.Status = item["Status"].ConvertDBNullToString();
+            }
+            return bookeventmodel;
+        }
+
     }
 }

@@ -5,5 +5,7 @@ namespace Event_Management_App.BussinessManager.IBAL
     public interface IBookedEventsBAL
     {
         public List<GetAllBookedDetails> GetBookedEvents();
+
+        public GetAllBookedDetails PopulateEventData(int ID);
     }
 }
