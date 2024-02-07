@@ -5,6 +5,9 @@
     Layout = "_AdminLayout";
 }
 
+@* <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />  *@
+
+
 <div class="col-xl-12" style=" display: flex; justify-content: space-between;">
 
     <h2>@ViewData["title"]</h2>
@@ -328,21 +331,21 @@
                 var cardContainer = $('#cardContainer');
                 data.forEach(function (item) {
                     var card = `
-                                             <div class="col-md-4 mb-4">
-                                                   <div class="card h-100 mb-4">
-                                                         <img src="/addeventimages/${item.ImagePath}" class="card-img-top" alt="Image">
-                                                               <div class="card-body">
-                                                                  <h5 class="card-title">${item.Category}</h5>
-                                                                  <p class="card-text">Location: ${item.Location}</p>
-                                                                  <p class="card-text">Amount: ${item.Amount}</p>
-                                                                   <p class="card-text">Descirption: ${item.Description}</p>
-                                                                             <a class="btn btn-info" onclick="viewEventData(${item.Id})" data-bs-toggle="modal" data-bs-target="#viewAddEventModal">View</a>
-                                                                             <a class="btn btn-warning" onclick="populateEventData(${item.Id})" data-bs-toggle="modal" data-bs-target="#updateEvent">Edit</a>
-                                                                             <a class="btn btn-danger" onclick="deleteEventData(${item.Id})">Delete</a>
-                                                                </div>
-                                                   </div>
-                                              </div>
-                                            `;
+                                                         <div class="col-md-4 mb-4">
+                                                               <div class="card h-100 mb-4">
+                                                                     <img src="/addeventimages/${item.ImagePath}" class="card-img-top" alt="Image">
+                                                                           <div class="card-body">
+                                                                              <h5 class="card-title">${item.Category}</h5>
+                                                                              <p class="card-text">Location: ${item.Location}</p>
+                                                                              <p class="card-text">Amount: ${item.Amount}</p>
+                                                                               <p class="card-text">Descirption: ${item.Description}</p>
+                                                                                         <a class="btn btn-info" onclick="viewEventData(${item.Id})" data-bs-toggle="modal" data-bs-target="#viewAddEventModal">View</a>
+                                                                                         <a class="btn btn-warning" onclick="populateEventData(${item.Id})" data-bs-toggle="modal" data-bs-target="#updateEvent">Edit</a>
+                                                                                         <a class="btn btn-danger" onclick="deleteEventData(${item.Id})">Delete</a>
+                                                                            </div>
+                                                               </div>
+                                                          </div>
+                                                        `;
                     cardContainer.append(card);
                 });
             },

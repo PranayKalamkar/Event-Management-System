@@ -25,82 +25,103 @@
                     <div class="row">
                         <div class="col-md-6">
                             <div class="mb-3">
+                                <label for="Username" class="form-label">Username : </label>
+                                <input id="Username" type="text" name="Username" class="form-control" autocomplete="off" />
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="mb-3">
+                                <label for="Email" class="form-label">Email : </label>
+                                <input id="Email" type="text" name="Email" class="form-control" autocomplete="off" />
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="row">
+                        <div class="col-md-6">
+                            <div class="mb-3">
+                                <label for="SPassword" class="form-label">Password : </label>
+                                <input id="SPassword" type="text" name="SPassword" class="form-control" autocomplete="off" />
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="mb-3">
                                 <label for="Category" class="form-label">Category : </label>
                                 <input id="Category" type="text" name="Category" class="form-control" autocomplete="off" readonly />
                             </div>
                         </div>
+                    </div>
+
+                    <div class="row">
                         <div class="col-md-6">
                             <div class="mb-3">
                                 <label for="Location" class="form-label">Location : </label>
                                 <input id="Location" type="text" name="Location" class="form-control" autocomplete="off" readonly />
                             </div>
                         </div>
-                    </div>
-
-                    <div class="row">
                         <div class="col-md-6">
                             <div class="mb-3">
                                 <label for="Capacity" class="form-label">Capacity : </label>
                                 <input id="Capacity" type="text" name="Capacity" class="form-control" autocomplete="off" readonly />
                             </div>
                         </div>
+                    </div>
+
+                    <div class="row">
                         <div class="col-md-6">
                             <div class="mb-3">
                                 <label for="Amount" class="form-label">Amount : </label>
                                 <input id="Amount" type="text" name="Amount" class="form-control" autocomplete="off" readonly />
                             </div>
                         </div>
-                    </div>
-
-                    <div class="row">
                         <div class="col-md-6">
                             <div class="mb-3">
                                 <label for="Contact" class="form-label">Contact : </label>
                                 <input id="Contact" type="text" name="Contact" class="form-control" autocomplete="off" readonly />
                             </div>
                         </div>
+                    </div>
+
+                    <div class="row">
                         <div class="col-md-6">
                             <div class="mb-3">
                                 <label for="Address" class="form-label">Address : </label>
                                 <input id="Address" type="text" name="Address" class="form-control" autocomplete="off" readonly />
                             </div>
                         </div>
-                    </div>
-
-                    <div class="row">
                         <div class="col-md-6">
                             <div class="mb-3">
                                 <label for="Description" class="form-label">Description : </label>
                                 <input id="Description" type="text" name="Description" class="form-control" autocomplete="off" readonly />
                             </div>
                         </div>
+                    </div>
+
+                    <div class="row">
                         <div class="col-md-6">
                             <div class="mb-3">
                                 <label for="Deposit" class="form-label">Deposit : </label>
                                 <input id="Deposit" type="text" name="Deposit" class="form-control" autocomplete="off" required />
                             </div>
                         </div>
-                    </div>
-
-                    <div class="row">
                         <div class="col-md-6">
                             <div class="mb-3">
                                 <label for="Date" class="form-label">Date : </label>
                                 <input id="Date" type="date" name="Date" class="form-control" autocomplete="off" required />
                             </div>
                         </div>
+                    </div>
+
+                    <div class="row">
                         <div class="col-md-6">
                             <div class="mb-3">
                                 <label for="Time" class="form-label">Time : </label>
                                 <input id="Time" type="time" name="Time" class="form-control" autocomplete="off" required />
                             </div>
                         </div>
-                    </div>
-
-                    <div class="row">
                         <div class="col-md-6">
                             <div class="mb-3">
-                                <label for="ImageFile" class="form-label">ImageFile : </label>
+                                <label for="ImageFile" class="form-label">Venue : </label>
                                 <input id="ImageFile" type="text" name="ImageFile" class="form-control" onchange="previewImage(this)" autocomplete="off" hidden />
                                 <div class="mb-3" style="display: flex; flex-direction: column;">
                                     <img id="imagePreviewView" src="#" alt="Image Preview" style="max-width: 30%; max-height: 150px; margin-top: 10px; display: none;">
@@ -139,24 +160,24 @@
     function bookEventList() {
         $.ajax({
             type: "Get",
-            url: "/CustomerBooking/CustomerListEvent",
+            url: "/Admin_CustomerBooking/CustomerListEvent",
             success: function (data) {
                 var cardContainer = $('#cardContainer');
                 data.forEach(function (item) {
                     var card = `
-                                                <div class="col-md-4 mb-4">
-                                                    <div class="card h-100 p-3">
-                                                        <img src="/addeventimages/${item.AddEventModel.ImagePath}" class="card-img-top" alt="Image">
-                                                        <div class="card-body">
-                                                            <h5 class="card-title">${item.AddEventModel.Category}</h5>
-                                                            <p class="card-text">Location: ${item.AddEventModel.Location}</p>
-                                                            <p class="card-text">Capacity: ${item.AddEventModel.Capacity}</p>
-                                                            <p class="card-text">Amount: ${item.AddEventModel.Amount}</p>
-                                                            <button class="btn btn-info" onclick="populateBookData(${item.AddEventModel.Id})" data-bs-toggle="modal" data-bs-target="#bookEvent">Book Now</button>
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                            `;
+                                                            <div class="col-md-4 mb-4">
+                                                                <div class="card h-100 p-3">
+                                                                    <img src="/addeventimages/${item.AddEventModel.ImagePath}" class="card-img-top" alt="Image">
+                                                                    <div class="card-body">
+                                                                        <h5 class="card-title">${item.AddEventModel.Category}</h5>
+                                                                        <p class="card-text">Location: ${item.AddEventModel.Location}</p>
+                                                                        <p class="card-text">Capacity: ${item.AddEventModel.Capacity}</p>
+                                                                        <p class="card-text">Amount: ${item.AddEventModel.Amount}</p>
+                                                                        <button class="btn btn-info" onclick="populateBookData(${item.AddEventModel.Id})" data-bs-toggle="modal" data-bs-target="#bookEvent">Book Now</button>
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                        `;
                     cardContainer.append(card);
                 });
             },
@@ -190,7 +211,7 @@
         $.ajax({
 
             type: "GET",
-            url: "/CustomerBooking/Populate/" + ID,
+            url: "/Admin_CustomerBooking/Populate/" + ID,
 
             success: function (event) {
                 // debugger;
@@ -215,73 +236,83 @@
     }
 
     function updateBook() {
-        debugger;
 
-        var bookData = {
+        if ($("#update").valid()) {
 
-            AddEventModel: {
+            debugger;
+
+            var bookId = {
+
                 Id: $('#Id').val(),
-                Amount: $('#Amount').val(),
-            },
-
-            BookedEventsModel: {
-                Deposit: $('#Deposit').val(),
-                Date: $('#Date').val(),
-                Time: $('#Time').val(),
-                Addevent_id: $('#Id').val(),
             }
+
+            var bookData = {
+
+                AddEventModel: {
+                    // Id: $('#Id').val(),
+                    Amount: $('#Amount').val(),
+                },
+
+                SignUpModel: {
+                    Username: $('#Username').val(),
+                    Email: $('#Email').val(),
+                    SPassword: $('#SPassword').val(),
+                },
+
+                BookedEventsModel: {
+                    Deposit: $('#Deposit').val(),
+                    Date: $('#Date').val(),
+                    Time: $('#Time').val(),
+                }
+            }
+
+
+            var formData = new FormData();
+            formData.append("ID", bookId.Id);
+            formData.append("model", JSON.stringify(bookData));
+
+            console.log(bookData);
+            debugger;
+
+            $.ajax({
+                type: "POST",
+                url: "/Admin_CustomerBooking/Booked",
+                data: formData,
+                contentType: false,
+                processData: false,
+                cache: false,
+
+                success: function (data) {
+
+                    $('#bookEvent').modal('hide');
+
+
+                    if (data.status === "success") {
+                        Swal.fire({
+                            title: "Good job!",
+                            text: "User saved & Booked successfully!",
+                            icon: "success",
+                            button: "Ok",
+                        });
+                    }
+                    else if (data.status === "warning") {
+                        alert(data.message);
+                    }
+
+                    // Remove all cards from the container
+                    $('#cardContainer').empty();
+                    bookEventList();
+
+                },
+                error: function (errormessage) {
+                    Swal.fire({
+                        title: "Error saving event!",
+                        text: "close",
+                        icon: "Error"
+                    });
+                }
+            });
         }
-
-
-        // var bookId = {
-        //     Id: $('#Id').val(),
-        // }
-
-        // var bookData = {
-        //     Deposit: $('#Deposit').val(),
-        //     Date: $('#Date').val(),
-        //     Time: $('#Time').val(),
-        // }
-
-        console.log(bookData);
-        debugger;
-
-        $.ajax({
-            type: "POST",
-            url: "/CustomerBooking/Booked",
-            data: JSON.stringify(bookData),
-            contentType: 'application/json',
-            processData: false,
-            cache: false,
-
-            success: function (data) {
-
-                $('#bookEvent').modal('hide');
-
-                // Swal.fire({
-                //     title: "Good job!",
-                //     text: "Event saved successfully!",
-                //     icon: "success",
-                //     button: "Ok",
-                // });
-
-                alert("Event Booked Successfully!");
-
-                // datatable.destroy();
-                // Remove all cards from the container
-                $('#cardContainer').empty();
-                bookEventList();
-                window.location.href = '/Customer/Customer';
-
-            },
-            error: function (errormessage) {
-                Swal.fire({
-                    title: "Error saving event!",
-                    text: "close",
-                    icon: "Error"
-                });
-            }
-        });
     }
 
 </script>

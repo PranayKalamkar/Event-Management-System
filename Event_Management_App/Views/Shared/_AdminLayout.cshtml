@@ -6,7 +6,9 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>@ViewData["Title"] - Event_Management_App</title>
     <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css" integrity="sha512-DTOQO9RWCH3ppGqcWaEA1BIZOC6xxalwEsw9c2QQeAIftl+Vegovlnee1c9QX4TctnWMn13TZye+giMm8e2LwA==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css" />
+    <link href='https://unpkg.com/boxicons@2.0.9/css/boxicons.min.css' rel='stylesheet'>
+
     @* <link rel="stylesheet" href="~/css/DashboardStyles.css" asp-append-version="true" /> *@
     <link rel="stylesheet" href="~/css/AdminLayout.css" asp-append-version="true" />
     <link rel="stylesheet" href="~/Event_Management_App.styles.css" asp-append-version="true" />
@@ -21,318 +23,114 @@
 </head>
 <body class="app">
 
-    <header class="app-header fixed-top">
+    <!-- SIDEBAR -->
+    <section id="sidebar">
+        <a href="#" class="brand">
+            <i class='bx bxs-smile'></i>
+            @* <img src="/images/kanasu.jpg" alt="kanasu" width="40px" height="40px" style="border-radius: 50px;" /> *@
+            <span class="text">Kanasu</span>
+        </a>
+        <ul class="side-menu top">
+            <li>
+                <a asp-controller="AdminDashboard" asp-action="Dashboard">
+                    <i class='bx bxs-dashboard'></i>
+                    <span class="text">Dashboard</span>
+                </a>
+            </li>
+            <li>
+                <a asp-controller="Admin" asp-action="Admin">
+                    <i class='bx bx-building-house'></i>
+                    <span class="text">Admin</span>
+                </a>
+            </li>
+            <li>
+                <a asp-controller="Admin_User" asp-action="Admin_User">
+                    <i class='bx bx-user'></i>
+                    <span class="text">User</span>
+                </a>
+            </li>
+            <li>
+                <a asp-controller="AddEvent" asp-action="AddEvent">
+                    <i class='bx bx-book-open'></i>
+                    <span class="text">Event Categories</span>
+                </a>
+            </li>
+            <li>
+                <a asp-controller="Admin_CustomerBooking" asp-action="Admin_CustomerBooking">
+                    <i class='bx bx-cart'></i>
+                    <span class="text">Customer Booking</span>
+                </a>
+            </li>
+            <li>
+                <a asp-controller="BookedEvents" asp-action="BookedEvents">
+                    <i class='bx bx-calendar-check'></i>
+                    <span class="text">Booked Events</span>
+                </a>
+            </li>
+            <li>
+                <a asp-controller="AnalyticsReports" asp-action="AnalyticsReports">
+                    <i class='bx bx-bar-chart-alt'></i>
+                    <span class="text">Analytics & Reports</span>
+                </a>
+            </li>
+            <li>
+                <a asp-controller="Message" asp-action="Message">
+                    <i class='bx bx-chat'></i>
+                    <span class="text">Message</span>
+                </a>
+            </li>
+            <li>
+                <a asp-controller="Team" asp-action="Team">
+                    <i class='bx bxl-microsoft-teams'></i>
+                    <span class="text">Teams</span>
+                </a>
+            </li>
+        </ul>
+        <ul class="side-menu">
+            <li>
+                <a asp-controller="Setting" asp-action="Setting">
+                    <i class='bx bxs-cog'></i>
+                    <span class="text">Settings</span>
+                </a>
+            </li>
+            <li>
+                <a asp-controller="User" asp-action="Login" class="logout">
+                    <i class='bx bxs-log-out-circle'></i>
+                    <span class="text">Logout</span>
+                </a>
+            </li>
+        </ul>
+    </section>
+    <!-- SIDEBAR -->
 
-        <div class="app-header-inner">
-            <div class="container-fluid py-2">
-                <div class="app-header-content">
-                    <div class="row justify-content-between align-items-center">
-
-                        <div class="col-auto">
-                            <a id="sidepanel-toggler" class="sidepanel-toggler d-inline-block" href="#">
-                                <svg xmlns="http://www.w3.org/2000/svg" width="30" height="30" viewBox="0 0 30 30" role="img"><title>Menu</title><path stroke="currentColor" stroke-linecap="round" stroke-miterlimit="10" stroke-width="2" d="M4 7h22M4 15h22M4 23h22"></path></svg>
-                            </a>
-                        </div><!--//col-->
-                        <div class="search-mobile-trigger d-sm-none col">
-                            <i class="search-mobile-trigger-icon fa-solid fa-magnifying-glass"></i>
-                        </div><!--//col-->
-                        <div class="app-search-box col">
-                            <form class="app-search-form">
-                                <input type="text" placeholder="Search..." name="search" class="form-control search-input">
-                                <button type="submit" class="btn search-btn btn-primary" value="Search"><i class="fa-solid fa-magnifying-glass"></i></button>
-                            </form>
-                        </div><!--//app-search-box-->
-
-                        <div class="app-utilities col-auto">
-                            <div class="app-utility-item app-notifications-dropdown dropdown">
-                                <a class="dropdown-toggle no-toggle-arrow" id="notifications-dropdown-toggle" data-bs-toggle="dropdown" href="#" role="button" aria-expanded="false" title="Notifications">
-                                    <!--//Bootstrap Icons: https://icons.getbootstrap.com/ -->
-                                    <svg width="1em" height="1em" viewBox="0 0 16 16" class="bi bi-bell icon" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
-                                        <path d="M8 16a2 2 0 0 0 2-2H6a2 2 0 0 0 2 2z" />
-                                        <path fill-rule="evenodd" d="M8 1.918l-.797.161A4.002 4.002 0 0 0 4 6c0 .628-.134 2.197-.459 3.742-.16.767-.376 1.566-.663 2.258h10.244c-.287-.692-.502-1.49-.663-2.258C12.134 8.197 12 6.628 12 6a4.002 4.002 0 0 0-3.203-3.92L8 1.917zM14.22 12c.223.447.481.801.78 1H1c.299-.199.557-.553.78-1C2.68 10.2 3 6.88 3 6c0-2.42 1.72-4.44 4.005-4.901a1 1 0 1 1 1.99 0A5.002 5.002 0 0 1 13 6c0 .88.32 4.2 1.22 6z" />
-                                    </svg>
-                                    <span class="icon-badge">3</span>
-                                </a><!--//dropdown-toggle-->
-
-                                <div class="dropdown-menu p-0" aria-labelledby="notifications-dropdown-toggle">
-                                    <div class="dropdown-menu-header p-3">
-                                        <h5 class="dropdown-menu-title mb-0">Notifications</h5>
-                                    </div><!--//dropdown-menu-title-->
-                                    <div class="dropdown-menu-content">
-                                        <div class="item p-3">
-                                            <div class="row gx-2 justify-content-between align-items-center">
-                                                <div class="col-auto">
-                                                    <img class="profile-image" src="/images/micky.jpg" alt="">
-                                                </div><!--//col-->
-                                                <div class="col">
-                                                    <div class="info">
-                                                        <div class="desc">Amy shared a file with you. Lorem ipsum dolor sit amet, consectetur adipiscing elit. </div>
-                                                        <div class="meta"> 2 hrs ago</div>
-                                                    </div>
-                                                </div><!--//col-->
-                                            </div><!--//row-->
-                                            <a class="link-mask" href="notifications.html"></a>
-                                        </div><!--//item-->
-                                        <div class="item p-3">
-                                            <div class="row gx-2 justify-content-between align-items-center">
-                                                <div class="col-auto">
-                                                    <div class="app-icon-holder">
-                                                        <svg width="1em" height="1em" viewBox="0 0 16 16" class="bi bi-receipt" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
-                                                            <path fill-rule="evenodd" d="M1.92.506a.5.5 0 0 1 .434.14L3 1.293l.646-.647a.5.5 0 0 1 .708 0L5 1.293l.646-.647a.5.5 0 0 1 .708 0L7 1.293l.646-.647a.5.5 0 0 1 .708 0L9 1.293l.646-.647a.5.5 0 0 1 .708 0l.646.647.646-.647a.5.5 0 0 1 .708 0l.646.647.646-.647a.5.5 0 0 1 .801.13l.5 1A.5.5 0 0 1 15 2v12a.5.5 0 0 1-.053.224l-.5 1a.5.5 0 0 1-.8.13L13 14.707l-.646.647a.5.5 0 0 1-.708 0L11 14.707l-.646.647a.5.5 0 0 1-.708 0L9 14.707l-.646.647a.5.5 0 0 1-.708 0L7 14.707l-.646.647a.5.5 0 0 1-.708 0L5 14.707l-.646.647a.5.5 0 0 1-.708 0L3 14.707l-.646.647a.5.5 0 0 1-.801-.13l-.5-1A.5.5 0 0 1 1 14V2a.5.5 0 0 1 .053-.224l.5-1a.5.5 0 0 1 .367-.27zm.217 1.338L2 2.118v11.764l.137.274.51-.51a.5.5 0 0 1 .707 0l.646.647.646-.646a.5.5 0 0 1 .708 0l.646.646.646-.646a.5.5 0 0 1 .708 0l.646.646.646-.646a.5.5 0 0 1 .708 0l.646.646.646-.646a.5.5 0 0 1 .708 0l.646.646.646-.646a.5.5 0 0 1 .708 0l.509.509.137-.274V2.118l-.137-.274-.51.51a.5.5 0 0 1-.707 0L12 1.707l-.646.647a.5.5 0 0 1-.708 0L10 1.707l-.646.647a.5.5 0 0 1-.708 0L8 1.707l-.646.647a.5.5 0 0 1-.708 0L6 1.707l-.646.647a.5.5 0 0 1-.708 0L4 1.707l-.646.647a.5.5 0 0 1-.708 0l-.509-.51z" />
-                                                            <path fill-rule="evenodd" d="M3 4.5a.5.5 0 0 1 .5-.5h6a.5.5 0 1 1 0 1h-6a.5.5 0 0 1-.5-.5zm0 2a.5.5 0 0 1 .5-.5h6a.5.5 0 1 1 0 1h-6a.5.5 0 0 1-.5-.5zm0 2a.5.5 0 0 1 .5-.5h6a.5.5 0 1 1 0 1h-6a.5.5 0 0 1-.5-.5zm0 2a.5.5 0 0 1 .5-.5h6a.5.5 0 0 1 0 1h-6a.5.5 0 0 1-.5-.5zm8-6a.5.5 0 0 1 .5-.5h1a.5.5 0 0 1 0 1h-1a.5.5 0 0 1-.5-.5zm0 2a.5.5 0 0 1 .5-.5h1a.5.5 0 0 1 0 1h-1a.5.5 0 0 1-.5-.5zm0 2a.5.5 0 0 1 .5-.5h1a.5.5 0 0 1 0 1h-1a.5.5 0 0 1-.5-.5zm0 2a.5.5 0 0 1 .5-.5h1a.5.5 0 0 1 0 1h-1a.5.5 0 0 1-.5-.5z" />
-                                                        </svg>
-                                                    </div>
-                                                </div><!--//col-->
-                                                <div class="col">
-                                                    <div class="info">
-                                                        <div class="desc">You have a new invoice. Proin venenatis interdum est.</div>
-                                                        <div class="meta"> 1 day ago</div>
-                                                    </div>
-                                                </div><!--//col-->
-                                            </div><!--//row-->
-                                            <a class="link-mask" href="notifications.html"></a>
-                                        </div><!--//item-->
-                                        <div class="item p-3">
-                                            <div class="row gx-2 justify-content-between align-items-center">
-                                                <div class="col-auto">
-                                                    <div class="app-icon-holder icon-holder-mono">
-                                                        <svg width="1em" height="1em" viewBox="0 0 16 16" class="bi bi-bar-chart-line" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
-                                                            <path fill-rule="evenodd" d="M11 2a1 1 0 0 1 1-1h2a1 1 0 0 1 1 1v12h.5a.5.5 0 0 1 0 1H.5a.5.5 0 0 1 0-1H1v-3a1 1 0 0 1 1-1h2a1 1 0 0 1 1 1v3h1V7a1 1 0 0 1 1-1h2a1 1 0 0 1 1 1v7h1V2zm1 12h2V2h-2v12zm-3 0V7H7v7h2zm-5 0v-3H2v3h2z" />
-                                                        </svg>
-                                                    </div>
-                                                </div><!--//col-->
-                                                <div class="col">
-                                                    <div class="info">
-                                                        <div class="desc">Your report is ready. Proin venenatis interdum est.</div>
-                                                        <div class="meta"> 3 days ago</div>
-                                                    </div>
-                                                </div><!--//col-->
-                                            </div><!--//row-->
-                                            <a class="link-mask" href="notifications.html"></a>
-                                        </div><!--//item-->
-                                        <div class="item p-3">
-                                            <div class="row gx-2 justify-content-between align-items-center">
-                                                <div class="col-auto">
-                                                    <img class="profile-image" src="/images/ani.jpg" alt="">
-                                                </div><!--//col-->
-                                                <div class="col">
-                                                    <div class="info">
-                                                        <div class="desc">James sent you a new message.</div>
-                                                        <div class="meta"> 7 days ago</div>
-                                                    </div>
-                                                </div><!--//col-->
-                                            </div><!--//row-->
-                                            <a class="link-mask" href="notifications.html"></a>
-                                        </div><!--//item-->
-                                    </div><!--//dropdown-menu-content-->
-
-                                    <div class="dropdown-menu-footer p-2 text-center">
-                                        <a asp-controller="Message" asp-action="Message">View all</a>
-                                    </div>
-
-                                </div><!--//dropdown-menu-->
-                            </div><!--//app-utility-item-->
-                            <div class="app-utility-item">
-                                <a asp-controller="Setting" asp-action="Setting" title="Settings">
-                                    <!--//Bootstrap Icons: https://icons.getbootstrap.com/ -->
-                                    <svg width="1em" height="1em" viewBox="0 0 16 16" class="bi bi-gear icon" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
-                                        <path fill-rule="evenodd" d="M8.837 1.626c-.246-.835-1.428-.835-1.674 0l-.094.319A1.873 1.873 0 0 1 4.377 3.06l-.292-.16c-.764-.415-1.6.42-1.184 1.185l.159.292a1.873 1.873 0 0 1-1.115 2.692l-.319.094c-.835.246-.835 1.428 0 1.674l.319.094a1.873 1.873 0 0 1 1.115 2.693l-.16.291c-.415.764.42 1.6 1.185 1.184l.292-.159a1.873 1.873 0 0 1 2.692 1.116l.094.318c.246.835 1.428.835 1.674 0l.094-.319a1.873 1.873 0 0 1 2.693-1.115l.291.16c.764.415 1.6-.42 1.184-1.185l-.159-.291a1.873 1.873 0 0 1 1.116-2.693l.318-.094c.835-.246.835-1.428 0-1.674l-.319-.094a1.873 1.873 0 0 1-1.115-2.692l.16-.292c.415-.764-.42-1.6-1.185-1.184l-.291.159A1.873 1.873 0 0 1 8.93 1.945l-.094-.319zm-2.633-.283c.527-1.79 3.065-1.79 3.592 0l.094.319a.873.873 0 0 0 1.255.52l.292-.16c1.64-.892 3.434.901 2.54 2.541l-.159.292a.873.873 0 0 0 .52 1.255l.319.094c1.79.527 1.79 3.065 0 3.592l-.319.094a.873.873 0 0 0-.52 1.255l.16.292c.893 1.64-.902 3.434-2.541 2.54l-.292-.159a.873.873 0 0 0-1.255.52l-.094.319c-.527 1.79-3.065 1.79-3.592 0l-.094-.319a.873.873 0 0 0-1.255-.52l-.292.16c-1.64.893-3.433-.902-2.54-2.541l.159-.292a.873.873 0 0 0-.52-1.255l-.319-.094c-1.79-.527-1.79-3.065 0-3.592l.319-.094a.873.873 0 0 0 .52-1.255l-.16-.292c-.892-1.64.902-3.433 2.541-2.54l.292.159a.873.873 0 0 0 1.255-.52l.094-.319z" />
-                                        <path fill-rule="evenodd" d="M8 5.754a2.246 2.246 0 1 0 0 4.492 2.246 2.246 0 0 0 0-4.492zM4.754 8a3.246 3.246 0 1 1 6.492 0 3.246 3.246 0 0 1-6.492 0z" />
-                                    </svg>
-                                </a>
-                            </div><!--//app-utility-item-->
-
-                            <div class="app-utility-item app-user-dropdown dropdown">
-                                <a class="dropdown-toggle" id="user-dropdown-toggle" data-bs-toggle="dropdown" href="#" role="button" aria-expanded="false"><img src="/images/jason.jpg" alt="user profile"></a>
-                                <ul class="dropdown-menu" aria-labelledby="user-dropdown-toggle">
-                                    <li><a class="dropdown-item" asp-controller="Admin" asp-action="Admin">Account</a></li>
-                                    <li><a class="dropdown-item" asp-controller="Setting" asp-action="Setting">Settings</a></li>
-                                    <li><hr class="dropdown-divider"></li>
-                                    <li><a class="dropdown-item" asp-controller="User" asp-action="Login">Log Out</a></li>
-                                </ul>
-                            </div><!--//app-user-dropdown-->
-                        </div><!--//app-utilities-->
-                    </div><!--//row-->
-                </div><!--//app-header-content-->
-            </div><!--//container-fluid-->
-        </div><!--//app-header-inner-->
-
-        <div id="app-sidepanel" class="app-sidepanel">
-            <div id="sidepanel-drop" class="sidepanel-drop"></div>
-            <div class="sidepanel-inner d-flex flex-column">
-                <a href="#" id="sidepanel-close" class="sidepanel-close d-xl-none">&times;</a>
-                <div class="app-branding">
-                    <a class="app-logo" href="index.html"><img class="logo-icon me-2 rounded-5" src="/images/kanasu.jpg" alt="logo"><span class="logo-text">KANASU</span></a>
-
-                </div><!--//app-branding-->
-
-                <nav id="app-nav-main" class="app-nav app-nav-main flex-grow-1">
-
-                    <ul class="app-menu list-unstyled accordion" id="menu-accordion">
-
-                        <li class="nav-item">
-                            <!--//Bootstrap Icons: https://icons.getbootstrap.com/ -->
-                            <a class="nav-link" asp-controller="AdminDashboard" asp-action="Dashboard">
-                                <span class="nav-icon">
-                                    <svg width="1em" height="1em" viewBox="0 0 16 16" class="bi bi-house-door" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
-                                        <path fill-rule="evenodd" d="M7.646 1.146a.5.5 0 0 1 .708 0l6 6a.5.5 0 0 1 .146.354v7a.5.5 0 0 1-.5.5H9.5a.5.5 0 0 1-.5-.5v-4H7v4a.5.5 0 0 1-.5.5H2a.5.5 0 0 1-.5-.5v-7a.5.5 0 0 1 .146-.354l6-6zM2.5 7.707V14H6v-4a.5.5 0 0 1 .5-.5h3a.5.5 0 0 1 .5.5v4h3.5V7.707L8 2.207l-5.5 5.5z" />
-                                        <path fill-rule="evenodd" d="M13 2.5V6l-2-2V2.5a.5.5 0 0 1 .5-.5h1a.5.5 0 0 1 .5.5z" />
-                                    </svg>
-                                </span>
-                                <span class="nav-link-text">Dashboard</span>
-                            </a><!--//nav-link-->
-                        </li><!--//nav-item-->
-
-                        <li class="nav-item">
-                            <!--//Bootstrap Icons: https://icons.getbootstrap.com/ -->
-                            <a class="nav-link" asp-controller="Admin" asp-action="Admin">
-                                <span class="nav-icon">
-                                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-building-fill-add" viewBox="0 0 16 16">
-                                        <path d="M12.5 16a3.5 3.5 0 1 0 0-7 3.5 3.5 0 0 0 0 7m.5-5v1h1a.5.5 0 0 1 0 1h-1v1a.5.5 0 0 1-1 0v-1h-1a.5.5 0 0 1 0-1h1v-1a.5.5 0 0 1 1 0" />
-                                        <path d="M2 1a1 1 0 0 1 1-1h10a1 1 0 0 1 1 1v7.256A4.5 4.5 0 0 0 12.5 8a4.5 4.5 0 0 0-3.59 1.787A.5.5 0 0 0 9 9.5v-1a.5.5 0 0 0-.5-.5h-1a.5.5 0 0 0-.5.5v1a.5.5 0 0 0 .5.5h1a.5.5 0 0 0 .39-.187A4.5 4.5 0 0 0 8.027 12H6.5a.5.5 0 0 0-.5.5V16H3a1 1 0 0 1-1-1zm2 1.5v1a.5.5 0 0 0 .5.5h1a.5.5 0 0 0 .5-.5v-1a.5.5 0 0 0-.5-.5h-1a.5.5 0 0 0-.5.5m3 0v1a.5.5 0 0 0 .5.5h1a.5.5 0 0 0 .5-.5v-1a.5.5 0 0 0-.5-.5h-1a.5.5 0 0 0-.5.5m3.5-.5a.5.5 0 0 0-.5.5v1a.5.5 0 0 0 .5.5h1a.5.5 0 0 0 .5-.5v-1a.5.5 0 0 0-.5-.5zM4 5.5v1a.5.5 0 0 0 .5.5h1a.5.5 0 0 0 .5-.5v-1a.5.5 0 0 0-.5-.5h-1a.5.5 0 0 0-.5.5M7.5 5a.5.5 0 0 0-.5.5v1a.5.5 0 0 0 .5.5h1a.5.5 0 0 0 .5-.5v-1a.5.5 0 0 0-.5-.5zm2.5.5v1a.5.5 0 0 0 .5.5h1a.5.5 0 0 0 .5-.5v-1a.5.5 0 0 0-.5-.5h-1a.5.5 0 0 0-.5.5M4.5 8a.5.5 0 0 0-.5.5v1a.5.5 0 0 0 .5.5h1a.5.5 0 0 0 .5-.5v-1a.5.5 0 0 0-.5-.5z" />
-                                    </svg>
-                                </span>
-                                <span class="nav-link-text">Admin</span>
-                            </a><!--//nav-link-->
-                        </li><!--//nav-item-->
-
-                        <li class="nav-item">
-                            <!--//Bootstrap Icons: https://icons.getbootstrap.com/ -->
-                            <a class="nav-link" asp-controller="Admin_User" asp-action="Admin_User">
-                                <span class="nav-icon">
-                                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-person" viewBox="0 0 16 16">
-                                        <path d="M8 8a3 3 0 1 0 0-6 3 3 0 0 0 0 6m2-3a2 2 0 1 1-4 0 2 2 0 0 1 4 0m4 8c0 1-1 1-1 1H3s-1 0-1-1 1-4 6-4 6 3 6 4m-1-.004c-.001-.246-.154-.986-.832-1.664C11.516 10.68 10.289 10 8 10s-3.516.68-4.168 1.332c-.678.678-.83 1.418-.832 1.664z" />
-                                    </svg>
-                                </span>
-                                <span class="nav-link-text">User</span>
-                            </a><!--//nav-link-->
-                        </li><!--//nav-item-->
-
-                        <li class="nav-item">
-                            <!--//Bootstrap Icons: https://icons.getbootstrap.com/ -->
-                            <a class="nav-link" asp-controller="AddEvent" asp-action="AddEvent">
-                                <span class="nav-icon">
-                                    <!--//Bootstrap Icons: https://icons.getbootstrap.com/ -->
-                                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-calendar-date" viewBox="0 0 16 16">
-                                        <path d="M6.445 11.688V6.354h-.633A13 13 0 0 0 4.5 7.16v.695c.375-.257.969-.62 1.258-.777h.012v4.61zm1.188-1.305c.047.64.594 1.406 1.703 1.406 1.258 0 2-1.066 2-2.871 0-1.934-.781-2.668-1.953-2.668-.926 0-1.797.672-1.797 1.809 0 1.16.824 1.77 1.676 1.77.746 0 1.23-.376 1.383-.79h.027c-.004 1.316-.461 2.164-1.305 2.164-.664 0-1.008-.45-1.05-.82zm2.953-2.317c0 .696-.559 1.18-1.184 1.18-.601 0-1.144-.383-1.144-1.2 0-.823.582-1.21 1.168-1.21.633 0 1.16.398 1.16 1.23" />
-                                        <path d="M3.5 0a.5.5 0 0 1 .5.5V1h8V.5a.5.5 0 0 1 1 0V1h1a2 2 0 0 1 2 2v11a2 2 0 0 1-2 2H2a2 2 0 0 1-2-2V3a2 2 0 0 1 2-2h1V.5a.5.5 0 0 1 .5-.5M1 4v10a1 1 0 0 0 1 1h12a1 1 0 0 0 1-1V4z" />
-                                    </svg>
-                                </span>
-                                <span class="nav-link-text">Event Categories</span>
-                            </a><!--//nav-link-->
-                        </li><!--//nav-item-->
-
-                        <li class="nav-item">
-                            <!--//Bootstrap Icons: https://icons.getbootstrap.com/ -->
-                            <a class="nav-link" asp-controller="Admin_CustomerBooking" asp-action="Admin_CustomerBooking">
-                                <span class="nav-icon">
-                                    <!--//Bootstrap Icons: https://icons.getbootstrap.com/ -->
-                                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-cart-check" viewBox="0 0 16 16">
-                                        <path d="M11.354 6.354a.5.5 0 0 0-.708-.708L8 8.293 6.854 7.146a.5.5 0 1 0-.708.708l1.5 1.5a.5.5 0 0 0 .708 0z" />
-                                        <path d="M.5 1a.5.5 0 0 0 0 1h1.11l.401 1.607 1.498 7.985A.5.5 0 0 0 4 12h1a2 2 0 1 0 0 4 2 2 0 0 0 0-4h7a2 2 0 1 0 0 4 2 2 0 0 0 0-4h1a.5.5 0 0 0 .491-.408l1.5-8A.5.5 0 0 0 14.5 3H2.89l-.405-1.621A.5.5 0 0 0 2 1zm3.915 10L3.102 4h10.796l-1.313 7zM6 14a1 1 0 1 1-2 0 1 1 0 0 1 2 0m7 0a1 1 0 1 1-2 0 1 1 0 0 1 2 0" />
-                                    </svg>
-                                </span>
-                                <span class="nav-link-text">Customer Booking</span>
-                            </a><!--//nav-link-->
-                        </li><!--//nav-item-->
-
-                        <li class="nav-item">
-                            <!--//Bootstrap Icons: https://icons.getbootstrap.com/ -->
-                            <a class="nav-link" asp-controller="BookedEvents" asp-action="BookedEvents">
-                                <span class="nav-icon">
-                                    <!--//Bootstrap Icons: https://icons.getbootstrap.com/ -->
-                                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-database-add" viewBox="0 0 16 16">
-                                        <path d="M12.5 16a3.5 3.5 0 1 0 0-7 3.5 3.5 0 0 0 0 7m.5-5v1h1a.5.5 0 0 1 0 1h-1v1a.5.5 0 0 1-1 0v-1h-1a.5.5 0 0 1 0-1h1v-1a.5.5 0 0 1 1 0" />
-                                        <path d="M12.096 6.223A5 5 0 0 0 13 5.698V7c0 .289-.213.654-.753 1.007a4.5 4.5 0 0 1 1.753.25V4c0-1.007-.875-1.755-1.904-2.223C11.022 1.289 9.573 1 8 1s-3.022.289-4.096.777C2.875 2.245 2 2.993 2 4v9c0 1.007.875 1.755 1.904 2.223C4.978 15.71 6.427 16 8 16c.536 0 1.058-.034 1.555-.097a4.5 4.5 0 0 1-.813-.927Q8.378 15 8 15c-1.464 0-2.766-.27-3.682-.687C3.356 13.875 3 13.373 3 13v-1.302c.271.202.58.378.904.525C4.978 12.71 6.427 13 8 13h.027a4.6 4.6 0 0 1 0-1H8c-1.464 0-2.766-.27-3.682-.687C3.356 10.875 3 10.373 3 10V8.698c.271.202.58.378.904.525C4.978 9.71 6.427 10 8 10q.393 0 .774-.024a4.5 4.5 0 0 1 1.102-1.132C9.298 8.944 8.666 9 8 9c-1.464 0-2.766-.27-3.682-.687C3.356 7.875 3 7.373 3 7V5.698c.271.202.58.378.904.525C4.978 6.711 6.427 7 8 7s3.022-.289 4.096-.777M3 4c0-.374.356-.875 1.318-1.313C5.234 2.271 6.536 2 8 2s2.766.27 3.682.687C12.644 3.125 13 3.627 13 4c0 .374-.356.875-1.318 1.313C10.766 5.729 9.464 6 8 6s-2.766-.27-3.682-.687C3.356 4.875 3 4.373 3 4" />
-                                    </svg>
-                                </span>
-                                <span class="nav-link-text">Booked Events</span>
-                            </a><!--//nav-link-->
-                        </li><!--//nav-item-->
-
-                        <li class="nav-item">
-                            <!--//Bootstrap Icons: https://icons.getbootstrap.com/ -->
-                            <a class="nav-link" asp-controller="AnalyticsReports" asp-action="AnalyticsReports">
-                                <span class="nav-icon">
-                                    <svg width="1em" height="1em" viewBox="0 0 16 16" class="bi bi-bar-chart-line" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
-                                        <path fill-rule="evenodd" d="M11 2a1 1 0 0 1 1-1h2a1 1 0 0 1 1 1v12h.5a.5.5 0 0 1 0 1H.5a.5.5 0 0 1 0-1H1v-3a1 1 0 0 1 1-1h2a1 1 0 0 1 1 1v3h1V7a1 1 0 0 1 1-1h2a1 1 0 0 1 1 1v7h1V2zm1 12h2V2h-2v12zm-3 0V7H7v7h2zm-5 0v-3H2v3h2z" />
-                                    </svg>
-                                </span>
-                                <span class="nav-link-text">Analytics & Reports</span>
-                            </a><!--//nav-link-->
-                        </li><!--//nav-item-->
-
-                        <li class="nav-item">
-                            <!--//Bootstrap Icons: https://icons.getbootstrap.com/ -->
-                            <a class="nav-link" asp-controller="Message" asp-action="Message">
-                                <span class="nav-icon">
-                                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-chat-square-dots" viewBox="0 0 16 16">
-                                        <path d="M14 1a1 1 0 0 1 1 1v8a1 1 0 0 1-1 1h-2.5a2 2 0 0 0-1.6.8L8 14.333 6.1 11.8a2 2 0 0 0-1.6-.8H2a1 1 0 0 1-1-1V2a1 1 0 0 1 1-1zM2 0a2 2 0 0 0-2 2v8a2 2 0 0 0 2 2h2.5a1 1 0 0 1 .8.4l1.9 2.533a1 1 0 0 0 1.6 0l1.9-2.533a1 1 0 0 1 .8-.4H14a2 2 0 0 0 2-2V2a2 2 0 0 0-2-2z" />
-                                        <path d="M5 6a1 1 0 1 1-2 0 1 1 0 0 1 2 0m4 0a1 1 0 1 1-2 0 1 1 0 0 1 2 0m4 0a1 1 0 1 1-2 0 1 1 0 0 1 2 0" />
-                                    </svg>
-                                    @* <i class="fa-regular fa-envelope fs-5"></i> *@
-                                </span>
-                                <span class="nav-link-text">Message</span>
-                            </a><!--//nav-link-->
-                        </li><!--//nav-item-->
-
-                        <li class="nav-item">
-                            <!--//Bootstrap Icons: https://icons.getbootstrap.com/ -->
-                            <a class="nav-link" asp-controller="Team" asp-action="Team">
-                                <span class="nav-icon">
-                                    <svg width="1em" height="1em" viewBox="0 0 16 16" class="bi bi-people-fill" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
-                                        <path fill-rule="evenodd" d="M7 14s-1 0-1-1 1-4 5-4 5 3 5 4-1 1-1 1H7zm4-6a3 3 0 1 0 0-6 3 3 0 0 0 0 6zm-5.784 6A2.238 2.238 0 0 1 5 13c0-1.355.68-2.75 1.936-3.72A6.325 6.325 0 0 0 5 9c-4 0-5 3-5 4s1 1 1 1h4.216zM4.5 8a2.5 2.5 0 1 0 0-5 2.5 2.5 0 0 0 0 5z" />
-                                    </svg>
-                                    @* <i class="fa-solid fa-users"></i> *@
-                                </span>
-                                <span class="nav-link-text">Teams</span>
-                            </a><!--//nav-link-->
-                        </li><!--//nav-item-->
-
-                        <li class="nav-item">
-                            <!--//Bootstrap Icons: https://icons.getbootstrap.com/ -->
-                            <a class="nav-link" asp-controller="Setting" asp-action="Setting">
-                                <span class="nav-icon">
-                                    <svg width="1em" height="1em" viewBox="0 0 16 16" class="bi bi-gear icon" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
-                                        <path fill-rule="evenodd" d="M8.837 1.626c-.246-.835-1.428-.835-1.674 0l-.094.319A1.873 1.873 0 0 1 4.377 3.06l-.292-.16c-.764-.415-1.6.42-1.184 1.185l.159.292a1.873 1.873 0 0 1-1.115 2.692l-.319.094c-.835.246-.835 1.428 0 1.674l.319.094a1.873 1.873 0 0 1 1.115 2.693l-.16.291c-.415.764.42 1.6 1.185 1.184l.292-.159a1.873 1.873 0 0 1 2.692 1.116l.094.318c.246.835 1.428.835 1.674 0l.094-.319a1.873 1.873 0 0 1 2.693-1.115l.291.16c.764.415 1.6-.42 1.184-1.185l-.159-.291a1.873 1.873 0 0 1 1.116-2.693l.318-.094c.835-.246.835-1.428 0-1.674l-.319-.094a1.873 1.873 0 0 1-1.115-2.692l.16-.292c.415-.764-.42-1.6-1.185-1.184l-.291.159A1.873 1.873 0 0 1 8.93 1.945l-.094-.319zm-2.633-.283c.527-1.79 3.065-1.79 3.592 0l.094.319a.873.873 0 0 0 1.255.52l.292-.16c1.64-.892 3.434.901 2.54 2.541l-.159.292a.873.873 0 0 0 .52 1.255l.319.094c1.79.527 1.79 3.065 0 3.592l-.319.094a.873.873 0 0 0-.52 1.255l.16.292c.893 1.64-.902 3.434-2.541 2.54l-.292-.159a.873.873 0 0 0-1.255.52l-.094.319c-.527 1.79-3.065 1.79-3.592 0l-.094-.319a.873.873 0 0 0-1.255-.52l-.292.16c-1.64.893-3.433-.902-2.54-2.541l.159-.292a.873.873 0 0 0-.52-1.255l-.319-.094c-1.79-.527-1.79-3.065 0-3.592l.319-.094a.873.873 0 0 0 .52-1.255l-.16-.292c-.892-1.64.902-3.433 2.541-2.54l.292.159a.873.873 0 0 0 1.255-.52l.094-.319z" />
-                                        <path fill-rule="evenodd" d="M8 5.754a2.246 2.246 0 1 0 0 4.492 2.246 2.246 0 0 0 0-4.492zM4.754 8a3.246 3.246 0 1 1 6.492 0 3.246 3.246 0 0 1-6.492 0z" />
-                                    </svg>
-                                </span>
-                                <span class="nav-link-text">Settings</span>
-                            </a><!--//nav-link-->
-                        </li><!--//nav-item-->
-
-                    </ul><!--//app-menu-->
-
-                </nav><!--//app-nav-->
-
-            </div><!--//sidepanel-inner-->
-
-        </div><!--//app-sidepanel-->
-
-
-    </header><!--//app-header-->
-
-    <div class="app-wrapper">
-
-        <div class="app-content pt-3 p-md-3 p-lg-4">
-            <div class="container-xl">
-
-                @RenderBody()
-
-
-            </div><!--//container-fluid-->
-        </div><!--//app-content-->
-
-        <footer class="app-footer">
-            <div class="container text-center py-3">
-                <!--/* This template is free as long as you keep the footer attribution link. If you'd like to use the template without the attribution link, you can buy the commercial license via our website: themes.3rdwavemedia.com Thank you for your support. :) */-->
-                <small class="copyright">Designed with <span class="sr-only">love</span><i class="fas fa-heart" style="color: #fb866a;"></i> by <a class="app-link" href="https://www.linkedin.com/in/pranay-kalamkar-57b40b184" target="_blank">Pranay Kalamkar</a> for developers</small>
-
-            </div>
-        </footer><!--//app-footer-->
-
-    </div><!--//app-wrapper-->
+    <section id="content">
+        <!-- NAVBAR -->
+        <nav>
+            <i class='bx bx-menu'></i>
+            <a href="#" class="nav-link">Categories</a>
+            <form action="#">
+                <div class="form-input">
+                    <input type="search" placeholder="Search...">
+                    <button type="submit" class="search-btn"><i class='bx bx-search'></i></button>
+                </div>
+            </form>
+            <input type="checkbox" id="switch-mode" hidden>
+            <label for="switch-mode" class="switch-mode"></label>
+            <a href="#" class="notification">
+                <i class='bx bxs-bell'></i>
+                <span class="num">8</span>
+            </a>
+            <a href="#" class="profile">
+                <img src="/images/jason.jpg">
+            </a>
+        </nav>
+        <!-- NAVBAR -->
+        <!-- MAIN -->
+        <main>
+            @RenderBody()
+        </main>
+        <!-- MAIN -->
+    </section>
 
 
 

@@ -161,16 +161,18 @@
 
 <div class="card w-100 shadow-sm">
     <div class="card-body">
-        <table class="table table-bordered" id="myTable" style="width:100% !important">
-            <thead>
-                <tr>
-                    <th>@Html.DisplayNameFor(model => model.Id)</th>
-                    <th>@Html.DisplayNameFor(model => model.Username)</th>
-                    <th>@Html.DisplayNameFor(model => model.Email)</th>
-                    <th>Actions</th>
-                </tr>
-            </thead>
-        </table>
+        <div class="table-responsive">
+            <table class="table table-bordered" id="myTable" style="width:100% !important">
+                <thead>
+                    <tr>
+                        <th>@Html.DisplayNameFor(model => model.Id)</th>
+                        <th>@Html.DisplayNameFor(model => model.Username)</th>
+                        <th>@Html.DisplayNameFor(model => model.Email)</th>
+                        <th>Actions</th>
+                    </tr>
+                </thead>
+            </table>
+        </div>
     </div>
 </div>
 

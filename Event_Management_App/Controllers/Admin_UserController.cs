@@ -24,7 +24,7 @@ namespace Event_Management_App.Controllers
             return Json(_IAdmin_UserBAL.GetAdmin_UserList());
         }
 
-        public IActionResult AddAdmin_User(string model)
+        public IActionResult AddAdmin_User()
         {
             return View();
         }
