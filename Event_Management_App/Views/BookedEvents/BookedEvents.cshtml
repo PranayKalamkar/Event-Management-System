@@ -1,7 +1,7 @@
 ﻿@model IEnumerable<Event_Management_App.Models.GetAllBookedDetails>
 
 @{
-    ViewData["title"] = "Booked Event";
+    ViewData["title"] = "Upcomming Events";
     Layout = "_AdminLayout";
 }
 
@@ -26,117 +26,147 @@
                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
             </div>
 
-            <div class="modal-body">
 
-                <form>
+            <form>
+
+                <div class="modal-body">
 
                     <input id="v_Id" name="Id" hidden />
 
+                    <!-- Image placement -->
                     <div class="row">
-                        <div class="col-md-6">
-                            <div class="mb-3">
-                                <label for="Username" class="form-label">Username : </label>
-                                <input id="v_Username" type="text" name="Username" class="form-control" readonly />
-                            </div>
-                        </div>
-                        <div class="col-md-6">
-                            <div class="mb-3">
-                                <label for="Email" class="form-label">Email : </label>
-                                <input id="v_Email" type="email" name="Email" class="form-control" readonly />
-                            </div>
-                        </div>
-                    </div>
 
-                    <div class="row">
-                        <div class="col-md-6">
-                            <div class="mb-3">
-                                <label for="Category" class="form-label">Category : </label>
-                                <input id="v_Category" type="text" name="Category" class="form-control" readonly />
-                            </div>
-                        </div>
-                        <div class="col-md-6">
-                            <div class="mb-3">
-                                <label for="Location" class="form-label">Location : </label>
-                                <input id="v_Location" type="text" name="Location" class="form-control" readonly />
-                            </div>
-                        </div>
-                    </div>
-
-                    <div class="row">
-                        <div class="col-md-6">
-                            <div class="mb-3">
-                                <label for="Capacity" class="form-label">Capacity : </label>
-                                <input id="v_Capacity" type="text" name="Capacity" class="form-control" readonly />
-                            </div>
-                        </div>
-                        <div class="col-md-6">
-                            <div class="mb-3">
-                                <label for="Amount" class="form-label">Amount : </label>
-                                <input id="v_Amount" type="text" name="Amount" class="form-control" readonly />
-                            </div>
-                        </div>
-                    </div>
-
-                    <div class="row">
-                        <div class="col-md-6">
-                            <div class="mb-3">
-                                <label for="Contact" class="form-label">Contact : </label>
-                                <input id="v_Contact" type="text" name="Contact" class="form-control" readonly />
-                            </div>
-                        </div>
-                        <div class="col-md-6">
-                            <div class="mb-3">
-                                <label for="Deposit" class="form-label">Deposit : </label>
-                                <input id="v_Deposit" type="text" name="Contact" class="form-control" readonly />
-                            </div>
-                        </div>
-                    </div>
-
-                    <div class="row">
-                        <div class="col-md-6">
-                            <div class="mb-3">
-                                <label for="Balance" class="form-label">Balance : </label>
-                                <input id="v_Balance" type="text" name="Address" class="form-control" readonly />
-                            </div>
-                        </div>
-                        <div class="col-md-6">
-                            <div class="mb-3">
-                                <label for="Date" class="form-label">Date : </label>
-                                <input id="v_Date" type="text" name="Date" class="form-control" readonly />
-                            </div>
-                        </div>
-                    </div>
-
-                    <div class="row">
-                        <div class="col-md-6">
-                            <div class="mb-3">
-                                <label for="Time" class="form-label">Time : </label>
-                                <input id="v_Time" type="time" name="Time" class="form-control" readonly />
-                            </div>
-                        </div>
-                        <div class="col-md-6">
-                            <div class="mb-3">
-                                <label for="Status" class="form-label">Status : </label>
-                                <input id="v_Status" type="text" name="Status" class="form-control" readonly />
-                            </div>
-                        </div>
-                    </div>
-
-                    <div class="row">
-                        <div class="col-md-6">
-                            <div class="mb-3">
-                                <label for="ImageFile" class="form-label">Venue : </label>
-                                <input id="ImageFile" type="text" name="ImageFile" class="form-control" onchange="previewImage(this)" autocomplete="off" hidden />
-                                <div class="mb-3" style="display: flex; flex-direction: column;">
-                                    <img id="imagePreviewView" src="#" alt="Image Preview" style="max-width: 30%; max-height: 150px; margin-top: 10px; display: none;">
+                        <div class="col-4">
+                            <div class="row">
+                                <div class="col-md-6">
+                                    <div class="mb-3">
+                                        <label for="ImageFile" class="form-label">Venue : </label>
+                                        <input id="ImageFile" type="text" name="ImageFile" class="form-control" onchange="previewImage(this)" autocomplete="off" hidden />
+                                        <div class="mb-3" style="display: flex; flex-direction: column;">
+                                            <img id="imagePreviewView" src="#" alt="Image Preview" style="height: 200px; width: 200px; border-radius: 50%;">
+                                        </div>
+                                    </div>
                                 </div>
                             </div>
+
+                        </div>
+
+                        <div class="col-8">
+
+
+                            <!-- Rest of the form -->
+
+                            <div class="row">
+                                <div class="col-md-6">
+                                    <div class="mb-3">
+                                        <label for="Username" class="form-label">Username : </label>
+                                        <input id="v_Username" type="text" name="Username" class="form-control" readonly />
+                                    </div>
+                                </div>
+                                <div class="col-md-6">
+                                    <div class="mb-3">
+                                        <label for="Email" class="form-label">Email : </label>
+                                        <input id="v_Email" type="email" name="Email" class="form-control" readonly />
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="row">
+                                <div class="col-md-6">
+                                    <div class="mb-3">
+                                        <label for="Category" class="form-label">Category : </label>
+                                        <input id="v_Category" type="text" name="Category" class="form-control" readonly />
+                                    </div>
+                                </div>
+                                <div class="col-md-6">
+                                    <div class="mb-3">
+                                        <label for="Location" class="form-label">Location : </label>
+                                        <input id="v_Location" type="text" name="Location" class="form-control" readonly />
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="row">
+                                <div class="col-md-6">
+                                    <div class="mb-3">
+                                        <label for="Capacity" class="form-label">Capacity : </label>
+                                        <input id="v_Capacity" type="text" name="Capacity" class="form-control" readonly />
+                                    </div>
+                                </div>
+                                <div class="col-md-6">
+                                    <div class="mb-3">
+                                        <label for="Amount" class="form-label">Amount : </label>
+                                        <input id="v_Amount" type="text" name="Amount" class="form-control" readonly />
+                                    </div>
+                                </div>
+                            </div>
+
                         </div>
                     </div>
 
-                </form>
+                    <div class="row">
 
-            </div>
+                        <div class="col-12">
+
+                            <div class="row">
+                                <div class="col-md-4">
+                                    <div class="mb-3">
+                                        <label for="Contact" class="form-label">Contact : </label>
+                                        <input id="v_Contact" type="text" name="Contact" class="form-control" readonly />
+                                    </div>
+                                </div>
+                                <div class="col-md-4">
+                                    <div class="mb-3">
+                                        <label for="Deposit" class="form-label">Deposit : </label>
+                                        <input id="v_Deposit" type="text" name="Contact" class="form-control" readonly />
+                                    </div>
+                                </div>
+                                <div class="col-md-4">
+                                    <div class="mb-3">
+                                        <label for="Balance" class="form-label">Balance : </label>
+                                        <input id="v_Balance" type="text" name="Address" class="form-control" readonly />
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="row">
+                                <div class="col-md-4">
+                                    <div class="mb-3">
+                                        <label for="Date" class="form-label">Date : </label>
+                                        <input id="v_Date" type="text" name="Date" class="form-control" readonly />
+                                    </div>
+                                </div>
+                                <div class="col-md-4">
+                                    <div class="mb-3">
+                                        <label for="Time" class="form-label">Time : </label>
+                                        <input id="v_Time" type="time" name="Time" class="form-control" readonly />
+                                    </div>
+                                </div>
+                                <div class="col-md-4">
+                                    <div class="mb-3">
+                                        <select id="v_Status" type="text" name="Status" class="form-control">
+                                            <option value="Pending">Pending</option>
+                                            <option value="Booked">Booked</option>
+                                            <option value="Available">Available</option>
+                                        </select>
+                                    </div>
+                                </div>
+                            </div>
+
+                        </div>
+                    </div>
+
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                        <button type="button" onclick="changeStatus()" class="btn btn-success">Save changes</button>
+                    </div>
+
+
+                </div>
+
+
+            </form>
+
 
         </div>
     </div>
@@ -164,22 +194,22 @@
                 var cardContainer = $('#cardContainer');
                 data.forEach(function (item) {
                     var card = `
-                                    <div class="col-md-4 mb-4">
-                                        <div class="card h-100 p-3">
-                                            <img src="/addeventimages/${item.AddEventModel.ImagePath}" class="card-img-top" alt="Image">
-                                            <div class="card-body">
-                                                <h5 class="card-title">${item.AddEventModel.Category}</h5>
-                                                <p class="card-text">Location: ${item.AddEventModel.Location}</p>
-                                                <p class="card-text">Deposit: ${item.BookedEventsModel.Deposit}</p>
-                                                <p class="card-text">Balance: ${item.BookedEventsModel.Balance}</p>
-                                                <p class="card-text">Date: ${item.BookedEventsModel.Date}</p>
-                                                <p class="card-text">Time: ${item.BookedEventsModel.Time}</p>
-                                                <p class="card-text">Status: ${item.BookedEventsModel.Status}</p>
-                                                <a class="btn btn-info" onclick="populateEventData(${item.BookedEventsModel.Id})" data-bs-toggle="modal" data-bs-target="#viewbookEventModal">View</a>
-                                            </div>
-                                        </div>
-                                    </div>
-                                `;
+                                                                        <div class="col-md-4 mb-4">
+                                                                            <div class="card h-100 p-3">
+                                                                                <img src="/addeventimages/${item.AddEventModel.ImagePath}" class="card-img-top" alt="Image">
+                                                                                <div class="card-body">
+                                                                                    <h5 class="card-title">${item.AddEventModel.Category}</h5>
+                                                                                    <p class="card-text">Location: ${item.AddEventModel.Location}</p>
+                                                                                    <p class="card-text">Deposit: ${item.BookedEventsModel.Deposit}</p>
+                                                                                    <p class="card-text">Balance: ${item.BookedEventsModel.Balance}</p>
+                                                                                    <p class="card-text">Date: ${item.BookedEventsModel.Date}</p>
+                                                                                    <p class="card-text">Time: ${item.BookedEventsModel.Time}</p>
+                                                                                    <p class="card-text">Status: ${item.BookedEventsModel.Status}</p>
+                                                                                    <a class="btn btn-info" onclick="populateEventData(${item.BookedEventsModel.Id})" data-bs-toggle="modal" data-bs-target="#viewbookEventModal">View</a>
+                                                                                </div>
+                                                                            </div>
+                                                                        </div>
+                                                                    `;
                     cardContainer.append(card);
                 });
             },
@@ -235,12 +265,68 @@
                 $('#v_Status').val(bookevent.BookedEventsModel.Status);
 
                 var imagePreview = '/addeventimages/' + bookevent.AddEventModel.ImagePath;
-                $('#imagePreviewUpdate').attr('src', imagePreview).show();
+                $('#imagePreviewView').attr('src', imagePreview).show();
             },
             error: function (errormessage) {
                 alert(errormessage.responseText);
             }
         });
+    }
+
+    function changeStatus(sId) {
+
+        debugger;
+
+        var bookID = {
+            id: $('#v_Id').val(),
+        }
+
+        debugger;
+
+        var bookEventData = {
+            Status: $('#v_Status').val(),
+        };
+
+        debugger;
+
+        var formData = new FormData();
+        formData.append("ID", bookID.id);
+        formData.append("model", JSON.stringify(bookEventData));
+
+        debugger;
+
+        $.ajax({
+            type: "POST",
+            url: "/AddEvent/Update",
+            data: formData,
+            contentType: false,
+            processData: false,
+            cache: false,
+
+            success: function (data) {
+
+                $('#viewbookEventModal').modal('hide');
+
+                Swal.fire({
+                    title: "Status Updated successfully!",
+                    text: "close",
+                    icon: "success"
+                });
+
+                // datatable.destroy();
+                // Remove all cards from the container
+                $('#cardContainer').empty();
+                getAddEventList();
+            },
+            error: function (errormessage) {
+                Swal.fire({
+                    title: "Error updating Status!",
+                    text: "close",
+                    icon: "Error"
+                });
+            }
+        });
+
     }
 
 

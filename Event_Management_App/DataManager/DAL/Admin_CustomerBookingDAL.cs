@@ -97,6 +97,8 @@ namespace Event_Management_App.DataManager.DAL
 
         public GetAllBookedDetails AddbookEventData(GetAllBookedDetails oData, int ID)
         {
+            oData.SignUpModel.SPassword = oData.SignUpModel.SPassword + _dBManager.getSalt();
+
             _dBManager.InitDbCommand("InsertCustomerBookData", CommandType.StoredProcedure);
 
             _dBManager.AddCMDParam("@p_Username", oData.SignUpModel.Username);

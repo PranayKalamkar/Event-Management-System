@@ -224,87 +224,106 @@
                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
             </div>
 
-            <div class="modal-body">
 
-                <form>
+            <form>
+                <div class="modal-body">
 
                     <input id="v_Id" name="Id" hidden />
 
                     <div class="row">
-                        <div class="col-md-6">
-                            <div class="mb-3">
-                                <label for="Category" class="form-label">Category : </label>
-                                <input id="v_Category" type="text" name="Category" class="form-control" readonly />
-                            </div>
-                        </div>
-                        <div class="col-md-6">
-                            <div class="mb-3">
-                                <label for="Location" class="form-label">Location : </label>
-                                <input id="v_Location" type="text" name="Location" class="form-control" readonly />
-                            </div>
-                        </div>
-                    </div>
 
-                    <div class="row">
-                        <div class="col-md-6">
-                            <div class="mb-3">
-                                <label for="Capacity" class="form-label">Capacity : </label>
-                                <input id="v_Capacity" type="text" name="Capacity" class="form-control" readonly />
-                            </div>
-                        </div>
-                        <div class="col-md-6">
-                            <div class="mb-3">
-                                <label for="Amount" class="form-label">Amount : </label>
-                                <input id="v_Amount" type="text" name="Amount" class="form-control" readonly />
-                            </div>
-                        </div>
-                    </div>
-
-                    <div class="row">
-                        <div class="col-md-6">
-                            <div class="mb-3">
-                                <label for="Description" class="form-label">Description : </label>
-                                <input id="v_Description" type="text" name="Description" class="form-control" readonly />
-                            </div>
-                        </div>
-                        <div class="col-md-6">
-                            <div class="mb-3">
-                                <label for="Status" class="form-label">Status : </label>
-                                <input id="v_Status" type="text" name="Status" class="form-control" readonly />
-                            </div>
-                        </div>
-                    </div>
-
-                    <div class="row">
-                        <div class="col-md-6">
-                            <div class="mb-3">
-                                <label for="Address" class="form-label">Address : </label>
-                                <input id="v_Address" type="text" name="Address" class="form-control" readonly />
-                            </div>
-                        </div>
-                        <div class="col-md-6">
-                            <div class="mb-3">
-                                <label for="Contact" class="form-label">Contact : </label>
-                                <input id="v_Contact" type="text" name="Contact" class="form-control" readonly />
-                            </div>
-                        </div>
-                    </div>
-
-                    <div class="row">
-                        <div class="col-md-6">
-                            <div class="mb-3">
-                                <label for="ImageFile" class="form-label">Venue : </label>
-                                <input id="v_ImageFile" type="text" name="ImageFile" class="form-control" onchange="previewImage(this)" autocomplete="off" hidden />
-                                <div class="mb-3" style="display: flex; flex-direction: column;">
-                                    <img id="imagePreviewView" src="#" alt="Image Preview" style="max-width: 30%; max-height: 150px; margin-top: 10px; display: none;">
+                        <div class="col-4">
+                            <div class="row">
+                                <div class="col-md-6">
+                                    <div class="mb-3">
+                                        <label for="ImageFile" class="form-label">Venue : </label>
+                                        <input id="v_ImageFile" type="text" name="ImageFile" class="form-control" onchange="previewImage(this)" autocomplete="off" hidden />
+                                        <div class="mb-3" style="display: flex; flex-direction: column;">
+                                            <img id="imagePreviewView" src="#" alt="Image Preview" style="height: 200px; width: 200px; border-radius: 50%;">
+                                        </div>
+                                    </div>
                                 </div>
                             </div>
+
                         </div>
+
+                        <div class="col-8">
+
+                            <div class="row">
+                                <div class="col-md-6">
+                                    <div class="mb-3">
+                                        <label for="Category" class="form-label">Category : </label>
+                                        <input id="v_Category" type="text" name="Category" class="form-control" readonly />
+                                    </div>
+                                </div>
+                                <div class="col-md-6">
+                                    <div class="mb-3">
+                                        <label for="Location" class="form-label">Location : </label>
+                                        <input id="v_Location" type="text" name="Location" class="form-control" readonly />
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="row">
+                                <div class="col-md-6">
+                                    <div class="mb-3">
+                                        <label for="Capacity" class="form-label">Capacity : </label>
+                                        <input id="v_Capacity" type="text" name="Capacity" class="form-control" readonly />
+                                    </div>
+                                </div>
+                                <div class="col-md-6">
+                                    <div class="mb-3">
+                                        <label for="Amount" class="form-label">Amount : </label>
+                                        <input id="v_Amount" type="text" name="Amount" class="form-control" readonly />
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="row">
+                                <div class="col-md-6">
+                                    <div class="mb-3">
+                                        <label for="Description" class="form-label">Description : </label>
+                                        <input id="v_Description" type="text" name="Description" class="form-control" readonly />
+                                    </div>
+                                </div>
+                                <div class="col-md-6">
+                                    <div class="mb-3">
+                                        <label for="Status" class="form-label">Status : </label>
+                                        <input id="v_Status" type="text" name="Status" class="form-control" readonly />
+                                    </div>
+                                </div>
+                            </div>
+
+                        </div>
+
                     </div>
 
-                </form>
+                    <div class="row">
 
-            </div>
+                        <div class="col-12">
+
+                            <div class="row">
+                                <div class="col-md-6">
+                                    <div class="mb-3">
+                                        <label for="Address" class="form-label">Address : </label>
+                                        <input id="v_Address" type="text" name="Address" class="form-control" readonly />
+                                    </div>
+                                </div>
+                                <div class="col-md-6">
+                                    <div class="mb-3">
+                                        <label for="Contact" class="form-label">Contact : </label>
+                                        <input id="v_Contact" type="text" name="Contact" class="form-control" readonly />
+                                    </div>
+                                </div>
+                            </div>
+
+                        </div>
+
+                    </div>
+
+                </div>
+            </form>
+
 
         </div>
     </div>
@@ -331,21 +350,21 @@
                 var cardContainer = $('#cardContainer');
                 data.forEach(function (item) {
                     var card = `
-                                                         <div class="col-md-4 mb-4">
-                                                               <div class="card h-100 mb-4">
-                                                                     <img src="/addeventimages/${item.ImagePath}" class="card-img-top" alt="Image">
-                                                                           <div class="card-body">
-                                                                              <h5 class="card-title">${item.Category}</h5>
-                                                                              <p class="card-text">Location: ${item.Location}</p>
-                                                                              <p class="card-text">Amount: ${item.Amount}</p>
-                                                                               <p class="card-text">Descirption: ${item.Description}</p>
-                                                                                         <a class="btn btn-info" onclick="viewEventData(${item.Id})" data-bs-toggle="modal" data-bs-target="#viewAddEventModal">View</a>
-                                                                                         <a class="btn btn-warning" onclick="populateEventData(${item.Id})" data-bs-toggle="modal" data-bs-target="#updateEvent">Edit</a>
-                                                                                         <a class="btn btn-danger" onclick="deleteEventData(${item.Id})">Delete</a>
-                                                                            </div>
-                                                               </div>
-                                                          </div>
-                                                        `;
+                                                                                                 <div class="col-md-4 mb-4">
+                                                                                                       <div class="card h-100 mb-4">
+                                                                                                             <img src="/addeventimages/${item.ImagePath}" class="card-img-top" alt="Image">
+                                                                                                                   <div class="card-body">
+                                                                                                                      <h5 class="card-title">${item.Category}</h5>
+                                                                                                                      <p class="card-text">Location: ${item.Location}</p>
+                                                                                                                      <p class="card-text">Amount: ${item.Amount}</p>
+                                                                                                                       <p class="card-text">Descirption: ${item.Description}</p>
+                                                                                                                                 <a class="btn btn-info" onclick="viewEventData(${item.Id})" data-bs-toggle="modal" data-bs-target="#viewAddEventModal">View</a>
+                                                                                                                                 <a class="btn btn-warning" onclick="populateEventData(${item.Id})" data-bs-toggle="modal" data-bs-target="#updateEvent">Edit</a>
+                                                                                                                                 <a class="btn btn-danger" onclick="deleteEventData(${item.Id})">Delete</a>
+                                                                                                                    </div>
+                                                                                                       </div>
+                                                                                                  </div>
+                                                                                                `;
                     cardContainer.append(card);
                 });
             },
@@ -385,11 +404,11 @@
             cache: false,
             type: "POST",
             success: function (data) {
-                debugger;
+                // debugger;
 
                 $('#addEvent').modal('hide');
 
-                // clearForm();
+                clearForm();
 
 
                 Swal.fire({
@@ -610,6 +629,7 @@
         $('#Status').val("");
         $('#Address').val("");
         $('#Contact').val("");
+        $('#ImageFile').val("");
     }
 
 
@@ -625,7 +645,7 @@
                 },
                 Location: {
                     required: true,
-                    maxlength: 10
+                    maxlength: 30
                 },
                 Capacity: {
                     required: true,
@@ -660,7 +680,7 @@
                 },
                 Location: {
                     required: "Please provide a Location!",
-                    maxlength: "Your Contact Number must be at max 30 characters long"
+                    maxlength: "Your Location must be at max 30 characters long"
                 },
                 Capacity: {
                     required: "Please provide a Capacity!",

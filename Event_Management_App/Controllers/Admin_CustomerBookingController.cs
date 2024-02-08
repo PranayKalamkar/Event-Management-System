@@ -55,15 +55,6 @@ namespace Event_Management_App.Controllers
 
             return Json(new { status = "success", message = "User saved & Booked successfully!" });
 
-            //int? testid = HttpContext.Session.GetInt32("Id");
-
-            //oData.BookedEventsModel.Signup_id = testid.Value;
-
-            //bookmodel.BookedEventsModel.Signup_id = id.ConvertDBNullToInt();
-
-            //_IAdmin_CustomerBookingBAL.AddbookEventData(oData, ID);
-
-            //return Json("CustomerListEvent");
         }
     }
 }

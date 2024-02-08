@@ -14,101 +14,128 @@
                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
             </div>
 
-            <div class="modal-body">
 
-                <form id="update">
+            <form id="update">
+
+                <div class="modal-body">
 
                     <input hidden id="Id" name="Id" />
 
                     <div class="row">
-                        <div class="col-md-6">
-                            <div class="mb-3">
-                                <label for="Category" class="form-label">Category : </label>
-                                <input id="Category" type="text" name="Category" class="form-control" autocomplete="off" readonly />
+
+                        <div class="col-4">
+
+                            <div class="row">
+                                <div class="col-md-6">
+                                    <div class="mb-3">
+                                        <label for="ImageFile" class="form-label">Venue : </label>
+                                        <input id="ImageFile" type="text" name="ImageFile" class="form-control" onchange="previewImage(this)" autocomplete="off" hidden />
+                                        <div class="mb-3" style="display: flex; flex-direction: column;">
+                                            <img id="imagePreviewView" src="#" alt="Image Preview" style="height: 200px; width: 200px; border-radius: 50%;">
+                                        </div>
+                                    </div>
+                                </div>
                             </div>
+
                         </div>
-                        <div class="col-md-6">
-                            <div class="mb-3">
-                                <label for="Location" class="form-label">Location : </label>
-                                <input id="Location" type="text" name="Location" class="form-control" autocomplete="off" readonly />
+
+                        <div class="col-8">
+
+                            <div class="row">
+                                <div class="col-md-6">
+                                    <div class="mb-3">
+                                        <label for="Category" class="form-label">Category : </label>
+                                        <input id="Category" type="text" name="Category" class="form-control" autocomplete="off" readonly />
+                                    </div>
+                                </div>
+                                <div class="col-md-6">
+                                    <div class="mb-3">
+                                        <label for="Location" class="form-label">Location : </label>
+                                        <input id="Location" type="text" name="Location" class="form-control" autocomplete="off" readonly />
+                                    </div>
+                                </div>
                             </div>
+
+                            <div class="row">
+                                <div class="col-md-6">
+                                    <div class="mb-3">
+                                        <label for="Capacity" class="form-label">Capacity : </label>
+                                        <input id="Capacity" type="text" name="Capacity" class="form-control" autocomplete="off" readonly />
+                                    </div>
+                                </div>
+                                <div class="col-md-6">
+                                    <div class="mb-3">
+                                        <label for="Amount" class="form-label">Amount : </label>
+                                        <input id="Amount" type="text" name="Amount" class="form-control" autocomplete="off" readonly />
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="row">
+                                <div class="col-md-6">
+                                    <div class="mb-3">
+                                        <label for="Contact" class="form-label">Contact : </label>
+                                        <input id="Contact" type="text" name="Contact" class="form-control" autocomplete="off" readonly />
+                                    </div>
+                                </div>
+                                <div class="col-md-6">
+                                    <div class="mb-3">
+                                        <label for="Address" class="form-label">Address : </label>
+                                        <input id="Address" type="text" name="Address" class="form-control" autocomplete="off" readonly />
+                                    </div>
+                                </div>
+                            </div>
+
                         </div>
+
+                    </div>
+
+                    <hr />
+
+                    <div class="row">
+
+                        <div class="col-12">
+
+                            <div class="row">
+                                <div class="col-md-4">
+                                    <div class="mb-3">
+                                        <label for="Date" class="form-label">Date : </label>
+                                        <input id="Date" type="date" name="Date" class="form-control" autocomplete="off" required />
+                                    </div>
+                                </div>
+                                <div class="col-md-4">
+                                    <div class="mb-3">
+                                        <label for="Time" class="form-label">Time : </label>
+                                        <input id="Time" type="time" name="Time" class="form-control" autocomplete="off" required />
+                                    </div>
+                                </div>
+                                <div class="col-md-4">
+                                    <div class="mb-3">
+                                        <label for="Deposit" class="form-label">Deposit : </label>
+                                        <input id="Deposit" type="text" name="Deposit" class="form-control" autocomplete="off" required />
+                                    </div>
+                                </div>
+                            </div>
+
+                        </div>
+
                     </div>
 
                     <div class="row">
-                        <div class="col-md-6">
-                            <div class="mb-3">
-                                <label for="Capacity" class="form-label">Capacity : </label>
-                                <input id="Capacity" type="text" name="Capacity" class="form-control" autocomplete="off" readonly />
-                            </div>
-                        </div>
-                        <div class="col-md-6">
-                            <div class="mb-3">
-                                <label for="Amount" class="form-label">Amount : </label>
-                                <input id="Amount" type="text" name="Amount" class="form-control" autocomplete="off" readonly />
-                            </div>
-                        </div>
-                    </div>
 
-                    <div class="row">
-                        <div class="col-md-6">
-                            <div class="mb-3">
-                                <label for="Contact" class="form-label">Contact : </label>
-                                <input id="Contact" type="text" name="Contact" class="form-control" autocomplete="off" readonly />
-                            </div>
-                        </div>
-                        <div class="col-md-6">
-                            <div class="mb-3">
-                                <label for="Address" class="form-label">Address : </label>
-                                <input id="Address" type="text" name="Address" class="form-control" autocomplete="off" readonly />
-                            </div>
-                        </div>
-                    </div>
-
-                    <div class="row">
-                        <div class="col-md-6">
+                        <div class="col-md-12">
                             <div class="mb-3">
                                 <label for="Description" class="form-label">Description : </label>
                                 <input id="Description" type="text" name="Description" class="form-control" autocomplete="off" readonly />
                             </div>
                         </div>
-                        <div class="col-md-6">
-                            <div class="mb-3">
-                                <label for="Deposit" class="form-label">Deposit : </label>
-                                <input id="Deposit" type="text" name="Deposit" class="form-control" autocomplete="off" required />
-                            </div>
-                        </div>
+
                     </div>
 
-                    <div class="row">
-                        <div class="col-md-6">
-                            <div class="mb-3">
-                                <label for="Date" class="form-label">Date : </label>
-                                <input id="Date" type="date" name="Date" class="form-control" autocomplete="off" required />
-                            </div>
-                        </div>
-                        <div class="col-md-6">
-                            <div class="mb-3">
-                                <label for="Time" class="form-label">Time : </label>
-                                <input id="Time" type="time" name="Time" class="form-control" autocomplete="off" required />
-                            </div>
-                        </div>
-                    </div>
+                </div>
 
-                    <div class="row">
-                        <div class="col-md-6">
-                            <div class="mb-3">
-                                <label for="ImageFile" class="form-label">Venue : </label>
-                                <input id="ImageFile" type="text" name="ImageFile" class="form-control" onchange="previewImage(this)" autocomplete="off" hidden />
-                                <div class="mb-3" style="display: flex; flex-direction: column;">
-                                    <img id="imagePreviewView" src="#" alt="Image Preview" style="max-width: 30%; max-height: 150px; margin-top: 10px; display: none;">
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </form>
+            </form>
 
-            </div>
 
             <div class="modal-footer">
                 <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
@@ -142,19 +169,19 @@
                 var cardContainer = $('#cardContainer');
                 data.forEach(function (item) {
                     var card = `
-                                        <div class="col-md-4 mb-4">
-                                            <div class="card h-100 p-3">
-                                                <img src="/addeventimages/${item.AddEventModel.ImagePath}" class="card-img-top" alt="Image">
-                                                <div class="card-body">
-                                                    <h5 class="card-title">${item.AddEventModel.Category}</h5>
-                                                    <p class="card-text">Location: ${item.AddEventModel.Location}</p>
-                                                    <p class="card-text">Capacity: ${item.AddEventModel.Capacity}</p>
-                                                    <p class="card-text">Amount: ${item.AddEventModel.Amount}</p>
-                                                    <button class="btn btn-info" onclick="populateBookData(${item.AddEventModel.Id})" data-bs-toggle="modal" data-bs-target="#bookEvent">Book Now</button>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    `;
+                                                    <div class="col-md-4 mb-4">
+                                                        <div class="card h-100 p-3">
+                                                            <img src="/addeventimages/${item.AddEventModel.ImagePath}" class="card-img-top" alt="Image">
+                                                            <div class="card-body">
+                                                                <h5 class="card-title">${item.AddEventModel.Category}</h5>
+                                                                <p class="card-text">Location: ${item.AddEventModel.Location}</p>
+                                                                <p class="card-text">Capacity: ${item.AddEventModel.Capacity}</p>
+                                                                <p class="card-text">Amount: ${item.AddEventModel.Amount}</p>
+                                                                <button class="btn btn-info" onclick="populateBookData(${item.AddEventModel.Id})" data-bs-toggle="modal" data-bs-target="#bookEvent">Book Now</button>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                `;
                     cardContainer.append(card);
                 });
             },
@@ -256,20 +283,24 @@
 
                 $('#bookEvent').modal('hide');
 
-                // Swal.fire({
-                //     title: "Good job!",
-                //     text: "Event saved successfully!",
-                //     icon: "success",
-                //     button: "Ok",
-                // });
+                Swal.fire({
+                    title: "Do you want to save the changes?",
+                    showDenyButton: true,
+                    showCancelButton: true,
+                    confirmButtonText: "Save",
+                    denyButtonText: `Don't save`
+                }).then((result) => {
+                    /* Read more about isConfirmed, isDenied below */
+                    if (result.isConfirmed) {
+                        Swal.fire("Saved!", "", "success");
+                    }
 
-                alert("Event Booked Successfully!");
+                    //Remove all cards from the container
+                    $('#cardContainer').empty();
+                    bookEventList();
 
-                // datatable.destroy();
-                // Remove all cards from the container
-                $('#cardContainer').empty();
-                bookEventList();
-                window.location.href = '/Customer/Customer';
+                    window.location.href = '/Customer/Customer';
+                });
 
             },
             error: function (errormessage) {

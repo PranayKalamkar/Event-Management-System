@@ -111,5 +111,13 @@ namespace Event_Management_App.DataManager.DAL
             return bookeventmodel;
         }
 
+        public GetAllBookedDetails UpdateEventData(GetAllBookedDetails bookevent, int Id)
+        {
+
+            GetAllBookedDetails bookeventmodel = null;
+
+            return bookeventmodel;
+        }
+
     }
 }
