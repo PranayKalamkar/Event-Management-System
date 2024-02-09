@@ -7,12 +7,6 @@ namespace Event_Management_App.Models
     public class BookedEventsModel
     {
 
-        //public BookedEventsModel()
-        //{
-        //    SignUpModel sign = new SignUpModel();
-        //    AddEventModel add = new AddEventModel();
-        //}
-
         public int Id { get; set; }
 
         [Required]
@@ -34,16 +28,15 @@ namespace Event_Management_App.Models
         public string? Time { get; set; }
 
         [Required]
-        [StringLength(50)]
-        [RegularExpression(@"^[a-zA-Z]+$", ErrorMessage = "Status must contain only letters.")]
-        public string? Status { get; set; }
-
-        [Required]
         [ForeignKey("addevent")]
         public int Addevent_id { get; set; }
 
         [Required]
         [ForeignKey("signup")]
         public int Signup_id { get; set; }
+
+        [Required]
+        [ForeignKey("eventstatus")]
+        public int Status_Id { get; set; }
     }
 }

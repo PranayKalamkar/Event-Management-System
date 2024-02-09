@@ -109,8 +109,8 @@ namespace Event_Management_App.DataManager.DAL
             _dBManager.AddCMDParam("@p_Balance", oData.BookedEventsModel.Balance);
             _dBManager.AddCMDParam("@p_Date", oData.BookedEventsModel.Date);
             _dBManager.AddCMDParam("@p_Time", oData.BookedEventsModel.Time);
-            _dBManager.AddCMDParam("@p_Status", oData.BookedEventsModel.Status);
             _dBManager.AddCMDParam("@p_addevent_id", ID);
+            _dBManager.AddCMDParam("@p_Status_id", oData.BookedEventsModel.Status_Id);
 
             _dBManager.ExecuteNonQuery();
 

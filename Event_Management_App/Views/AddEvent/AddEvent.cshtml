@@ -1,4 +1,4 @@
-﻿@model IEnumerable<Event_Management_App.Models.AddEventModel>
+﻿@model IEnumerable<Event_Management_App.Models.GetAllBookedDetails>
 
 @{
     ViewData["title"] = "Event Categories";
@@ -71,28 +71,19 @@
                         </div>
                         <div class="col-md-6">
                             <div class="mb-3">
-                                <label for="Status" class="form-label">Status : </label>
-                                <input id="Status" type="text" onblur="validateField('Status')" name="Status" class="form-control" autocomplete="off" maxlength="30" required />
+                                <label for="Address" class="form-label">Address : </label>
+                                <input id="Address" type="text" onblur="validateField('Address')" name="Address" class="form-control" autocomplete="off" maxlength="30" required />
                             </div>
                         </div>
                     </div>
 
                     <div class="row">
-                        <div class="col-md-6">
-                            <div class="mb-3">
-                                <label for="Address" class="form-label">Address : </label>
-                                <input id="Address" type="text" onblur="validateField('Address')" name="Address" class="form-control" autocomplete="off" maxlength="30" required />
-                            </div>
-                        </div>
                         <div class="col-md-6">
                             <div class="mb-3">
                                 <label for="Contact" class="form-label">Contact : </label>
                                 <input id="Contact" type="text" onblur="validateField('Contact')" name="Contact" class="form-control" autocomplete="off" maxlength="10" required />
                             </div>
                         </div>
-                    </div>
-
-                    <div class="row">
                         <div class="col-md-6">
                             <div class="mb-3">
                                 <label for="ImageFile" class="form-label">Image : </label>
@@ -352,15 +343,15 @@
                     var card = `
                                                                                                  <div class="col-md-4 mb-4">
                                                                                                        <div class="card h-100 mb-4">
-                                                                                                             <img src="/addeventimages/${item.ImagePath}" class="card-img-top" alt="Image">
+                                                                                                             <img src="/addeventimages/${item.AddEventModel.ImagePath}" class="card-img-top" alt="Image">
                                                                                                                    <div class="card-body">
-                                                                                                                      <h5 class="card-title">${item.Category}</h5>
-                                                                                                                      <p class="card-text">Location: ${item.Location}</p>
-                                                                                                                      <p class="card-text">Amount: ${item.Amount}</p>
-                                                                                                                       <p class="card-text">Descirption: ${item.Description}</p>
-                                                                                                                                 <a class="btn btn-info" onclick="viewEventData(${item.Id})" data-bs-toggle="modal" data-bs-target="#viewAddEventModal">View</a>
-                                                                                                                                 <a class="btn btn-warning" onclick="populateEventData(${item.Id})" data-bs-toggle="modal" data-bs-target="#updateEvent">Edit</a>
-                                                                                                                                 <a class="btn btn-danger" onclick="deleteEventData(${item.Id})">Delete</a>
+                                                                                                                      <h5 class="card-title">${item.AddEventModel.Category}</h5>
+                                                                                                                      <p class="card-text">Location: ${item.AddEventModel.Location}</p>
+                                                                                                                      <p class="card-text">Amount: ${item.AddEventModel.Amount}</p>
+                                                                                                                      <p class="card-text">Status: ${item.EventStatusModel.Status}</p>
+                                                                                                                                 <a class="btn btn-info" onclick="viewEventData(${item.AddEventModel.Id})" data-bs-toggle="modal" data-bs-target="#viewAddEventModal">View</a>
+                                                                                                                                 <a class="btn btn-warning" onclick="populateEventData(${item.AddEventModel.Id})" data-bs-toggle="modal" data-bs-target="#updateEvent">Edit</a>
+                                                                                                                                 <a class="btn btn-danger" onclick="deleteEventData(${item.AddEventModel.Id})">Delete</a>
                                                                                                                     </div>
                                                                                                        </div>
                                                                                                   </div>
@@ -387,7 +378,6 @@
             Capacity: $('#Capacity').val(),
             Amount: $('#Amount').val(),
             Description: $('#Description').val(),
-            Status: $('#Status').val(),
             Address: $('#Address').val(),
             Contact: $('#Contact').val(),
         }
@@ -462,17 +452,17 @@
                 // debugger;
 
                 // Populate the form with the received employee details
-                $('#u_Id').val(addevent.Id);
-                $('#u_Category').val(addevent.Category);
-                $('#u_Location').val(addevent.Location);
-                $('#u_Capacity').val(addevent.Capacity);
-                $('#u_Amount').val(addevent.Amount);
-                $('#u_Description').val(addevent.Description);
-                $('#u_Status').val(addevent.Status);
-                $('#u_Address').val(addevent.Address);
-                $('#u_Contact').val(addevent.Contact);
+                $('#u_Id').val(addevent.AddEventModel.Id);
+                $('#u_Category').val(addevent.AddEventModel.Category);
+                $('#u_Location').val(addevent.AddEventModel.Location);
+                $('#u_Capacity').val(addevent.AddEventModel.Capacity);
+                $('#u_Amount').val(addevent.AddEventModel.Amount);
+                $('#u_Description').val(addevent.AddEventModel.Description);
+                $('#u_Address').val(addevent.AddEventModel.Address);
+                $('#u_Contact').val(addevent.AddEventModel.Contact);
+                $('#u_Status').val(addevent.EventStatusModel.Status);
 
-                var imagePreview = "/addeventimages/" + addevent.ImagePath;
+                var imagePreview = "/addeventimages/" + addevent.AddEventModel.ImagePath;
                 $('#imagePreviewUpdate').attr('src', imagePreview).show();
             },
             error: function (errormessage) {
@@ -496,9 +486,9 @@
             Capacity: $('#u_Capacity').val(),
             Amount: $('#u_Amount').val(),
             Description: $('#u_Description').val(),
-            Status: $('#u_Status').val(),
             Address: $('#u_Address').val(),
             Contact: $('#u_Contact').val(),
+            Status: $('#u_Status').val(),
         };
 
         debugger;
@@ -553,17 +543,17 @@
                 debugger;
 
                 // Populate the form with the received employee details
-                $('#v_Id').val(addevent.Id);
-                $('#v_Category').val(addevent.Category);
-                $('#v_Location').val(addevent.Location);
-                $('#v_Capacity').val(addevent.Capacity);
-                $('#v_Amount').val(addevent.Amount);
-                $('#v_Description').val(addevent.Description);
-                $('#v_Status').val(addevent.Status);
-                $('#v_Address').val(addevent.Address);
-                $('#v_Contact').val(addevent.Contact);
+                $('#v_Id').val(addevent.AddEventModel.Id);
+                $('#v_Category').val(addevent.AddEventModel.Category);
+                $('#v_Location').val(addevent.AddEventModel.Location);
+                $('#v_Capacity').val(addevent.AddEventModel.Capacity);
+                $('#v_Amount').val(addevent.AddEventModel.Amount);
+                $('#v_Description').val(addevent.AddEventModel.Description);
+                $('#v_Address').val(addevent.AddEventModel.Address);
+                $('#v_Contact').val(addevent.AddEventModel.Contact);
+                $('#v_Status').val(addevent.EventStatusModel.Status);
 
-                var imagePreview = "/addeventimages/" + addevent.ImagePath;
+                var imagePreview = "/addeventimages/" + addevent.AddEventModel.ImagePath;
                 $('#imagePreviewView').attr('src', imagePreview).show();
             },
             error: function (errormessage) {

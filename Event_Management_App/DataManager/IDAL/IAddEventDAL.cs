@@ -4,13 +4,13 @@ namespace Event_Management_App.DataManager.IDAL
 {
     public interface IAddEventDAL
     {
-        public List<AddEventModel> AddEventList();
+        public List<GetAllBookedDetails> AddEventList();
 
         public AddEventModel AddEvent(AddEventModel addeventmodel);
 
-        public AddEventModel PopulateEventData(int ID);
+        public GetAllBookedDetails PopulateEventData(int ID);
 
-        public AddEventModel UpdateEventData(AddEventModel addeventmodel, int ID);
+        public GetAllBookedDetails UpdateEventData(GetAllBookedDetails addeventmodel, int ID);
 
         public string GetDBImagebyID(int ID);
 

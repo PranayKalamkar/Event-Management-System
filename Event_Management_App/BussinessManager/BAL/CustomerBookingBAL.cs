@@ -36,7 +36,7 @@ namespace Event_Management_App.BussinessManager.BAL
 
             oData.BookedEventsModel.Balance = balance.ToString();
 
-            oData.BookedEventsModel.Status = "Pending";
+            oData.BookedEventsModel.Status_Id = 3;
 
             return _ICustomerBookingDAL.AddbookEventData(oData);
         }

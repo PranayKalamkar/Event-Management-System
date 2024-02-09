@@ -7,5 +7,7 @@
         public AddEventModel? AddEventModel { get; set; }
 
         public BookedEventsModel? BookedEventsModel { get; set; }
+
+        public EventStatusModel? EventStatusModel { get; set; }
     }
 }

@@ -9,11 +9,6 @@
 
     <h2>@ViewData["title"]</h2>
 
-    @*     <p>
-    <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#addEvent">
-    AddEvent
-    </button>
-    </p> *@
 </div>
 
 
@@ -100,7 +95,6 @@
                                     </div>
                                 </div>
                             </div>
-
                         </div>
                     </div>
 
@@ -144,15 +138,12 @@
                                 </div>
                                 <div class="col-md-4">
                                     <div class="mb-3">
-                                        <select id="v_Status" type="text" name="Status" class="form-control">
-                                            <option value="Pending">Pending</option>
-                                            <option value="Booked">Booked</option>
-                                            <option value="Available">Available</option>
-                                        </select>
+                                        <label for="Status" class="form-label">Status : </label>
+                                        @* <input id="v_Status" type="text" name="Status" class="form-control" /> *@
+                                        <select id="v_Status" type="text" name="Status" class="form-control"></select>
                                     </div>
                                 </div>
                             </div>
-
                         </div>
                     </div>
 
@@ -161,12 +152,9 @@
                         <button type="button" onclick="changeStatus()" class="btn btn-success">Save changes</button>
                     </div>
 
-
                 </div>
 
-
             </form>
-
 
         </div>
     </div>
@@ -184,6 +172,7 @@
 
     $(document).ready(function () {
         getAddEventList();
+        GetStatus();
     });
 
     function getAddEventList() {
@@ -194,22 +183,20 @@
                 var cardContainer = $('#cardContainer');
                 data.forEach(function (item) {
                     var card = `
-                                                                        <div class="col-md-4 mb-4">
-                                                                            <div class="card h-100 p-3">
-                                                                                <img src="/addeventimages/${item.AddEventModel.ImagePath}" class="card-img-top" alt="Image">
-                                                                                <div class="card-body">
-                                                                                    <h5 class="card-title">${item.AddEventModel.Category}</h5>
-                                                                                    <p class="card-text">Location: ${item.AddEventModel.Location}</p>
-                                                                                    <p class="card-text">Deposit: ${item.BookedEventsModel.Deposit}</p>
-                                                                                    <p class="card-text">Balance: ${item.BookedEventsModel.Balance}</p>
-                                                                                    <p class="card-text">Date: ${item.BookedEventsModel.Date}</p>
-                                                                                    <p class="card-text">Time: ${item.BookedEventsModel.Time}</p>
-                                                                                    <p class="card-text">Status: ${item.BookedEventsModel.Status}</p>
-                                                                                    <a class="btn btn-info" onclick="populateEventData(${item.BookedEventsModel.Id})" data-bs-toggle="modal" data-bs-target="#viewbookEventModal">View</a>
-                                                                                </div>
-                                                                            </div>
-                                                                        </div>
-                                                                    `;
+                                                                                    <div class="col-md-4 mb-4">
+                                                                                        <div class="card h-100 p-3">
+                                                                                            <img src="/addeventimages/${item.AddEventModel.ImagePath}" class="card-img-top" alt="Image">
+                                                                                            <div class="card-body">
+                                                                                                <h5 class="card-title">${item.AddEventModel.Category}</h5>
+                                                                                                <p class="card-text">Location: ${item.AddEventModel.Location}</p>
+                                                                                                <p class="card-text">Deposit: ${item.BookedEventsModel.Deposit}</p>
+                                                                                                <p class="card-text">Balance: ${item.BookedEventsModel.Balance}</p>
+                                                                                                <p class="card-text">Status: ${item.EventStatusModel.Status}</p>
+                                                                                                <a class="btn btn-info" onclick="populateEventData(${item.BookedEventsModel.Id})" data-bs-toggle="modal" data-bs-target="#viewbookEventModal">View</a>
+                                                                                            </div>
+                                                                                        </div>
+                                                                                    </div>
+                                                                                `;
                     cardContainer.append(card);
                 });
             },
@@ -262,7 +249,7 @@
                 $('#v_Balance').val(bookevent.BookedEventsModel.Balance);
                 $('#v_Date').val(bookevent.BookedEventsModel.Date);
                 $('#v_Time').val(bookevent.BookedEventsModel.Time);
-                $('#v_Status').val(bookevent.BookedEventsModel.Status);
+                $('#v_Status').val(bookevent.BookedEventsModel.Status_Id);
 
                 var imagePreview = '/addeventimages/' + bookevent.AddEventModel.ImagePath;
                 $('#imagePreviewView').attr('src', imagePreview).show();
@@ -273,27 +260,44 @@
         });
     }
 
-    function changeStatus(sId) {
+
+    function GetStatus() {
+        $.ajax({
+            url: '/BookedEvents/GetStatus',
+            type: 'GET',
+            dataType: 'json', // assuming your server returns JSON
+            success: function (data) {
+
+                var dropdown = $('#v_Status');
+
+                dropdown.empty();
+
+                if (data) {
+
+                    $.each(data, function (i, status) {
+                        if (status && status.EventStatusModel.Status && status.EventStatusModel.Id) {
+                            dropdown.append($('<option></option>').text(status.EventStatusModel.Status).val(status.EventStatusModel.Id));
+                        }
+                    });
+
+                }
+            },
+            error: function (jqXHR, textStatus, errorThrown) {
+                console.log(textStatus, errorThrown);
+            }
+        });
+    }
+
+    function changeStatus() {
 
         debugger;
 
-        var bookID = {
+        var statusID = {
             id: $('#v_Id').val(),
+            Status_Id: $('v_Status'),
         }
 
-        debugger;
-
-        var bookEventData = {
-            Status: $('#v_Status').val(),
-        };
-
-        debugger;
-
-        var formData = new FormData();
-        formData.append("ID", bookID.id);
-        formData.append("model", JSON.stringify(bookEventData));
-
-        debugger;
+        console.log(statusID);
 
         $.ajax({
             type: "POST",

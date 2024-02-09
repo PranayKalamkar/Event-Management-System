@@ -14,13 +14,15 @@ namespace Event_Management_App.BussinessManager.BAL
             _IAddEventDAL = new AddEventDAL(dBManager);
         }
 
-        List<AddEventModel> IAddEventBAL.AddEventList()
+        public List<GetAllBookedDetails> AddEventList()
         {
             return _IAddEventDAL.AddEventList();
         }
 
         public AddEventModel AddEvent(AddEventModel addeventmodel, IFormFile ImageFile)
         {
+            addeventmodel.Status_Id = 1;
+
             addeventmodel.ImageFile = ImageFile;
 
             addeventmodel.ImagePath = UploadImage(addeventmodel.ImageFile);
@@ -28,25 +30,25 @@ namespace Event_Management_App.BussinessManager.BAL
             return _IAddEventDAL.AddEvent(addeventmodel);
         }
 
-        public AddEventModel PopulateEventData(int ID)
+        public GetAllBookedDetails PopulateEventData(int ID)
         {
             return _IAddEventDAL.PopulateEventData(ID);
         }
 
-        public AddEventModel UpdateEventData(AddEventModel addeventmodel, int ID, IFormFile file)
+        public GetAllBookedDetails UpdateEventData(GetAllBookedDetails addeventmodel, int ID, IFormFile file)
         {
 
-            addeventmodel.ImageFile = file;
+            addeventmodel.AddEventModel.ImageFile = file;
 
             string existingImage = _IAddEventDAL.GetDBImagebyID(ID);
 
-            if(addeventmodel.ImageFile != null)
+            if(addeventmodel.AddEventModel.ImageFile != null)
             {
-                addeventmodel.ImagePath = UploadImage(addeventmodel.ImageFile);
+                addeventmodel.AddEventModel.ImagePath = UploadImage(addeventmodel.AddEventModel.ImageFile);
             }
             else
             {
-                addeventmodel.ImagePath = existingImage;
+                addeventmodel.AddEventModel.ImagePath = existingImage;
             }
 
             return _IAddEventDAL.UpdateEventData(addeventmodel, ID);

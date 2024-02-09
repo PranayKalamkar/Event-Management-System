@@ -8,14 +8,11 @@ namespace Event_Management_App.Controllers
 {
     public class AddEventController : Controller
     {
-        IConfiguration _configuration;
-        string connectionString;
+
         IAddEventBAL _IAddEventBAL;
 
-        public AddEventController(IConfiguration configuration, IAddEventBAL addeventBAL)
+        public AddEventController(IAddEventBAL addeventBAL)
         {
-            _configuration = configuration;
-            connectionString = configuration.GetConnectionString("DefaultConnection");
             _IAddEventBAL = addeventBAL;
         }
 
@@ -53,7 +50,7 @@ namespace Event_Management_App.Controllers
 
         public IActionResult Update(int ID,string model, IFormFile file)
         {
-            AddEventModel addeventmodel = JsonSerializer.Deserialize<AddEventModel>(model)!;
+            GetAllBookedDetails addeventmodel = JsonSerializer.Deserialize<GetAllBookedDetails>(model)!;
 
             _IAddEventBAL.UpdateEventData(addeventmodel, ID, file);
 

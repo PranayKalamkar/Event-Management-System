@@ -3,6 +3,7 @@ using Event_Management_App.BussinessManager.IBAL;
 using Event_Management_App.DataManager.IDAL;
 using Event_Management_App.Models;
 using Microsoft.AspNetCore.Mvc;
+using System.Collections.Generic;
 using System.Text.Json;
 
 namespace Event_Management_App.Controllers
@@ -38,6 +39,13 @@ namespace Event_Management_App.Controllers
             _IBookedEventsBAL.UpdateEventData(bookevent, Id);
 
             return Json("BookedEventsList");
+        }
+
+        public IActionResult GetStatus()
+        {
+            List<GetAllBookedDetails> status = _IBookedEventsBAL.GetStatus();
+
+            return Json(status);
         }
     }
 }

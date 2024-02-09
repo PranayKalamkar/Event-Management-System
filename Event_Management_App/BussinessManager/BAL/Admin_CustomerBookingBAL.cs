@@ -45,7 +45,7 @@ namespace Event_Management_App.BussinessManager.BAL
 
             oData.SignUpModel.Role = 2;
 
-            oData.BookedEventsModel.Status = "Pending";
+            oData.BookedEventsModel.Status_Id = 3;
 
             _IAdmin_CustomerBookingDAL.AddbookEventData(oData, ID);
 

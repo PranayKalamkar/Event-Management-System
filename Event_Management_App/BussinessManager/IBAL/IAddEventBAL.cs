@@ -4,13 +4,13 @@ namespace Event_Management_App.BussinessManager.IBAL
 {
     public interface IAddEventBAL
     {
-        public List<AddEventModel> AddEventList();
+        public List<GetAllBookedDetails> AddEventList();
 
         public AddEventModel AddEvent(AddEventModel addeventmodel, IFormFile ImageFile);
 
-        public AddEventModel PopulateEventData(int ID);
+        public GetAllBookedDetails PopulateEventData(int ID);
 
-        public AddEventModel UpdateEventData(AddEventModel addeventmodel, int ID, IFormFile file);
+        public GetAllBookedDetails UpdateEventData(GetAllBookedDetails addeventmodel, int ID, IFormFile file);
 
         public void DeleteEventData(int ID);
 
