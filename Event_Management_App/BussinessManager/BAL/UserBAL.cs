@@ -6,13 +6,13 @@ using Event_Management_App.Models;
 
 namespace Event_Management_App.BussinessManager.BAL
 {
-    public class EventBAL : IEventBAL
+    public class UserBAL : IUserBAL
     {
-        IEventDAL _IEventDAL;
+        IUserDAL _IEventDAL;
 
-        public EventBAL(IDBManager dBManager)
+        public UserBAL(IDBManager dBManager)
         {
-            _IEventDAL = new EventDAL(dBManager);
+            _IEventDAL = new UserDAL(dBManager);
         }
 
         public List<SignUpModel> GetUserList()
@@ -36,23 +36,7 @@ namespace Event_Management_App.BussinessManager.BAL
 
         }
 
-        public LoginModel LoginUser(string email, string pass, int Id)
-        {
-            LoginModel login = new LoginModel();
-
-            login.EmailExist = _IEventDAL.CheckEmailExist(email,Id);
-
-            login.GetPassword = _IEventDAL.GetPassword(pass);
-
-            login.ExistingPassword = _IEventDAL.LoginUser(email);
-
-            login.GetRole = _IEventDAL.GetRole(email);
-
-            login.GetId = _IEventDAL.GetId(email);
-
-            return login;
-
-        }
+       
     }
 }
 

@@ -10,16 +10,16 @@ namespace Event_Management_App.Controllers
 {
     public class UserController : Controller
     {
-        readonly IEventBAL _IEventBAL;
+        readonly IUserBAL _IUserBAL;
 
-        public UserController(IEventBAL eventBAL)
+        public UserController(IUserBAL userBAL)
         {
-            _IEventBAL = eventBAL;
+            _IUserBAL = userBAL;
         }
 
         public IActionResult GetUser()
         {
-            return Json(_IEventBAL.GetUserList());
+            return Json(_IUserBAL.GetUserList());
         }
 
         public IActionResult Dashboard()
@@ -39,7 +39,7 @@ namespace Event_Management_App.Controllers
 
            if(ModelState.IsValid)
             {
-                var result = _IEventBAL.SignUp(sign);
+                var result = _IUserBAL.SignUp(sign);
 
                 if(result == "Exist")
                 {
@@ -49,38 +49,6 @@ namespace Event_Management_App.Controllers
             return Json(new { status = "success", message = "User register successfully!" });
         }
 
-        public IActionResult Login()
-        {
-            return View();
-        }
-
-        [HttpPost]
-        public IActionResult LoginPost(string Email, string SPassword, int Id )
-        {
-            LoginModel login = new LoginModel();
-
-            if (ModelState.IsValid)
-            {
-                login = _IEventBAL.LoginUser(Email, SPassword, Id);
-             
-                if (!login.EmailExist)
-                {
-                    return Json(new { status = "warning", message = "Email does Not Exist!" });
-                }
-                else if(login.GetPassword != login.ExistingPassword)
-                {
-                    return Json(new { status = "warning", message = "Invalid Password!" });
-                }
-            }
-
-            HttpContext.Session.SetInt32("Id", login.GetId);
-
-            HttpContext.Session.SetString("Email", Email);
-
-            HttpContext.Session.SetString("Password", SPassword);
-
-            return Json(new { role = login.GetRole, status = "success", message = "Login successfully!" });
-        }
     }
 }
 

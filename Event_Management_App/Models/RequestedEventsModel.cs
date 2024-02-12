@@ -4,7 +4,7 @@ using System.ComponentModel.DataAnnotations.Schema;
 namespace Event_Management_App.Models
 {
     [Table("bookevent")]
-    public class BookedEventsModel
+    public class RequestedEventsModel
     {
 
         public int Id { get; set; }

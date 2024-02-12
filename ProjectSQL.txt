@@ -1,0 +1,457 @@
+Tables
+
+Table: addevent
+Columns:
+Id int AI PK 
+Category varchar(50) 
+Location varchar(50) 
+Capacity varchar(50) 
+Amount varchar(50) 
+Description varchar(100) 
+Address varchar(300) 
+Contact varchar(10) 
+ImagePath varchar(600) 
+status_id int
+
+Table: bookevent
+Columns:
+Id int AI PK 
+Deposit varchar(30) 
+Balance varchar(30) 
+Date date 
+Time time 
+addevent_id int 
+signup_id int 
+status_id int
+
+Table: eventstatus
+Columns:
+status_id int AI PK 
+status_name varchar(45)
+
+Table: roles
+Columns:
+RoleId int PK 
+AccessRole varchar(50)
+
+Table: signup
+Columns:
+Id int AI PK 
+Username varchar(100) 
+Email varchar(100) 
+SPassword varchar(255) 
+RoleId int
+
+Stored Procedure
+
+CREATE DEFINER=`root`@`localhost` PROCEDURE `AddEventInsert`(
+    IN a_Category varchar(50),
+    IN a_Location varchar(50),
+    IN a_Capacity varchar(10),
+    IN a_Amount varchar(50),
+    IN a_Description varchar(200),    	
+	IN a_Address varchar(100),	
+	IN a_Contact varchar(10),
+    IN a_ImagePath varchar(600),
+	IN a_Status_Id INT
+)
+BEGIN
+	INSERT INTO addevent(Category, Location, Capacity, Amount, Description, Address, Contact, ImagePath, status_id)
+    VALUES(a_Category,a_Location,a_Capacity, a_Amount, a_Description, a_Status, a_Address, a_Contact, a_ImagePath, a_Status_Id);
+END
+
+
+CREATE DEFINER=`root`@`localhost` PROCEDURE `CheckEmailExist`(IN p_EmailId VARCHAR(60), IN p_Id INT)
+BEGIN
+    DECLARE emailExists BOOLEAN;
+    
+    IF p_Id IS NULL THEN
+        SELECT EXISTS(
+		    SELECT 1 FROM SignUp WHERE Email = p_EmailId
+	    ) INTO emailExists;
+    ELSE
+        SELECT EXISTS(
+		    SELECT 1 FROM SignUp WHERE Email = p_EmailId AND Id != p_Id
+	    ) INTO emailExists;
+    END IF;
+    
+    SELECT emailExists AS IsExists;
+END
+
+CREATE DEFINER=`root`@`localhost` PROCEDURE `DeleteAddEventById`(
+    IN deleteId int
+)
+BEGIN
+    DELETE FROM addevent
+    WHERE Id = deleteId;
+END
+
+CREATE DEFINER=`root`@`localhost` PROCEDURE `Deleteadmin_userById`(
+    IN deleteId int
+)
+BEGIN
+    DELETE FROM signup
+    WHERE Id = deleteId;
+END
+
+
+CREATE DEFINER=`root`@`localhost` PROCEDURE `DeleteadminById`(
+    IN deleteId int
+)
+BEGIN
+    DELETE FROM signup
+    WHERE Id = deleteId;
+END
+
+
+CREATE DEFINER=`root`@`localhost` PROCEDURE `EncryptMD5`(
+	IN existingEmail varchar(255),
+	IN existingPassword varchar(255)
+)
+begin
+	select * from SignUp where Email=existingEmail and SPassword = MD5(existingPassword);
+END
+
+CREATE DEFINER=`root`@`localhost` PROCEDURE `GetAddEventbyId`(in p_id int)
+begin
+	select * from addevent where Id = p_id;
+end
+
+CREATE DEFINER=`root`@`localhost` PROCEDURE `GetAdmin_UserbyId`(in p_id int)
+BEGIN
+	select * from SignUp where Id = p_id;
+END
+
+
+CREATE DEFINER=`root`@`localhost` PROCEDURE `GetAdminbyId`(in p_id int)
+BEGIN
+	select * from SignUp where Id = p_id;
+END
+
+
+CREATE DEFINER=`root`@`localhost` PROCEDURE `GetAllAdmin`()
+begin
+	select * from SignUp where RoleId = 1;
+end
+
+CREATE DEFINER=`root`@`localhost` PROCEDURE `GetAllAdmin_User`()
+begin
+	select * from SignUp where RoleId = 2;
+end
+
+
+CREATE DEFINER=`root`@`localhost` PROCEDURE `GetAllBookedEvents`()
+BEGIN
+SELECT 
+	bookevent.Id, signup.Username, signup.Email, addevent.Category, addevent.Location, addevent.Capacity,
+    addevent.Amount, addevent.Contact, addevent.ImagePath, bookevent.Deposit, bookevent.Balance, 
+    bookevent.Date, bookevent.Time, eventstatus.status_name
+FROM bookevent
+INNER JOIN addevent 
+	ON bookevent.addevent_id = addevent.Id
+INNER JOIN signup 
+	ON bookevent.signup_id = signup.Id
+INNER JOIN eventstatus
+	ON bookevent.status_id = eventstatus.status_id
+    where bookevent.status_id = 2;
+END
+
+
+CREATE DEFINER=`root`@`localhost` PROCEDURE `GetAllRequestedEvents`()
+BEGIN
+	SELECT 
+	bookevent.Id, signup.Username, signup.Email, addevent.Category, addevent.Location, addevent.Capacity,
+    addevent.Amount, addevent.Contact, addevent.ImagePath, bookevent.Deposit, bookevent.Balance, 
+    bookevent.Date, bookevent.Time, eventstatus.status_name
+FROM bookevent
+INNER JOIN addevent 
+	ON bookevent.addevent_id = addevent.Id
+INNER JOIN signup 
+	ON bookevent.signup_id = signup.Id
+INNER JOIN eventstatus
+	ON bookevent.status_id = eventstatus.status_id
+    where bookevent.status_id = 3;
+END
+
+
+CREATE DEFINER=`root`@`localhost` PROCEDURE `GetAllEvent`()
+BEGIN
+	SELECT addevent.Id, addevent.Category, addevent.Location,
+		addevent.Capacity, addevent.Amount, addevent.Description,
+        addevent.Address, addevent.Contact, addevent.ImagePath,
+        eventstatus.status_name
+        from addevent INNER JOIN  eventstatus
+        ON addevent.status_id = eventstatus.status_id;
+END
+
+
+CREATE DEFINER=`root`@`localhost` PROCEDURE `GetAvailableEvent`()
+BEGIN
+	SELECT addevent.Id, addevent.Category, addevent.Location,
+		addevent.Capacity, addevent.Amount, addevent.Description,
+        addevent.Address, addevent.Contact, addevent.ImagePath,
+        eventstatus.status_name
+        from addevent 
+        INNER JOIN  eventstatus
+        ON addevent.status_id = eventstatus.status_id
+        INNER JOIN bookevent
+        ON addevent.Id = bookevent.addevent_id
+        where bookevent.status_id = 1 ;
+END
+
+
+
+CREATE DEFINER=`root`@`localhost` PROCEDURE `GetAllStatus`()
+BEGIN
+	select * from eventstatus;
+END
+
+
+CREATE DEFINER=`root`@`localhost` PROCEDURE `GetAllUser`()
+begin
+	select * from SignUp;
+end
+
+
+CREATE DEFINER=`root`@`localhost` PROCEDURE `GetbookEventbyId`(in p_id int)
+begin
+	select * from addevent
+	LEFT JOIN bookevent
+	ON bookevent.addevent_Id = addevent.Id
+    where addevent.Id = p_id;
+end
+
+
+CREATE DEFINER=`root`@`localhost` PROCEDURE `GetDBImagebyID`(IN u_ID int)
+BEGIN
+    SELECT ImagePath FROM addevent WHERE Id = u_ID;
+END
+
+
+CREATE DEFINER=`root`@`localhost` PROCEDURE `GetId`(
+	IN IEmail varchar(100)
+)
+BEGIN
+	 SELECT Id from SignUp where Email = IEmail;
+END
+
+
+CREATE DEFINER=`root`@`localhost` PROCEDURE `GetPassword`(
+	IN user_pass varchar(100)
+)
+BEGIN
+	select MD5(user_pass);
+END
+
+
+CREATE DEFINER=`root`@`localhost` PROCEDURE `GetRole`(
+	IN IEmail varchar(100)
+)
+BEGIN
+	 SELECT RoleId from SignUp where Email = IEmail;
+END
+
+
+CREATE DEFINER=`root`@`localhost` PROCEDURE `GetUserPassword`(
+	IN IEmail varchar(100)
+)
+BEGIN
+	 SELECT SPassword from SignUp where Email = IEmail;
+END
+
+
+CREATE DEFINER=`root`@`localhost` PROCEDURE `InsertAdmin`(
+	IN UserName varchar(100),
+	IN Email varchar(100),
+	IN SPassword varchar(100),
+    IN u_RoleId int
+)
+BEGIN
+	INSERT INTO SignUp(Username, Email, SPassword, RoleId)
+	VALUES(UserName,Email,md5(SPassword), u_RoleId); 
+END
+
+
+CREATE DEFINER=`root`@`localhost` PROCEDURE `InsertAdmin_User`(
+	IN UserName varchar(100),
+	IN Email varchar(100),
+	IN SPassword varchar(100),
+    IN u_RoleId int
+)
+BEGIN
+	INSERT INTO SignUp(Username, Email, SPassword, RoleId)
+	VALUES(UserName,Email,md5(SPassword), u_RoleId); 
+END
+
+
+CREATE DEFINER=`root`@`localhost` PROCEDURE `InsertbookEvent`(
+	IN a_Deposit varchar(50),
+    IN a_Balance varchar(50),
+	IN a_Date Date,
+	IN a_Time Time,
+	IN a_addEvent_id INT,
+	IN a_signup_id INT,
+	IN a_Status_id INT
+)
+BEGIN
+	INSERT INTO bookevent(Deposit, Balance, Date, Time, addevent_id, signup_id, status_id)
+	VALUES(a_Deposit,a_Balance,a_Date,a_Time,a_addEvent_id,a_signup_id,a_Status_id); 
+END
+
+
+CREATE DEFINER=`root`@`localhost` PROCEDURE `InsertCustomerBookData`(
+IN p_Username VARCHAR(50),
+IN p_Email VARCHAR(55), 
+IN p_SPassword VARCHAR(45),
+IN p_RoleId INT,
+IN p_Deposit varchar(45),
+IN p_Balance varchar(45),  
+IN p_Date Date, 
+IN p_Time Time, 
+IN p_addevent_id INT,
+IN p_Status_id INT
+)
+BEGIN
+	DECLARE last_id INT;
+	INSERT INTO signup (Username, Email, SPassword,RoleId) VALUES (p_Username, p_Email, md5(p_SPassword),p_RoleId);
+	SET last_id = LAST_INSERT_ID();
+	INSERT INTO bookevent (Deposit, Balance, Date, Time,addevent_id,signup_id,status_id) VALUES (p_Deposit,p_Balance,p_Date,p_Time,p_addevent_id,last_id,p_Status_id);
+END
+
+
+CREATE DEFINER=`root`@`localhost` PROCEDURE `InsertUser`(
+	IN UserName varchar(100),
+	IN Email varchar(100),
+	IN SPassword varchar(100),
+    IN u_RoleId int
+)
+BEGIN
+	INSERT INTO SignUp(Username, Email, SPassword, RoleId)
+	VALUES(UserName,Email,md5(SPassword), u_RoleId); 
+END
+
+
+CREATE DEFINER=`root`@`localhost` PROCEDURE `PopulateAddEventbyId`(in p_id int)
+begin
+	SELECT addevent.Id, addevent.Category, addevent.Location,
+		addevent.Capacity, addevent.Amount, addevent.Description,
+        addevent.Address, addevent.Contact, addevent.ImagePath,
+        eventstatus.status_name
+        from addevent INNER JOIN  eventstatus
+        ON addevent.status_id = eventstatus.status_id 
+        where addevent.Id = p_id;
+end
+
+
+CREATE DEFINER=`root`@`localhost` PROCEDURE `PopulateBookedEvents`(
+IN p_Id int
+)
+BEGIN
+	SELECT 
+	signup.Username, signup.Email, addevent.Category, addevent.Location, addevent.Capacity,
+    addevent.Amount, addevent.Contact, addevent.ImagePath, bookevent.Id, bookevent.Deposit, bookevent.Balance, 
+    bookevent.Date, bookevent.Time, eventstatus.status_name
+FROM bookevent
+INNER JOIN addevent 
+	ON bookevent.addevent_id = addevent.Id
+INNER JOIN signup 
+	ON bookevent.signup_id = signup.Id
+INNER JOIN eventstatus 
+	ON bookevent.status_id = eventstatus.status_id
+where bookevent.Id = p_Id;
+END
+
+
+CREATE DEFINER=`root`@`localhost` PROCEDURE `PopulateRequestedEvents`(
+IN p_Id int
+)
+BEGIN
+SELECT 
+	signup.Username, signup.Email, addevent.Category, addevent.Location, addevent.Capacity,
+    addevent.Amount, addevent.Contact, addevent.ImagePath, bookevent.Id, bookevent.Deposit, bookevent.Balance, 
+    bookevent.Date, bookevent.Time, bookevent.status_id, eventstatus.status_name
+FROM bookevent
+INNER JOIN addevent 
+	ON bookevent.addevent_id = addevent.Id
+INNER JOIN signup 
+	ON bookevent.signup_id = signup.Id
+INNER JOIN eventstatus 
+	ON bookevent.status_id = eventstatus.status_id
+where bookevent.Id = p_Id;
+END
+
+
+CREATE DEFINER=`root`@`localhost` PROCEDURE `UpdateaddEventById`(
+    IN u_Id int,
+    IN u_Category varchar(50),
+    IN u_Location varchar(50),
+    IN u_Capacity varchar(10),
+    IN u_Amount varchar(50),
+    IN u_Description varchar(200),    	
+	IN u_Address varchar(100),	
+	IN u_Contact varchar(10),
+    IN u_ImagePath varchar(600),
+	IN u_Status_id INT
+)
+BEGIN
+    UPDATE addevent
+    SET
+        Category = u_Category,
+        Location = u_Location,
+        Capacity = u_Capacity,
+        Amount = u_Amount,
+        Description = u_Description,
+		Address = u_Address,
+		Contact = u_Contact,
+		ImagePath = u_ImagePath,
+		status_id = u_Status_id
+    WHERE Id = u_Id;
+END
+
+
+
+CREATE DEFINER=`root`@`localhost` PROCEDURE `Updateadmin_userById`(
+    IN u_Id int,
+    IN Username varchar(50),
+    IN Email varchar(50)
+)
+BEGIN
+    UPDATE signup
+    SET
+		Username = Username,
+		Email = Email
+    WHERE Id = u_Id;
+END
+
+
+CREATE DEFINER=`root`@`localhost` PROCEDURE `UpdateadminById`(
+    IN u_Id int,
+    IN Username varchar(50),
+    IN Email varchar(50)
+)
+BEGIN
+    UPDATE signup
+    SET
+		Username = Username,
+		Email = Email
+    WHERE Id = u_Id;
+END
+
+
+CREATE DEFINER=`root`@`localhost` PROCEDURE `UpdateStatusById`(
+IN u_Id_in INT,
+IN u_status_id_in INT
+)
+BEGIN
+	UPDATE bookevent
+    SET status_id = u_status_id_in
+    WHERE id = u_Id_in;
+    
+SELECT u_status_id_in;
+        
+UPDATE addevent 
+SET 
+    status_id = u_status_id_in
+WHERE
+    Id = u_Id_in;
+END

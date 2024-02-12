@@ -7,31 +7,21 @@ namespace Event_Management_App.BussinessManager.BAL
 {
     public class BookedEventsBAL : IBookedEventsBAL
     {
-        IBookedEventsDAL _IBookedEventDAL;
+        IBookedEventsDAL _IBookedEventsDAL;
 
         public BookedEventsBAL(IDBManager dBManager)
         {
-            _IBookedEventDAL = new BookedEventsDAL(dBManager);
+            _IBookedEventsDAL = new BookedEventsDAL(dBManager);
         }
 
-        public List<GetAllBookedDetails> GetBookedEvents()
+        public List<GetAllBookedDetails> GetAllBookedEvents()
         {
-            return _IBookedEventDAL.GetBookedEvents();
+            return _IBookedEventsDAL.AllBookedEvents();
         }
 
         public GetAllBookedDetails PopulateEventData(int ID)
         {
-            return _IBookedEventDAL.PopulateEventData(ID);
-        }
-
-        public GetAllBookedDetails UpdateEventData(GetAllBookedDetails bookevent, int Id)
-        {
-            return _IBookedEventDAL.UpdateEventData(bookevent,Id);
-        }
-
-        public List<GetAllBookedDetails> GetStatus()
-        {
-            return _IBookedEventDAL.GetStatus();
+            return _IBookedEventsDAL.PopulateBookedEventData(ID);
         }
     }
 }

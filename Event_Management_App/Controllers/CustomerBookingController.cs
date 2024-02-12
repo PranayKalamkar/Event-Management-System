@@ -32,7 +32,7 @@ namespace Event_Management_App.Controllers
         {
             int? testid = HttpContext.Session.GetInt32("Id");
 
-            oData.BookedEventsModel.Signup_id = testid.Value;
+            oData.RequestedEventsModel.Signup_id = testid.Value;
 
             //bookmodel.BookedEventsModel.Signup_id = id.ConvertDBNullToInt();
 

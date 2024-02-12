@@ -1,7 +1,7 @@
 ﻿@model IEnumerable<Event_Management_App.Models.GetAllBookedDetails>
 
 @{
-    ViewData["title"] = "Booked Events";
+    ViewData["title"] = "Requested Events";
     Layout = "_AdminLayout";
 }
 
@@ -26,7 +26,7 @@
 
                 <div class="modal-body">
 
-                    <input id="v_Id" name="Id" hidden />
+                    <input id="v_Id" name="Id" hidden/>
 
                     <!-- Image placement -->
                     <div class="row">
@@ -139,8 +139,8 @@
                                 <div class="col-md-4">
                                     <div class="mb-3">
                                         <label for="Status" class="form-label">Status : </label>
-                                        <input id="v_Status" type="text" name="Status" class="form-control" readonly />
-                                        @* <select id="v_Status" type="text" name="Status" class="form-control"></select> *@
+                                        @* <input id="v_Status" type="text" name="Status" class="form-control" /> *@
+                                        <select id="v_Status" type="text" name="Status" class="form-control"></select>
                                     </div>
                                 </div>
                             </div>
@@ -149,7 +149,7 @@
 
                     <div class="modal-footer">
                         <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-                        @* <button type="button" onclick="changeStatus()" class="btn btn-success">Save changes</button> *@
+                        <button type="button" onclick="changeStatus()" class="btn btn-success">Save changes</button>
                     </div>
 
                 </div>
@@ -172,32 +172,32 @@
 
     $(document).ready(function () {
         getAddEventList();
-        // GetStatus();
+        GetStatus();
     });
 
     function getAddEventList() {
         $.ajax({
             type: "Get",
-            url: "/BookedEvents/BookedEventsList",
+            url: "/RequestedEvents/RequestedEventsList",
             success: function (data) {
                 var cardContainer = $('#cardContainer');
                 data.forEach(function (item) {
                     var card = `
-                                                                                                    <div class="col-md-4 mb-4">
-                                                                                                        <div class="card h-100 p-3">
-                                                                                                            <img src="/addeventimages/${item.AddEventModel.ImagePath}" class="card-img-top" alt="Image">
-                                                                                                            <div class="card-body">
-                                                                                                                <h5 class="card-title">${item.AddEventModel.Category}</h5>
+                                                                                                <div class="col-md-4 mb-4">
+                                                                                                    <div class="card h-100 p-3">
+                                                                                                        <img src="/addeventimages/${item.AddEventModel.ImagePath}" class="card-img-top" alt="Image">
+                                                                                                        <div class="card-body">
+                                                                                                            <h5 class="card-title">${item.AddEventModel.Category}</h5>
                                                                                                                 <p class="card-text">Id: ${item.RequestedEventsModel.Id}</p>
-                                                                                                                <p class="card-text">Location: ${item.AddEventModel.Location}</p>
+                                                                                                            <p class="card-text">Location: ${item.AddEventModel.Location}</p>
                                                                                                                 <p class="card-text">Deposit: ${item.RequestedEventsModel.Deposit}</p>
                                                                                                                 <p class="card-text">Balance: ${item.RequestedEventsModel.Balance}</p>
-                                                                                                                <p class="card-text">Status: ${item.EventStatusModel.Status}</p>
+                                                                                                            <p class="card-text">Status: ${item.EventStatusModel.Status}</p>
                                                                                                                 <button class="btn btn-info" onclick="populateEventData(${item.RequestedEventsModel.Id})" data-bs-toggle="modal" data-bs-target="#viewbookEventModal">View</button>
-                                                                                                            </div>
                                                                                                         </div>
                                                                                                     </div>
-                                                                                                `;
+                                                                                                </div>
+                                                                                            `;
                     cardContainer.append(card);
                 });
             },
@@ -232,7 +232,7 @@
         $.ajax({
 
             type: "GET",
-            url: "/BookedEvents/PopulateBookEvent/" + Id,
+            url: "/RequestedEvents/PopulateEvent/" + Id,
 
             success: function (bookevent) {
                 // debugger;
@@ -250,7 +250,7 @@
                 $('#v_Balance').val(bookevent.RequestedEventsModel.Balance);
                 $('#v_Date').val(bookevent.RequestedEventsModel.Date);
                 $('#v_Time').val(bookevent.RequestedEventsModel.Time);
-                $('#v_Status').val(bookevent.EventStatusModel.Status);
+                $('#v_Status').val(bookevent.RequestedEventsModel.Status_Id);
 
                 var imagePreview = '/addeventimages/' + bookevent.AddEventModel.ImagePath;
                 $('#imagePreviewView').attr('src', imagePreview).show();
@@ -261,4 +261,86 @@
         });
     }
 
+
+    function GetStatus() {
+
+        $.ajax({
+            url: '/RequestedEvents/GetStatus',
+            type: 'GET',
+            dataType: 'json', // assuming your server returns JSON
+            success: function (data) {
+
+                var dropdown = $('#v_Status');
+
+                dropdown.empty();
+
+                if (data) {
+
+                    $.each(data, function (i, status) {
+                        if (status && status.EventStatusModel.Status && status.EventStatusModel.Id) {
+                            dropdown.append($('<option></option>').text(status.EventStatusModel.Status).val(status.EventStatusModel.Id));
+                        }
+                    });
+
+                }
+            },
+            error: function (jqXHR, textStatus, errorThrown) {
+                console.log(textStatus, errorThrown);
+            }
+        });
+
+    }
+
+    function changeStatus() {
+
+        // debugger;
+
+        var statusID = {
+            Id: $('#v_Id').val(),
+            Status_Id: $('#v_Status').val(),
+        }
+
+        var formaData = new FormData();
+        formaData.append("Id", statusID.Id);
+        formaData.append("Status_Id", statusID.Status_Id);
+
+        console.log(statusID);
+
+        $.ajax({
+            type: "POST",
+            url: "/RequestedEvents/UpdateEvent",
+            data: formaData,
+            contentType: false,
+            processData: false,
+            cache: false,
+
+            success: function (data) {
+
+                $('#viewbookEventModal').modal('hide');
+
+                Swal.fire({
+                    title: "Status Updated successfully!",
+                    text: "close",
+                    icon: "success"
+                });
+
+                // datatable.destroy();
+                // Remove all cards from the container
+                $('#cardContainer').empty();
+                getAddEventList();
+            },
+            error: function (errormessage) {
+                Swal.fire({
+                    title: "Error updating Status!",
+                    text: "close",
+                    icon: "Error"
+                });
+            }
+        });
+
+    }
+
+
+    // <a href="#" class="btn btn-warning" onclick = "populateEventData(${item.BookedEventsModel.Id})" > Edit < /a>
+    //     < a href = "#" class="btn btn-danger" onclick = "deleteEventData(${item.BookedEventsModel.Id})" > Delete < /a>
 </script>

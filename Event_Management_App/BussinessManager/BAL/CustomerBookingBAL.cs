@@ -30,13 +30,13 @@ namespace Event_Management_App.BussinessManager.BAL
         {
             string amount = oData.AddEventModel.Amount;
 
-            string deposit = oData.BookedEventsModel.Deposit;
+            string deposit = oData.RequestedEventsModel.Deposit;
 
             double balance = double.Parse(amount) - double.Parse(deposit);
 
-            oData.BookedEventsModel.Balance = balance.ToString();
+            oData.RequestedEventsModel.Balance = balance.ToString();
 
-            oData.BookedEventsModel.Status_Id = 3;
+            oData.RequestedEventsModel.Status_Id = 3;
 
             return _ICustomerBookingDAL.AddbookEventData(oData);
         }

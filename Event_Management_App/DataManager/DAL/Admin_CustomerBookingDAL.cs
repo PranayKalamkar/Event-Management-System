@@ -18,7 +18,7 @@ namespace Event_Management_App.DataManager.DAL
         {
             List<GetAllBookedDetails> bookedList = new List<GetAllBookedDetails>();
 
-            _dBManager.InitDbCommand("GetAllEvent", CommandType.StoredProcedure);
+            _dBManager.InitDbCommand("GetAvailableEvent", CommandType.StoredProcedure);
 
             DataSet ds = _dBManager.ExecuteDataSet();
             foreach (DataRow item in ds.Tables[0].Rows)
@@ -28,7 +28,7 @@ namespace Event_Management_App.DataManager.DAL
 
                 bookedEvents.SignUpModel = new SignUpModel();
                 bookedEvents.AddEventModel = new AddEventModel();
-                bookedEvents.BookedEventsModel = new BookedEventsModel();
+                bookedEvents.RequestedEventsModel = new RequestedEventsModel();
 
                 try
                 {
@@ -64,9 +64,9 @@ namespace Event_Management_App.DataManager.DAL
             foreach (DataRow item in ds.Tables[0].Rows)
             {
                 bookmodel.AddEventModel = new AddEventModel();
-                bookmodel.BookedEventsModel = new BookedEventsModel();
+                bookmodel.RequestedEventsModel = new RequestedEventsModel();
 
-                bookmodel.BookedEventsModel.Id = item["Id"].ConvertDBNullToInt();
+                bookmodel.RequestedEventsModel.Id = item["Id"].ConvertDBNullToInt();
                 bookmodel.AddEventModel.Id = item["Id"].ConvertDBNullToInt();
                 bookmodel.AddEventModel.Category = item["Category"].ConvertDBNullToString();
                 bookmodel.AddEventModel.Location = item["Location"].ConvertDBNullToString();
@@ -105,12 +105,12 @@ namespace Event_Management_App.DataManager.DAL
             _dBManager.AddCMDParam("@p_Email", oData.SignUpModel.Email);
             _dBManager.AddCMDParam("@p_SPassword", oData.SignUpModel.SPassword);
             _dBManager.AddCMDParam("@p_RoleId", oData.SignUpModel.Role);
-            _dBManager.AddCMDParam("@p_Deposit", oData.BookedEventsModel.Deposit);
-            _dBManager.AddCMDParam("@p_Balance", oData.BookedEventsModel.Balance);
-            _dBManager.AddCMDParam("@p_Date", oData.BookedEventsModel.Date);
-            _dBManager.AddCMDParam("@p_Time", oData.BookedEventsModel.Time);
+            _dBManager.AddCMDParam("@p_Deposit", oData.RequestedEventsModel.Deposit);
+            _dBManager.AddCMDParam("@p_Balance", oData.RequestedEventsModel.Balance);
+            _dBManager.AddCMDParam("@p_Date", oData.RequestedEventsModel.Date);
+            _dBManager.AddCMDParam("@p_Time", oData.RequestedEventsModel.Time);
             _dBManager.AddCMDParam("@p_addevent_id", ID);
-            _dBManager.AddCMDParam("@p_Status_id", oData.BookedEventsModel.Status_Id);
+            _dBManager.AddCMDParam("@p_Status_id", oData.RequestedEventsModel.Status_Id);
 
             _dBManager.ExecuteNonQuery();
 

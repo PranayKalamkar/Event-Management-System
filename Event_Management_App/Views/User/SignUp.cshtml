@@ -52,7 +52,7 @@
                     <button type="button" id="registerBtn" class="btn btn-success" onclick="SignUp()">Register</button>
 
                     <div class="register-option">
-                        Already have an account? <a asp-controller="User" asp-action="Login">Login</a>
+                        Already have an account? <a asp-controller="Login" asp-action="Login">Login</a>
                     </div>
 
                 </form>
@@ -94,7 +94,7 @@
 
                     if (data.status === "success") {
                         alert(data.message);
-                        window.location.href = "/User/Login";
+                        window.location.href = "/Login/Login";
                     }
                     else if (data.status === "warning") {
                         alert(data.message);

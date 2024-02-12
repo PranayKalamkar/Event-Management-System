@@ -5,20 +5,20 @@ using System.Data;
 
 namespace Event_Management_App.DataManager.DAL
 {
-    public class BookedEventsDAL : IBookedEventsDAL
+    public class RequestedEventsDAL : IRequestedEventsDAL
     {
         readonly IDBManager _dBManager;
-            
-        public BookedEventsDAL(IDBManager dBManager)
+
+        public RequestedEventsDAL(IDBManager dBManager)
         {
             _dBManager = dBManager;
         }
 
-        public List<GetAllBookedDetails> AllBookedEvents()
+        public List<GetAllBookedDetails> GetRequestedEvents() 
         {
             List<GetAllBookedDetails> bookedList = new List<GetAllBookedDetails>();
 
-            _dBManager.InitDbCommand("GetAllBookedEvents", CommandType.StoredProcedure);
+            _dBManager.InitDbCommand("GetAllRequestedEvents", CommandType.StoredProcedure);
 
             DataSet ds = _dBManager.ExecuteDataSet();
             foreach (DataRow item in ds.Tables[0].Rows)
@@ -50,7 +50,7 @@ namespace Event_Management_App.DataManager.DAL
 
                     bookedList.Add(bookedEvents);
                 }
-                catch (Exception ex)
+                catch(Exception ex)
                 {
                     Console.WriteLine(ex.Message);
                 }
@@ -78,7 +78,7 @@ namespace Event_Management_App.DataManager.DAL
             return existingImage;
         }
 
-        public GetAllBookedDetails PopulateBookedEventData(int ID)
+        public GetAllBookedDetails PopulateRequestedEventData(int ID)
         {
             _dBManager.InitDbCommand("PopulateRequestedEvents", CommandType.StoredProcedure);
 
@@ -109,9 +109,57 @@ namespace Event_Management_App.DataManager.DAL
                 bookeventmodel.RequestedEventsModel.Balance = item["Balance"].ConvertDBNullToString();
                 bookeventmodel.RequestedEventsModel.Date = item["Date"].ConvertDBNullToString();
                 bookeventmodel.RequestedEventsModel.Time = item["Time"].ConvertDBNullToString();
+                bookeventmodel.RequestedEventsModel.Status_Id = item["status_id"].ConvertDBNullToInt();
                 bookeventmodel.EventStatusModel.Status = item["status_name"].ConvertDBNullToString();
             }
             return bookeventmodel;
         }
+
+        public GetAllBookedDetails UpdateRequestedEventData(GetAllBookedDetails bookevent, int Id)
+        {
+
+            _dBManager.InitDbCommand("UpdateStatusById", CommandType.StoredProcedure);
+
+            _dBManager.AddCMDParam("@u_Id_in", Id);
+            _dBManager.AddCMDParam("@u_status_id_in", bookevent.RequestedEventsModel.Status_Id);
+            //_dBManager.AddCMDParam("@u_status_id", bookevent.AddEventModel.Status_Id);
+
+            _dBManager.ExecuteNonQuery();
+
+
+            return bookevent;
+        }
+
+        public List<GetAllBookedDetails> GetStatus()
+        {
+            List<GetAllBookedDetails> status = new List<GetAllBookedDetails>();
+
+            _dBManager.InitDbCommand("GetAllStatus", CommandType.StoredProcedure);
+
+            DataSet ds = _dBManager.ExecuteDataSet();
+            foreach (DataRow item in ds.Tables[0].Rows)
+            {
+
+                GetAllBookedDetails bookedEvents = new GetAllBookedDetails();
+
+                bookedEvents.EventStatusModel = new EventStatusModel();
+
+                try
+                {
+                    bookedEvents.EventStatusModel.Id = item["status_id"].ConvertDBNullToInt();
+                    bookedEvents.EventStatusModel.Status = item["status_name"].ConvertDBNullToString();
+
+                    status.Add(bookedEvents);
+                }
+                catch (Exception ex)
+                {
+                    Console.WriteLine(ex.Message);
+                }
+
+            }
+
+            return status;
+        }
+
     }
 }

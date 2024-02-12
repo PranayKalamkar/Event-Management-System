@@ -13,10 +13,12 @@ namespace Event_Management_App.Extension
         {
             services.AddScoped<IDBManager>(AddDBManager);
             //services.AddScoped<IEmployeeBAL, EmployeeBAL>;
-            services.AddScoped<IEventBAL, EventBAL>();
+            services.AddScoped<IUserBAL, UserBAL>();
+            services.AddScoped<ILoginBAL, LoginBAL>();
             services.AddScoped<IAddEventBAL, AddEventBAL>();
             services.AddScoped<IAdmin_UserBAL, Admin_UserBAL>();
             services.AddScoped<IAdminBAL, AdminBAL>();
+            services.AddScoped<IRequestedEventsBAL, RequestedEventsBAL>();
             services.AddScoped<IBookedEventsBAL, BookedEventsBAL>();
             services.AddScoped<ICustomerBookingBAL, CustomerBookingBAL>();
             services.AddScoped<IAdmin_CustomerBookingBAL, Admin_CustomerBookingBAL>();

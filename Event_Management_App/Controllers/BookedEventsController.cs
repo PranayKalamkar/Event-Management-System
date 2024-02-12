@@ -1,10 +1,5 @@
-﻿using Event_Management_App.BussinessManager.BAL;
-using Event_Management_App.BussinessManager.IBAL;
-using Event_Management_App.DataManager.IDAL;
-using Event_Management_App.Models;
+﻿using Event_Management_App.BussinessManager.IBAL;
 using Microsoft.AspNetCore.Mvc;
-using System.Collections.Generic;
-using System.Text.Json;
 
 namespace Event_Management_App.Controllers
 {
@@ -24,28 +19,12 @@ namespace Event_Management_App.Controllers
 
         public IActionResult BookedEventsList()
         {
-            return Json(_IBookedEventsBAL.GetBookedEvents());
+            return Json(_IBookedEventsBAL.GetAllBookedEvents());
         }
 
-        public IActionResult PopulateEvent(int Id)
+        public IActionResult PopulateBookEvent(int Id)
         {
             return Json(_IBookedEventsBAL.PopulateEventData(Id));
-        }
-
-        public IActionResult UpdateEvent(string model, int Id)
-        {
-            GetAllBookedDetails bookevent = JsonSerializer.Deserialize<GetAllBookedDetails>(model)!;
-
-            _IBookedEventsBAL.UpdateEventData(bookevent, Id);
-
-            return Json("BookedEventsList");
-        }
-
-        public IActionResult GetStatus()
-        {
-            List<GetAllBookedDetails> status = _IBookedEventsBAL.GetStatus();
-
-            return Json(status);
         }
     }
 }

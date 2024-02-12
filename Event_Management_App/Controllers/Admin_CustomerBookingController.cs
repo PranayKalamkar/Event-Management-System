@@ -35,7 +35,7 @@ namespace Event_Management_App.Controllers
             {
                 GetAllBookedDetails oData = JsonSerializer.Deserialize<GetAllBookedDetails>(model)!;
 
-                oData.BookedEventsModel.Addevent_id = ID;
+                oData.RequestedEventsModel.Addevent_id = ID;
 
                 if (ModelState.IsValid)
                 {
