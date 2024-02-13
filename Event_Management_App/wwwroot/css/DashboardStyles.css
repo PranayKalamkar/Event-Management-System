@@ -579,7 +579,9 @@ legend + * {
     -webkit-appearance: none;
 }
 
-::-webkit-color-swatch-wrapper {
+::-webkit-color-swatch-wr
+
+er {
     padding: 0;
 }
 

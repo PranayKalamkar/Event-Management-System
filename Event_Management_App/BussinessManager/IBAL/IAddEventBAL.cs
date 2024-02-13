@@ -10,7 +10,7 @@ namespace Event_Management_App.BussinessManager.IBAL
 
         public GetAllBookedDetails PopulateEventData(int ID);
 
-        public GetAllBookedDetails UpdateEventData(GetAllBookedDetails addeventmodel, int ID, IFormFile file);
+        public AddEventModel UpdateEventData(AddEventModel addeventmodel, int ID, IFormFile file);
 
         public void DeleteEventData(int ID);
 

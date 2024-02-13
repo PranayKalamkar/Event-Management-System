@@ -50,7 +50,7 @@ namespace Event_Management_App.Controllers
         [HttpPost]
         public IActionResult Update(int ID,string model, IFormFile file)
         {
-            GetAllBookedDetails addeventmodel = JsonSerializer.Deserialize<GetAllBookedDetails>(model)!;
+            AddEventModel addeventmodel = JsonSerializer.Deserialize<AddEventModel>(model)!;
 
             _IAddEventBAL.UpdateEventData(addeventmodel, ID, file);
 

@@ -113,20 +113,24 @@ namespace Event_Management_App.DataManager.DAL
             return addeventmodel;
         }
 
-        public GetAllBookedDetails UpdateEventData(GetAllBookedDetails addeventmodel, int ID)
+        public AddEventModel UpdateEventData(AddEventModel addeventmodel, int ID)
         {
+            //addeventmodel = new GetAllBookedDetails();
+
+            //addeventmodel = new AddEventModel();
+
             _dBManager.InitDbCommand("UpdateaddEventById", CommandType.StoredProcedure);
 
             _dBManager.AddCMDParam("u_Id", ID);
-            _dBManager.AddCMDParam("u_Category", addeventmodel.AddEventModel.Category);
-            _dBManager.AddCMDParam("u_Location", addeventmodel.AddEventModel.Location);
-            _dBManager.AddCMDParam("u_Capacity", addeventmodel.AddEventModel.Capacity);
-            _dBManager.AddCMDParam("u_Amount", addeventmodel.AddEventModel.Amount);
-            _dBManager.AddCMDParam("u_Description", addeventmodel.AddEventModel.Description);
-            _dBManager.AddCMDParam("u_Address", addeventmodel.AddEventModel.Address);
-            _dBManager.AddCMDParam("u_Contact", addeventmodel.AddEventModel.Contact);
-            _dBManager.AddCMDParam("u_ImagePath", addeventmodel.AddEventModel.ImagePath);
-            _dBManager.AddCMDParam("u_Status_id", addeventmodel.AddEventModel.Status_Id);
+            _dBManager.AddCMDParam("u_Category", addeventmodel.Category);
+            _dBManager.AddCMDParam("u_Location", addeventmodel.Location);
+            _dBManager.AddCMDParam("u_Capacity", addeventmodel.Capacity);
+            _dBManager.AddCMDParam("u_Amount", addeventmodel.Amount);
+            _dBManager.AddCMDParam("u_Description", addeventmodel.Description);
+            _dBManager.AddCMDParam("u_Address", addeventmodel.Address);
+            _dBManager.AddCMDParam("u_Contact", addeventmodel.Contact);
+            _dBManager.AddCMDParam("u_ImagePath", addeventmodel.ImagePath);
+            _dBManager.AddCMDParam("u_Status_id", addeventmodel.Status_Id);
 
             _dBManager.ExecuteNonQuery();
 

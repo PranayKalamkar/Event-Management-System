@@ -11,7 +11,7 @@ Description varchar(100)
 Address varchar(300) 
 Contact varchar(10) 
 ImagePath varchar(600) 
-status_id int
+statusID int
 
 Table: bookevent
 Columns:
@@ -333,12 +333,12 @@ END
 
 CREATE DEFINER=`root`@`localhost` PROCEDURE `PopulateAddEventbyId`(in p_id int)
 begin
-	SELECT addevent.Id, addevent.Category, addevent.Location,
+		SELECT addevent.Id, addevent.Category, addevent.Location,
 		addevent.Capacity, addevent.Amount, addevent.Description,
         addevent.Address, addevent.Contact, addevent.ImagePath,
         eventstatus.status_name
         from addevent INNER JOIN  eventstatus
-        ON addevent.status_id = eventstatus.status_id 
+        ON addevent.statusID = eventstatus.status_id 
         where addevent.Id = p_id;
 end
 
@@ -403,8 +403,7 @@ BEGIN
         Description = u_Description,
 		Address = u_Address,
 		Contact = u_Contact,
-		ImagePath = u_ImagePath,
-		status_id = u_Status_id
+		ImagePath = u_ImagePath
     WHERE Id = u_Id;
 END
 
@@ -454,4 +453,47 @@ SET
     status_id = u_status_id_in
 WHERE
     Id = u_Id_in;
+END
+
+
+
+CREATE DEFINER=`root`@`localhost` PROCEDURE `GetAvailableEvent`()
+BEGIN
+	SELECT addevent.Id, addevent.Category, addevent.Location,
+		addevent.Capacity, addevent.Amount, addevent.Description,
+        addevent.Address, addevent.Contact, addevent.ImagePath,
+        eventstatus.status_name
+        from addevent 
+        INNER JOIN  eventstatus
+        ON addevent.statusID = eventstatus.status_id
+        INNER JOIN bookevent
+        ON addevent.Id = bookevent.addevent_id
+        where bookevent.status_id = 1 ;
+END
+
+
+CREATE DEFINER=`root`@`localhost` PROCEDURE `UpdateaddEventById`(
+    IN u_Id int,
+    IN u_Category varchar(50),
+    IN u_Location varchar(50),
+    IN u_Capacity varchar(10),
+    IN u_Amount varchar(50),
+    IN u_Description varchar(200),    	
+	IN u_Address varchar(100),	
+	IN u_Contact varchar(10),
+    IN u_ImagePath varchar(600),
+    IN u_Status_id INT
+)
+BEGIN
+    UPDATE addevent
+    SET
+        Category = u_Category,
+        Location = u_Location,
+        Capacity = u_Capacity,
+        Amount = u_Amount,
+        Description = u_Description,
+		Address = u_Address,
+		Contact = u_Contact,
+		ImagePath = u_ImagePath
+    WHERE Id = u_Id;
 END

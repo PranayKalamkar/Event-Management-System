@@ -58,7 +58,6 @@ namespace Event_Management_App.DataManager.DAL
         {
             string existingPassword = null;
 
-            //_dBManager.InitDbCommandText("select SPassword from SignUp where Email = @Email;");
             _dBManager.InitDbCommand("GetUserPassword", CommandType.StoredProcedure);
 
 

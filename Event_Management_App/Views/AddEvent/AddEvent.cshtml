@@ -183,7 +183,7 @@
                         <div class="col-md-6">
                             <div class="mb-3">
                                 <label for="ImageFile" class="form-label">Image : </label>
-                                <input id="u_ImageFile" type="file" name="ImageFile" class="form-control" onchange="previewImage(this)" autocomplete="off" required />
+                                <input id="updateImageFile" type="file" name="ImageFile" class="form-control" onchange="previewImage(this)" autocomplete="off" required />
                             </div>
                         </div>
                         <div class="col-md-6">
@@ -496,7 +496,7 @@
         var formData = new FormData();
         formData.append("ID", eventAddID.id);
         formData.append("model", JSON.stringify(addEventData));
-        formData.append("file", $("#u_ImageFile")[0].files[0]);
+        formData.append("file", $("#updateImageFile")[0].files[0]);
 
         debugger;
 

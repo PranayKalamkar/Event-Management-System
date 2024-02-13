@@ -10,7 +10,7 @@ namespace Event_Management_App.DataManager.IDAL
 
         public GetAllBookedDetails PopulateEventData(int ID);
 
-        public GetAllBookedDetails UpdateEventData(GetAllBookedDetails addeventmodel, int ID);
+        public AddEventModel UpdateEventData(AddEventModel addeventmodel, int ID);
 
         public string GetDBImagebyID(int ID);
 

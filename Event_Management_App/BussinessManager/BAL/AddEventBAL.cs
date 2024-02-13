@@ -35,20 +35,21 @@ namespace Event_Management_App.BussinessManager.BAL
             return _IAddEventDAL.PopulateEventData(ID);
         }
 
-        public GetAllBookedDetails UpdateEventData(GetAllBookedDetails addeventmodel, int ID, IFormFile file)
+        public AddEventModel UpdateEventData(AddEventModel addeventmodel, int ID, IFormFile file)
         {
+            //addeventmodel.AddEventModel.Id = ID;
 
-            addeventmodel.AddEventModel.ImageFile = file;
+            addeventmodel.ImageFile = file;
 
             string existingImage = _IAddEventDAL.GetDBImagebyID(ID);
 
-            if(addeventmodel.AddEventModel.ImageFile != null)
+            if(addeventmodel.ImageFile != null)
             {
-                addeventmodel.AddEventModel.ImagePath = UploadImage(addeventmodel.AddEventModel.ImageFile);
+                addeventmodel.ImagePath = UploadImage(addeventmodel.ImageFile);
             }
             else
             {
-                addeventmodel.AddEventModel.ImagePath = existingImage;
+                addeventmodel.ImagePath = existingImage;
             }
 
             return _IAddEventDAL.UpdateEventData(addeventmodel, ID);
