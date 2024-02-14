@@ -300,34 +300,40 @@
             Status_Id: $('#v_Status').val(),
         }
 
-        var formaData = new FormData();
-        formaData.append("Id", statusID.Id);
-        formaData.append("Status_Id", statusID.Status_Id);
+        var emailID = {
+            Email: $('#v_Email').val(),
+        }
+
+        var formData = new FormData();
+        formData.append("Id", statusID.Id);
+        formData.append("Status_Id", statusID.Status_Id);
+        formData.append("Email", emailID.Email);
 
         console.log(statusID);
 
         $.ajax({
             type: "POST",
             url: "/RequestedEvents/UpdateEvent",
-            data: formaData,
+            data: formData,
             contentType: false,
             processData: false,
             cache: false,
 
             success: function (data) {
-
-                $('#viewbookEventModal').modal('hide');
-
+ 
                 Swal.fire({
                     title: "Status Updated successfully!",
                     text: "close",
                     icon: "success"
                 });
 
+                $('#viewbookEventModal').modal('hide');
                 // datatable.destroy();
                 // Remove all cards from the container
                 $('#cardContainer').empty();
                 getAddEventList();
+
+                window.location.href = "/BookedEvents/BookedEvents";
             },
             error: function (errormessage) {
                 Swal.fire({

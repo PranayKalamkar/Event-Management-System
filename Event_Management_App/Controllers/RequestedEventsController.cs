@@ -12,9 +12,12 @@ namespace Event_Management_App.Controllers
     {
         IRequestedEventsBAL _IRequestedEventsBAL;
 
-        public RequestedEventsController(IRequestedEventsBAL bookedeventsBAL)
+        IEmailSenderBAL _IEmailSenderBAL;
+
+        public RequestedEventsController(IRequestedEventsBAL bookedeventsBAL, IEmailSenderBAL emailSenderBAL)
         {
             _IRequestedEventsBAL = bookedeventsBAL;
+            _IEmailSenderBAL = emailSenderBAL;
         }
 
         public IActionResult RequestedEvents()
@@ -33,11 +36,13 @@ namespace Event_Management_App.Controllers
         }
 
         [HttpPost]
-        public IActionResult UpdateEvent(int Status_Id, int Id)
+        public async Task<IActionResult> UpdateEvent(int Status_Id, int Id, string Email)
         {
             //GetAllBookedDetails bookevent = JsonSerializer.Deserialize<GetAllBookedDetails>(model)!;
 
             GetAllBookedDetails bookevent = new GetAllBookedDetails();
+
+            await _IEmailSenderBAL.EmailSendAsync(Email, "Booking Confirm", "Congratulation Your Booking Is confirmed!");
 
             bookevent.RequestedEventsModel = new RequestedEventsModel();
 
@@ -45,9 +50,9 @@ namespace Event_Management_App.Controllers
 
             //bookevent.BookedEventsModel = new BookedEventsModel();
 
-            bookevent.RequestedEventsModel.Status_Id = Status_Id;
+            //bookevent.RequestedEventsModel.Status_Id = Status_Id;
 
-            _IRequestedEventsBAL.UpdateEventData(bookevent, Id);
+            _IRequestedEventsBAL.UpdateEventData(Status_Id, Id);
 
             return Json("BookedEventsList");
         }

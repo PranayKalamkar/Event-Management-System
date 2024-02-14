@@ -22,6 +22,7 @@ namespace Event_Management_App.Extension
             services.AddScoped<IBookedEventsBAL, BookedEventsBAL>();
             services.AddScoped<ICustomerBookingBAL, CustomerBookingBAL>();
             services.AddScoped<IAdmin_CustomerBookingBAL, Admin_CustomerBookingBAL>();
+            services.AddScoped<IEmailSenderBAL, EmailSenderBAL>();
 
             return services;
         }

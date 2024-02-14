@@ -450,7 +450,7 @@ SELECT u_status_id_in;
         
 UPDATE addevent 
 SET 
-    status_id = u_status_id_in
+    statusID= u_status_id_in
 WHERE
     Id = u_Id_in;
 END

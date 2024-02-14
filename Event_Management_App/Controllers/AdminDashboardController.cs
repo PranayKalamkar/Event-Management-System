@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Http;
+using Microsoft.AspNetCore.Mvc;
 
 namespace Event_Management_App.Controllers
 {
@@ -19,6 +20,10 @@ namespace Event_Management_App.Controllers
 
         public IActionResult Dashboard()
         {
+            Console.WriteLine(HttpContext.Session.GetInt32("Id"));
+
+            Console.WriteLine(HttpContext.Session.GetString("Email"));
+
             return View();
         }
     }

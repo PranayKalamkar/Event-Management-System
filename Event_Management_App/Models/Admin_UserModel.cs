@@ -8,7 +8,8 @@ namespace Event_Management_App.Models
 
         [Required]
         [StringLength(50)]
-        [RegularExpression(@"^[a-zA-Z]+$", ErrorMessage = "Username must contain only letters and numbers.")]
+        //[RegularExpression(@"^[a-zA-Z]+$", ErrorMessage = "Username must contain only letters and numbers.")]
+        [RegularExpression(@"^[a-zA-Z]+\\s[a-zA-Z]+$", ErrorMessage = "Username must contain only letters and numbers.")]
         public string? Username { get; set; }
 
         [Required]
