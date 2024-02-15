@@ -1,19 +1,18 @@
 ﻿$(document).ready(function () {
 
-    getAdminList();
+    getAdmin_UserList();
 
 });
 
 var datatable;
 
-function getAdminList() {
+function getAdmin_UserList() {
     $.ajax({
 
         type: "Get",
-        url: "/Admin/GetAdmin",
+        url: "/Admin_User/GetAdmin_User",
         success: function (data) {
 
-            debugger;
             datatable = $('#myTable').DataTable({
                 data: data,
                 columns: [
@@ -24,7 +23,7 @@ function getAdminList() {
                         data: null,
                         render: function (data, type, row) {
 
-                            return '<button type="button" onclick="populateadminData(' + row.Id + ')" class="btn btn-warning" data-bs-toggle="modal" data-bs-target="#updateAdmin" style="margin-right: 10px;">Edit</button><button type="button" onclick="deleteadminData(' + row.Id + ')" class="btn btn-danger" style="margin-right: 10px;" >Delete</button><button type="button" onclick="viewEventData(' + row.Id + ')" class="btn btn-info d-none" data-bs-toggle="modal" data-bs-target="#viewAddEventModal">Disable</button>';
+                            return '<button type="button" onclick="populateadmin_userData(' + row.Id + ')" class="btn btn-warning" data-bs-toggle="modal" data-bs-target="#updateUser" style="margin-right: 10px;">Edit</button><button type="button" onclick="deleteadmin_userData(' + row.Id + ')" class="btn btn-danger" style="margin-right: 10px;" >Delete</button><button type="button" onclick="viewadmin_userData(' + row.Id + ')" class="btn btn-info d-none" data-bs-toggle="modal" data-bs-target="#viewUser">View</button>';
 
                         }
                     },
@@ -40,7 +39,7 @@ function getAdminList() {
     });
 }
 
-function addAdmin() {
+function addUser() {
 
     if ($("#create").valid()) {
 
@@ -55,16 +54,15 @@ function addAdmin() {
         formData.append("model", JSON.stringify(eventObj));
 
         $.ajax({
-            url: "/Admin/AddAdminPost",
+            url: "/Admin_User/AddAdmin_UserPost",
             data: formData,
             processData: false,
             contentType: false,
             cache: false,
             type: "POST",
             success: function (data) {
-                debugger;
 
-                $('#addAdmin').modal('hide');
+                $('#addUser').modal('hide');
 
                 // clearForm();
 
@@ -81,8 +79,7 @@ function addAdmin() {
                 }
 
                 datatable.destroy();
-                getAdminList();
-                // windows.reload();
+                getAdmin_UserList();
 
             },
             error: function (errorThrown) {
@@ -93,20 +90,20 @@ function addAdmin() {
     }
 }
 
-function populateadminData(ID) {
+
+function populateadmin_userData(ID) {
 
     $.ajax({
 
         type: "GET",
-        url: "/Admin/PopulateAdmin/" + ID,
+        url: "/Admin_User/PopulateAdmin_User/" + ID,
 
-        success: function (admin) {
-            debugger;
+        success: function (admin_user) {
 
             // Populate the form with the received employee details
-            $('#u_Id').val(admin.Id);
-            $('#u_Username').val(admin.Username);
-            $('#u_Email').val(admin.Email);
+            $('#u_Id').val(admin_user.Id);
+            $('#u_Username').val(admin_user.Username);
+            $('#u_Email').val(admin_user.Email);
 
         },
         error: function (errormessage) {
@@ -115,26 +112,26 @@ function populateadminData(ID) {
     });
 }
 
-function updateAdmin() {
+function updateUser() {
 
     if ($("#update").valid()) {
 
-        var adminID = {
+        var admin_userID = {
             id: $('#u_Id').val(),
         }
 
-        var adminData = {
+        var admin_userData = {
             Username: $('#u_Username').val(),
             Email: $('#u_Email').val(),
         };
 
         var formData = new FormData();
-        formData.append("ID", adminID.id);
-        formData.append("model", JSON.stringify(adminData));
+        formData.append("ID", admin_userID.id);
+        formData.append("model", JSON.stringify(admin_userData));
 
         $.ajax({
             type: "POST",
-            url: "/Admin/UpdateAdmin",
+            url: "/Admin_User/UpdateAdmin_User",
             data: formData,
             contentType: false,
             processData: false,
@@ -142,7 +139,7 @@ function updateAdmin() {
 
             success: function (data) {
 
-                $('#updateAdmin').modal('hide');
+                $('#updateUser').modal('hide');
 
 
                 if (data.status === "success") {
@@ -158,7 +155,7 @@ function updateAdmin() {
                 }
 
                 datatable.destroy();
-                getAdminList();
+                getAdmin_UserList();
             },
             error: function (errormessage) {
                 Swal.fire({
@@ -171,7 +168,32 @@ function updateAdmin() {
     }
 }
 
-function deleteadminData(ID) {
+
+function viewadmin_userData(ID) {
+
+    $.ajax({
+        type: "GET",
+        url: "/Admin_User/PopulateAdmin_User/?ID=" + ID,
+
+        success: function (admin_user) {
+
+            // Populate the form with the received employee details
+            $('#v_Id').val(admin_user.Id);
+            $('#v_Username').val(admin_user.Username);
+            $('#v_Email').val(admin_user.Email);
+            $('#v_Contact').val(admin_user.Contact);
+            $('#v_Address').val(admin_user.Address);
+
+            var imagePreview = "/adminuserimage/" + admin_user.IdProofPath;
+            $('#imagePreviewUpdate').attr('src', imagePreview).show();
+        },
+        error: function (errormessage) {
+            alert(errormessage.responseText);
+        }
+    });
+}
+
+function deleteadmin_userData(ID) {
 
     Swal.fire({
         title: "Are you sure?",
@@ -187,17 +209,17 @@ function deleteadminData(ID) {
 
             $.ajax({
                 type: "GET",
-                url: "/Admin/DeleteAdmin/" + ID,
+                url: "/Admin_User/DeleteAdmin_User/" + ID,
                 success: function (result) {
+
+                    datatable.destroy();
+                    getAdmin_UserList();
 
                     Swal.fire({
                         title: "Deleted!",
                         text: "Your file has been deleted.",
                         icon: "success"
                     });
-
-                    datatable.destroy();
-                    getAdminList();
 
                 },
                 error: function (errormessage) {

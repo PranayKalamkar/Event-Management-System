@@ -96,8 +96,8 @@ namespace Event_Management_App.DataManager.DAL
             _dBManager.InitDbCommand("Updateadmin_userById", CommandType.StoredProcedure);
 
             _dBManager.AddCMDParam("u_Id", ID);
-            _dBManager.AddCMDParam("Username", adminusermodel.Username);
-            _dBManager.AddCMDParam("Email", adminusermodel.Email);
+            _dBManager.AddCMDParam("u_Username", adminusermodel.Username);
+            _dBManager.AddCMDParam("u_Email", adminusermodel.Email);
 
             _dBManager.ExecuteNonQuery();
 

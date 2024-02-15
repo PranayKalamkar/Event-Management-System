@@ -112,31 +112,48 @@
 
                 <form>
 
-                    <input id="v_Id" name="Id" hidden />
+                    <input hidden id="v_Id" name="Id" />
 
-                    <div class="mb-3">
-                        <label for="Username" class="form-label">Username : </label>
-                        <input id="v_Username" type="text" name="Username" class="form-control" readonly />
+                    <div class="row">
+                        <div class="col-md-6">
+                            <div class="mb-3">
+                                <label for="Username" class="form-label">Username : </label>
+                                <input id="v_Username" type="text" name="Username" class="form-control" autocomplete="off" required />
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="mb-3">
+                                <label for="Email" class="form-label">Email : </label>
+                                <input id="v_Email" type="email" name="Email" class="form-control" autocomplete="off" required />
+                            </div>
+                        </div>
                     </div>
 
-                    <div class="mb-3">
-                        <label for="Email" class="form-label">Email : </label>
-                        <input id="v_Email" type="text" name="Email" class="form-control" readonly />
+                    <div class="row">
+                        <div class="col-md-6">
+                            <div class="mb-3">
+                                <label for="Contact" class="form-label">Contact : </label>
+                                <input id="v_Contact" type="text" name="Contact" class="form-control" autocomplete="off" required />
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="mb-3">
+                                <label for="Address" class="form-label">Address : </label>
+                                <input id="v_Address" type="text" name="Address" class="form-control" autocomplete="off" required />
+                            </div>
+                        </div>
                     </div>
 
-                    <div class="mb-3">
-                        <label for="SPassword" class="form-label">Password : </label>
-                        <input id="v_SPassword" type="text" name="SPassword" class="form-control" readonly />
-                    </div>
-
-                    <div class="mb-3">
-                        <label for="ConfirmPassword" class="form-label">Confirm Password : </label>
-                        <input id="v_ConfirmPassword" type="text" name="ConfirmPassword" class="form-control" readonly />
-                    </div>
-
-                    <div class="mb-3">
-                        <label for="Role" class="form-label">Role : </label>
-                        <input id="v_Role" type="text" name="Role" class="form-control" readonly />
+                    <div class="row">
+                        <div class="col-md-6">
+                            <div class="mb-3">
+                                <label for="ImageFile" class="form-label">IdProof : </label>
+                                @* <input id="v_ImageFile" type="file" name="ImageFile" class="form-control" onchange="previewImage(this)" autocomplete="off" required /> *@
+                                <div class="mb-3" style="display: flex; flex-direction: column;">
+                                    <img id="imagePreviewUpdate" src="#" alt="Image Preview" style="max-width: 30%; max-height: 150px; margin-top: 10px; display: none;">
+                                </div>
+                            </div>
+                        </div>
                     </div>
 
                 </form>
@@ -148,16 +165,6 @@
 </div>
 
 
-@* <table class="table table-striped" id="myTable" style="width=100% !important">
-    <thead class="table-dark">
-        <tr>
-            <th>@Html.DisplayNameFor(model => model.Id)</th>
-            <th>@Html.DisplayNameFor(model => model.Username)</th>
-            <th>@Html.DisplayNameFor(model => model.Email)</th>
-            <th>Actions</th>
-        </tr>
-    </thead>
-</table> *@
 
 <div class="card w-100 shadow-sm">
     <div class="card-body">
@@ -182,234 +189,6 @@
     }
 }
 
-<script>
-
-    $(document).ready(function () {
-
-        getAdmin_UserList();
-
-    });
-
-    var datatable;
-
-    function getAdmin_UserList() {
-        $.ajax({
-
-            type: "Get",
-            url: "/Admin_User/GetAdmin_User",
-            success: function (data) {
-
-                debugger;
-                datatable = $('#myTable').DataTable({
-                    data: data,
-                    columns: [
-                        { data: 'Id' },
-                        { data: 'Username' },
-                        { data: 'Email' },
-                        {
-                            data: null,
-                            render: function (data, type, row) {
-
-                                return '<button type="button" onclick="populateadmin_userData(' + row.Id + ')" class="btn btn-warning" data-bs-toggle="modal" data-bs-target="#updateUser" style="margin-right: 10px;">Edit</button><button type="button" onclick="deleteadmin_userData(' + row.Id + ')" class="btn btn-danger" style="margin-right: 10px;" >Delete</button><button type="button" onclick="viewEventData(' + row.Id + ')" class="btn btn-info d-none" data-bs-toggle="modal" data-bs-target="#viewAddEventModal">Disable</button>';
-
-                            }
-                        },
-
-                    ]
-                });
-
-            },
-            error: function (textStatus, errorThrown) {
-                Success = false;
-            }
-
-        });
-    }
-
-    function addUser() {
-
-        if ($("#create").valid()) {
-
-            debugger;
-
-            var eventObj = {
-                Username: $('#Username').val(),
-                Email: $('#Email').val(),
-                SPassword: $('#SPassword').val(),
-                ConfirmSPassword: $('#ConfirmSPassword').val(),
-            }
-
-            var formData = new FormData();
-            formData.append("model", JSON.stringify(eventObj));
-
-            $.ajax({
-                url: "/Admin_User/AddAdmin_UserPost",
-                data: formData,
-                processData: false,
-                contentType: false,
-                cache: false,
-                type: "POST",
-                success: function (data) {
-                    debugger;
-
-                    $('#addUser').modal('hide');
-
-                    // clearForm();
-
-                    if (data.status === "success") {
-                        Swal.fire({
-                            title: "Good job!",
-                            text: "User saved successfully!",
-                            icon: "success",
-                            button: "Ok",
-                        });
-                    }
-                    else if (data.status === "warning") {
-                        alert(data.message);
-                    }
-
-                    datatable.destroy();
-                    getAdmin_UserList();
-
-                },
-                error: function (errorThrown) {
-                    console.log("Error saving User:", errorThrown);
-                    Swal.fire("Oops", "An error occurred while saving your data, Please try again later.", "error");
-                }
-            });
-        }
-    }
-
-    function populateadmin_userData(ID) {
-        debugger;
-
-        $.ajax({
-
-            type: "GET",
-            url: "/Admin_User/PopulateAdmin_User/" + ID,
-
-            success: function (admin_user) {
-                debugger;
-
-                // Populate the form with the received employee details
-                $('#u_Id').val(admin_user.Id);
-                $('#u_Username').val(admin_user.Username);
-                $('#u_Email').val(admin_user.Email);
-
-            },
-            error: function (errormessage) {
-                alert(errormessage.responseText);
-            }
-        });
-    }
-
-    function updateUser() {
-
-        if ($("#update").valid()) {
-
-            debugger;
-
-            var admin_userID = {
-                id: $('#u_Id').val(),
-            }
-
-            debugger;
-
-            var admin_userData = {
-                Username: $('#u_Username').val(),
-                Email: $('#u_Email').val(),
-            };
-
-            debugger;
-
-            var formData = new FormData();
-            formData.append("ID", admin_userID.id);
-            formData.append("model", JSON.stringify(admin_userData));
-
-            debugger;
-
-            $.ajax({
-                type: "POST",
-                url: "/Admin_User/UpdateAdmin_User",
-                data: formData,
-                contentType: false,
-                processData: false,
-                cache: false,
-
-                success: function (data) {
-
-                    $('#updateUser').modal('hide');
 
 
-                    if (data.status === "success") {
-                        Swal.fire({
-                            title: "Good job!",
-                            text: "User updated successfully!",
-                            icon: "success",
-                            button: "Ok",
-                        });
-                    }
-                    else if (data.status === "warning") {
-                        alert(data.message);
-                    }
-
-                    datatable.destroy();
-                    getAdmin_UserList();
-                },
-                error: function (errormessage) {
-                    Swal.fire({
-                        title: "Error updating event!",
-                        text: "close",
-                        icon: "Error"
-                    });
-                }
-            });
-        }
-    }
-
-    function deleteadmin_userData(ID) {
-        debugger;
-
-        Swal.fire({
-            title: "Are you sure?",
-            text: "You won't be able to revert this!",
-            icon: "warning",
-            showCancelButton: true,
-            confirmButtonColor: "#3085d6",
-            cancelButtonColor: "#d33",
-            confirmButtonText: "Yes, delete it!"
-        }).then((result) => {
-
-            if (result.isConfirmed) {
-
-                $.ajax({
-                    type: "GET",
-                    url: "/Admin_User/DeleteAdmin_User/" + ID,
-                    success: function (result) {
-
-                        datatable.destroy();
-                        getAdmin_UserList();
-
-                        Swal.fire({
-                            title: "Deleted!",
-                            text: "Your file has been deleted.",
-                            icon: "success"
-                        });
-
-                    },
-                    error: function (errormessage) {
-
-                        Swal.fire({
-                            title: "Error Delete employee!",
-                            text: "close",
-                            icon: "Error"
-                        });
-
-                    }
-                });
-
-            }
-        });
-    }
-
-</script>
+<script src="~/js/admin_user.js" asp-append-version="true"></script>

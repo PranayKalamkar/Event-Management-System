@@ -28,5 +28,6 @@ namespace Event_Management_App.Models
 
         [Required]
         public int Role { get; set; }
+
     }
 }

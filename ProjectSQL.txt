@@ -42,6 +42,15 @@ Email varchar(100)
 SPassword varchar(255) 
 RoleId int
 
+Table: signupinfo
+Columns:
+Id int AI PK 
+Contact varchar(10) 
+Address varchar(100) 
+Idproof varchar(600) 
+Signup_Id int 
+profile varchar(600)
+
 Stored Procedure
 
 CREATE DEFINER=`root`@`localhost` PROCEDURE `AddEventInsert`(
