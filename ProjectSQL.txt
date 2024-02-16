@@ -506,3 +506,67 @@ BEGIN
 		ImagePath = u_ImagePath
     WHERE Id = u_Id;
 END
+
+
+
+CREATE DEFINER=`root`@`localhost` PROCEDURE `PopulateAdmin_UserbyId`(in p_id int)
+BEGIN
+	select Signup.*, Signupinfo.* 
+    from SignUp left join signupinfo
+    on signup.Id = signupinfo.Signup_Id
+    where signup.Id = p_id;
+END
+
+
+CREATE DEFINER=`root`@`localhost` PROCEDURE `Updateadmin_userById`(
+    IN u_Id int,
+    IN u_Username varchar(50),
+    IN u_Email varchar(50),
+    IN u_Contact varchar(10),
+    IN u_Address varchar(100),
+    IN u_IdProof varchar(600),
+    IN u_Profile varchar(600)
+)
+BEGIN
+    IF exists (select * from signupinfo where Signup_Id = u_Id) THEN
+		UPDATE signupinfo
+        SET 
+			signupinfo.Contact = u_Contact,
+            signupinfo.Address = u_Address,
+            signupinfo.Idproof = u_IdProof,
+            signupinfo.profile = u_Profile
+		WHERE Signup_Id = u_Id;
+        
+        UPDATE signup
+        SET
+			signup.Username = u_Username,
+            signup.Email = u_Email
+		WHERE signup.Id = u_Id;
+	ELSE
+		INSERT INTO signupinfo(Contact, Address, Idproof, Signup_Id, profile)
+        VALUES (u_Contact, u_Address, u_IdProof, u_Id, u_Profile);
+	END IF;
+END
+
+
+CREATE DEFINER=`root`@`localhost` PROCEDURE `InsertAdmin_User`(
+	IN a_UserName varchar(100),
+	IN a_Email varchar(100),
+	IN a_SPassword varchar(100),
+    IN a_RoleId int,
+    IN a_Contact varchar(10),
+    IN a_Address varchar(100),
+    IN a_Idproof varchar(600),
+    IN a_profile varchar(600)
+)
+BEGIN
+	declare last_id int;
+
+	INSERT INTO SignUp(Username, Email, SPassword, RoleId)
+	VALUES(a_UserName, a_Email, md5(a_SPassword), a_RoleId);
+    
+    set last_id = LAST_INSERT_ID();
+    
+    INSERT INTO Signupinfo(Contact, Address, Idproof, Signup_Id, profile)
+	VALUES(a_Contact, a_Address, a_Idproof, last_id, a_profile);
+END

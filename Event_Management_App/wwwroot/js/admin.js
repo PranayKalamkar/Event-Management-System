@@ -24,7 +24,7 @@ function getAdminList() {
                         data: null,
                         render: function (data, type, row) {
 
-                            return '<button type="button" onclick="populateadminData(' + row.Id + ')" class="btn btn-warning" data-bs-toggle="modal" data-bs-target="#updateAdmin" style="margin-right: 10px;">Edit</button><button type="button" onclick="deleteadminData(' + row.Id + ')" class="btn btn-danger" style="margin-right: 10px;" >Delete</button><button type="button" onclick="viewEventData(' + row.Id + ')" class="btn btn-info d-none" data-bs-toggle="modal" data-bs-target="#viewAddEventModal">Disable</button>';
+                            return '<button type="button" onclick="populateadminData(' + row.Id + ')" class="btn btn-warning" data-bs-toggle="modal" data-bs-target="#updateAdmin" style="margin-right: 10px;">Edit</button><button type="button" onclick="deleteadminData(' + row.Id + ')" class="btn btn-danger" style="margin-right: 10px;" >Delete</button><button type="button" onclick="viewEventData(' + row.Id + ')" class="btn btn-info" data-bs-toggle="modal" data-bs-target="#viewAddEventModal">View</button>';
 
                         }
                     },
@@ -49,10 +49,14 @@ function addAdmin() {
             Email: $('#Email').val(),
             SPassword: $('#SPassword').val(),
             ConfirmSPassword: $('#ConfirmSPassword').val(),
+            Contact: $('#Contact').val(),
+            Address: $('#Address').val(),
         }
 
         var formData = new FormData();
         formData.append("model", JSON.stringify(eventObj));
+        formData.append("idproof", $('#IdProofFile')[0].files[0]);
+        formData.append("profile", $('#ProfileFile')[0].files[0]);
 
         $.ajax({
             url: "/Admin/AddAdminPost",
@@ -93,6 +97,41 @@ function addAdmin() {
     }
 }
 
+function previewIdProof(input) {
+    var file = input.files[0];
+
+    if (file) {
+        var reader = new FileReader();
+
+        reader.onload = function (e) {
+            $('#IdProofUpdate').attr('src', e.target.result).show();
+        };
+
+        reader.readAsDataURL(file);
+    } else {
+        // Clear the image preview if no file is selected
+        $('#IdProofUpdate').attr('src', '').hide();
+    }
+}
+
+
+function previewProfile(input) {
+    var file = input.files[0];
+
+    if (file) {
+        var reader = new FileReader();
+
+        reader.onload = function (e) {
+            $('#ProfileUpdate').attr('src', e.target.result).show();
+        };
+
+        reader.readAsDataURL(file);
+    } else {
+        // Clear the image preview if no file is selected
+        $('#ProfileUpdate').attr('src', '').hide();
+    }
+}
+
 function populateadminData(ID) {
 
     $.ajax({
@@ -107,6 +146,14 @@ function populateadminData(ID) {
             $('#u_Id').val(admin.Id);
             $('#u_Username').val(admin.Username);
             $('#u_Email').val(admin.Email);
+            $('#u_Contact').val(admin.Contact);
+            $('#u_Address').val(admin.Address);
+
+            var IdProofPreview = "/admin_useridproof/" + admin.IdProofPath;
+            $('#IdProofUpdate').attr('src', IdProofPreview).show();
+
+            var profilePreview = "/admin_userimage/" + admin.ProfilePath;
+            $('#ProfileUpdate').attr('src', profilePreview).show();
 
         },
         error: function (errormessage) {
@@ -126,11 +173,15 @@ function updateAdmin() {
         var adminData = {
             Username: $('#u_Username').val(),
             Email: $('#u_Email').val(),
+            Contact: $('#u_Contact').val(),
+            Address: $('#u_Address').val(),
         };
 
         var formData = new FormData();
         formData.append("ID", adminID.id);
         formData.append("model", JSON.stringify(adminData));
+        formData.append("idproof", $("#u_IdProofFile")[0].files[0]);
+        formData.append("profile", $("#u_ProfileFile")[0].files[0]);
 
         $.ajax({
             type: "POST",
@@ -169,6 +220,33 @@ function updateAdmin() {
             }
         });
     }
+}
+
+function viewadmin_userData(ID) {
+
+    $.ajax({
+        type: "GET",
+        url: "/Admin/PopulateAdmin/?ID=" + ID,
+
+        success: function (admin) {
+
+            // Populate the form with the received employee details
+            $('#v_Id').val(admin.Id);
+            $('#v_Username').val(admin.Username);
+            $('#v_Email').val(admin.Email);
+            $('#v_Contact').val(admin.Contact);
+            $('#v_Address').val(admin.Address);
+
+            var IdProofPreview = "/admin_useridproof/" + admin.IdProofPath;
+            $('#IdProofView').attr('src', IdProofPreview).show();
+
+            var profilePreview = "/admin_userimage/" + admin.ProfilePath;
+            $('#ProfileView').attr('src', profilePreview).show();
+        },
+        error: function (errormessage) {
+            alert(errormessage.responseText);
+        }
+    });
 }
 
 function deleteadminData(ID) {

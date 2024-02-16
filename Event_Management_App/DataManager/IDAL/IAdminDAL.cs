@@ -4,15 +4,15 @@ namespace Event_Management_App.DataManager.IDAL
 {
     public interface IAdminDAL
     {
-        public List<AdminModel> GetAdminList();
+        public List<Admin_UserModel> GetAdminList();
 
-        public AdminModel AddAdmin(AdminModel sign);
+        public Admin_UserModel AddAdmin(Admin_UserModel sign);
 
         public bool CheckEmailExist(string emailId, int Id);
 
-        public AdminModel PopulateAdminData(int ID);
+        public Admin_UserModel PopulateAdminData(int ID);
 
-        public AdminModel UpdateAdminData(AdminModel adminmodel, int ID);
+        public Admin_UserModel UpdateAdminData(Admin_UserModel adminmodel, int ID);
 
         public void DeleteAdminData(int ID);
     }

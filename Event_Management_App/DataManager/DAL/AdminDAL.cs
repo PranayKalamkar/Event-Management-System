@@ -14,9 +14,9 @@ namespace Event_Management_App.DataManager.DAL
             _dBManager = dbManager;
         }
 
-        public List<AdminModel> GetAdminList()
+        public List<Admin_UserModel> GetAdminList()
         {
-            List<AdminModel> userList = new List<AdminModel>();
+            List<Admin_UserModel> userList = new List<Admin_UserModel>();
 
             _dBManager.InitDbCommand("GetAllAdmin", CommandType.StoredProcedure);
 
@@ -24,7 +24,7 @@ namespace Event_Management_App.DataManager.DAL
 
             foreach (DataRow item in ds.Tables[0].Rows)
             {
-                AdminModel model = new AdminModel();
+                Admin_UserModel model = new Admin_UserModel();
 
                 model.Id = item["Id"].ConvertDBNullToInt();
                 model.Username = item["Username"].ConvertDBNullToString();
@@ -38,16 +38,20 @@ namespace Event_Management_App.DataManager.DAL
 
         }
 
-        public AdminModel AddAdmin(AdminModel sign)
+        public Admin_UserModel AddAdmin(Admin_UserModel sign)
         {
             sign.SPassword = sign.SPassword + _dBManager.getSalt();
 
-            _dBManager.InitDbCommand("InsertAdmin", CommandType.StoredProcedure);
+            _dBManager.InitDbCommand("InsertAdmin_User", CommandType.StoredProcedure);
 
-            _dBManager.AddCMDParam("@Username", sign.Username);
-            _dBManager.AddCMDParam("@Email", sign.Email);
-            _dBManager.AddCMDParam("@SPassword", sign.SPassword);
-            _dBManager.AddCMDParam("@u_RoleId", sign.Role);
+            _dBManager.AddCMDParam("@a_UserName", sign.Username);
+            _dBManager.AddCMDParam("@a_Email", sign.Email);
+            _dBManager.AddCMDParam("@a_SPassword", sign.SPassword);
+            _dBManager.AddCMDParam("@a_RoleId", sign.Role);
+            _dBManager.AddCMDParam("@a_Contact", sign.Contact);
+            _dBManager.AddCMDParam("@a_Address", sign.Address);
+            _dBManager.AddCMDParam("@a_Idproof", sign.IdProofPath);
+            _dBManager.AddCMDParam("@a_profile", sign.ProfilePath);
 
 
             _dBManager.ExecuteNonQuery();
@@ -70,11 +74,11 @@ namespace Event_Management_App.DataManager.DAL
             return emailExist;
         }
 
-        public AdminModel PopulateAdminData(int ID)
+        public Admin_UserModel PopulateAdminData(int ID)
         {
-            _dBManager.InitDbCommand("GetAdminbyId", CommandType.StoredProcedure);
+            _dBManager.InitDbCommand("PopulateAdmin_UserbyId", CommandType.StoredProcedure);
 
-            AdminModel adminmodel = null;
+            Admin_UserModel adminmodel = null;
 
             _dBManager.AddCMDParam("@p_id", ID);
 
@@ -82,22 +86,30 @@ namespace Event_Management_App.DataManager.DAL
 
             foreach (DataRow item in ds.Tables[0].Rows)
             {
-                adminmodel = new AdminModel();
+                adminmodel = new Admin_UserModel();
 
                 adminmodel.Id = item["Id"].ConvertDBNullToInt();
                 adminmodel.Username = item["Username"].ConvertDBNullToString();
                 adminmodel.Email = item["Email"].ConvertDBNullToString();
+                adminmodel.Contact = item["Contact"].ConvertDBNullToString();
+                adminmodel.Address = item["Address"].ConvertDBNullToString();
+                adminmodel.IdProofPath = item["Idproof"].ConvertDBNullToString();
+                adminmodel.ProfilePath = item["profile"].ConvertDBNullToString();
             }
             return adminmodel;
         }
 
-        public AdminModel UpdateAdminData(AdminModel adminmodel, int ID)
+        public Admin_UserModel UpdateAdminData(Admin_UserModel adminmodel, int ID)
         {
-            _dBManager.InitDbCommand("UpdateadminById", CommandType.StoredProcedure);
+            _dBManager.InitDbCommand("Updateadmin_userById", CommandType.StoredProcedure);
 
             _dBManager.AddCMDParam("u_Id", ID);
             _dBManager.AddCMDParam("Username", adminmodel.Username);
             _dBManager.AddCMDParam("Email", adminmodel.Email);
+            _dBManager.AddCMDParam("u_Contact", adminmodel.Contact);
+            _dBManager.AddCMDParam("u_Address", adminmodel.Address);
+            _dBManager.AddCMDParam("u_IdProof", adminmodel.IdProofPath);
+            _dBManager.AddCMDParam("u_Profile", adminmodel.ProfilePath);
 
             _dBManager.ExecuteNonQuery();
 

@@ -30,13 +30,13 @@ namespace Event_Management_App.Controllers
         }
 
         [HttpPost]
-        public IActionResult AddAdmin_UserPost(string model)
+        public IActionResult AddAdmin_UserPost(string model, IFormFile idproof, IFormFile profile)
         {
             Admin_UserModel admin_user = JsonSerializer.Deserialize<Admin_UserModel>(model)!;
 
             if(ModelState.IsValid) 
             {
-                var result = _IAdmin_UserBAL.AddAdmin_User(admin_user);
+                var result = _IAdmin_UserBAL.AddAdmin_User(admin_user, idproof, profile);
 
                 if(result == "Exist")
                 {
@@ -55,13 +55,13 @@ namespace Event_Management_App.Controllers
         }
 
         [HttpPost]
-        public IActionResult UpdateAdmin_User(string model, int ID)
+        public IActionResult UpdateAdmin_User(string model, int ID, IFormFile idproof, IFormFile profile)
         {
             Admin_UserModel admin_user = JsonSerializer.Deserialize<Admin_UserModel>(model)!;
 
             if (ModelState.IsValid)
             {
-                var result = _IAdmin_UserBAL.UpdateAdmin_UserData(admin_user, ID);
+                var result = _IAdmin_UserBAL.UpdateAdmin_UserData(admin_user, ID, idproof, profile);
 
                 if (result == "Exist")
                 {

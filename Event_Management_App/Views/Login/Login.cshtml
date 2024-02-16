@@ -18,6 +18,7 @@
                         <label asp-for="Email">Email:</label>
                         @Html.ValidationMessageFor(model => model.Email, "", new { @class = "text-danger" })
                     </div>
+
                     <div class="input-group">
                         @Html.PasswordFor(model => model.SPassword, new { @placeholder = "Password..", autocomplete = "off" })
                         <label asp-for="SPassword">Password:</label>

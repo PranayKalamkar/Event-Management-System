@@ -45,10 +45,14 @@ namespace Event_Management_App.DataManager.DAL
 
             _dBManager.InitDbCommand("InsertAdmin_User", CommandType.StoredProcedure);
 
-            _dBManager.AddCMDParam("@Username", sign.Username);
-            _dBManager.AddCMDParam("@Email", sign.Email);
-            _dBManager.AddCMDParam("@SPassword", sign.SPassword);
-            _dBManager.AddCMDParam("@u_RoleId", sign.Role);
+            _dBManager.AddCMDParam("@a_UserName", sign.Username);
+            _dBManager.AddCMDParam("@a_Email", sign.Email);
+            _dBManager.AddCMDParam("@a_SPassword", sign.SPassword);
+            _dBManager.AddCMDParam("@a_RoleId", sign.Role);
+            _dBManager.AddCMDParam("@a_Contact", sign.Contact);
+            _dBManager.AddCMDParam("@a_Address", sign.Address);
+            _dBManager.AddCMDParam("@a_Idproof", sign.IdProofPath);
+            _dBManager.AddCMDParam("@a_profile", sign.ProfilePath);
 
 
             _dBManager.ExecuteNonQuery();
@@ -72,7 +76,7 @@ namespace Event_Management_App.DataManager.DAL
 
         public Admin_UserModel PopulateAdmin_UserData(int ID)
         {
-            _dBManager.InitDbCommand("GetAdmin_UserbyId", CommandType.StoredProcedure);
+            _dBManager.InitDbCommand("PopulateAdmin_UserbyId", CommandType.StoredProcedure);
 
             Admin_UserModel adminusermodel = null;
 
@@ -87,6 +91,10 @@ namespace Event_Management_App.DataManager.DAL
                 adminusermodel.Id = item["Id"].ConvertDBNullToInt();
                 adminusermodel.Username = item["Username"].ConvertDBNullToString();
                 adminusermodel.Email = item["Email"].ConvertDBNullToString();
+                adminusermodel.Contact = item["Contact"].ConvertDBNullToString();
+                adminusermodel.Address = item["Address"].ConvertDBNullToString();
+                adminusermodel.IdProofPath = item["Idproof"].ConvertDBNullToString();
+                adminusermodel.ProfilePath = item["profile"].ConvertDBNullToString();
             }
             return adminusermodel;
         }
@@ -98,6 +106,10 @@ namespace Event_Management_App.DataManager.DAL
             _dBManager.AddCMDParam("u_Id", ID);
             _dBManager.AddCMDParam("u_Username", adminusermodel.Username);
             _dBManager.AddCMDParam("u_Email", adminusermodel.Email);
+            _dBManager.AddCMDParam("u_Contact", adminusermodel.Contact);
+            _dBManager.AddCMDParam("u_Address", adminusermodel.Address);
+            _dBManager.AddCMDParam("u_IdProof", adminusermodel.IdProofPath);
+            _dBManager.AddCMDParam("u_Profile", adminusermodel.ProfilePath);
 
             _dBManager.ExecuteNonQuery();
 

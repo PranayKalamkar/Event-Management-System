@@ -17,7 +17,7 @@
 </div>
 
 <!-- Modal for Add Data -->
-<div class="modal fade" id="addUser" tabindex="-1" aria-labelledby="addUserLabel" aria-hidden="true">
+<div class="modal fade" id="addUser" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="addUserLabel" aria-hidden="true">
     <div class="modal-dialog">
         <div class="modal-content">
             <div class="modal-header">
@@ -29,24 +29,64 @@
 
                 <form id="create" action="#" name="add">
 
-                    <div class="mb-3">
-                        <label for="Username" class="form-label">Username : </label>
-                        <input id="Username" type="text" name="Username" class="form-control" autocomplete="off" maxlength="50" required />
+                    <div class="row">
+                        <div class="col-md-6">
+                            <div class="mb-3">
+                                <label for="Username" class="form-label">Username : </label>
+                                <input id="Username" type="text" name="Username" class="form-control" autocomplete="off" maxlength="50" required />
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="mb-3">
+                                <label for="Email" class="form-label">Email : </label>
+                                <input id="Email" type="email" name="Email" class="form-control" autocomplete="off" maxlength="50" required />
+                            </div>
+                        </div>
                     </div>
 
-                    <div class="mb-3">
-                        <label for="Email" class="form-label">Email : </label>
-                        <input id="Email" type="email" name="Email" class="form-control" autocomplete="off" maxlength="50" required />
+                    <div class="row">
+                        <div class="col-md-6">
+                            <div class="mb-3">
+                                <label for="SPassword" class="form-label">Password : </label>
+                                <input id="SPassword" type="password" name="SPassword" class="form-control" autocomplete="off" maxlength="30" required />
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="mb-3">
+                                <label for="ConfirmSPassword" class="form-label">Confirm Password : </label>
+                                <input id="ConfirmSPassword" type="password" name="ConfirmSPassword" class="form-control" autocomplete="off" maxlength="30" required />
+                            </div>
+                        </div>
                     </div>
 
-                    <div class="mb-3">
-                        <label for="SPassword" class="form-label">Password : </label>
-                        <input id="SPassword" type="password" name="SPassword" class="form-control" autocomplete="off" maxlength="30" required />
+                    <div class="row">
+                        <div class="col-md-6">
+                            <div class="mb-3">
+                                <label for="Contact" class="form-label">Contact : </label>
+                                <input id="Contact" type="text" name="Contact" class="form-control" autocomplete="off" maxlength="10" required />
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="mb-3">
+                                <label for="Address" class="form-label">Address : </label>
+                                <input id="Address" type="text" name="Address" class="form-control" autocomplete="off" maxlength="100" required />
+                            </div>
+                        </div>
                     </div>
 
-                    <div class="mb-3">
-                        <label for="ConfirmSPassword" class="form-label">Confirm Password : </label>
-                        <input id="ConfirmSPassword" type="password" name="ConfirmSPassword" class="form-control" autocomplete="off" maxlength="30" required />
+                    <div class="row">
+                        <div class="col-md-6">
+                            <div class="mb-3">
+                                <label for="IdProofFile" class="form-label">IdProof : </label>
+                                <input id="IdProofFile" name="IdProofFile" type="file" class="form-control" autocomplete="off" required />
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="mb-3">
+                                <label for="ProfileFile" class="form-label">Profile : </label>
+                                <input id="ProfileFile" name="ProfileFile" type="file" class="form-control" autocomplete="off" required />
+                            </div>
+                        </div>
                     </div>
 
                 </form>
@@ -62,7 +102,7 @@
 </div>
 
 <!-- Modal for Update Data -->
-<div class="modal fade" id="updateUser" tabindex="-1" aria-labelledby="updateUserModal" aria-hidden="true">
+<div class="modal fade" id="updateUser" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="updateUserModal" aria-hidden="true">
     <div class="modal-dialog">
         <div class="modal-content">
             <div class="modal-header">
@@ -76,23 +116,71 @@
 
                     <input hidden id="u_Id" name="Id" />
 
-                    <div class="mb-3">
-                        <label for="Username" class="form-label">Username : </label>
-                        <input id="u_Username" type="text" name="Username" class="form-control" autocomplete="off" required />
+                    <div class="row">
+                        <div class="col-md-6">
+                            <div class="mb-3">
+                                <label for="Username" class="form-label">Username : </label>
+                                <input id="u_Username" type="text" name="Username" class="form-control" autocomplete="off" required />
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="mb-3">
+                                <label for="Email" class="form-label">Email : </label>
+                                <input id="u_Email" type="email" name="Email" class="form-control" autocomplete="off" required />
+                            </div>
+                        </div>
                     </div>
 
-                    <div class="mb-3">
-                        <label for="Email" class="form-label">Email : </label>
-                        <input id="u_Email" type="email" name="Email" class="form-control" autocomplete="off" required />
+                    <div class="row">
+                        <div class="col-md-6">
+                            <div class="mb-3">
+                                <label for="Contact" class="form-label">Contact : </label>
+                                <input id="u_Contact" type="text" name="Contact" class="form-control" autocomplete="off" required />
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="mb-3">
+                                <label for="Address" class="form-label">Address : </label>
+                                <input id="u_Address" type="text" name="Address" class="form-control" autocomplete="off" required />
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="row">
+                        <div class="col-md-6">
+                            <div class="mb-3">
+                                <label for="IdProofFile" class="form-label">IdProof : </label>
+                                <input id="u_IdProofFile" type="file" name="IdProofFile" class="form-control" onchange="previewIdProof(this)" autocomplete="off" required />
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="mb-3" style="display: flex; flex-direction: column;">
+                                <img id="IdProofUpdate" style="max-width: 50%; max-height: 150px; margin-top: 10px; display: none;">
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="row">
+                        <div class="col-md-6">
+                            <div class="mb-3">
+                                <label for="ProfileFile" class="form-label">Profile : </label>
+                                <input id="u_ProfileFile" type="file" name="ProfileFile" class="form-control" onchange="previewProfile(this)" autocomplete="off" required />
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="mb-3" style="display: flex; flex-direction: column;">
+                                <img id="ProfileUpdate" style="max-width: 50%; max-height: 150px; margin-top: 10px; display: none;">
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                        <button type="button" onclick="updateUser()" class="btn btn-success">Save changes</button>
                     </div>
 
                 </form>
 
-            </div>
-
-            <div class="modal-footer">
-                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-                <button type="button" onclick="updateUser()" class="btn btn-success">Save changes</button>
             </div>
 
         </div>
@@ -100,7 +188,7 @@
 </div>
 
 <!-- Modal for View Data -->
-<div class="modal fade" id="viewUser" tabindex="-1" aria-labelledby="viewUserModal" aria-hidden="true">
+<div class="modal fade" id="viewUser" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="viewUserModal" aria-hidden="true">
     <div class="modal-dialog modal-lg">
         <div class="modal-content">
             <div class="modal-header">
@@ -118,13 +206,13 @@
                         <div class="col-md-6">
                             <div class="mb-3">
                                 <label for="Username" class="form-label">Username : </label>
-                                <input id="v_Username" type="text" name="Username" class="form-control" autocomplete="off" required />
+                                <input id="v_Username" type="text" name="Username" class="form-control" autocomplete="off" readonly />
                             </div>
                         </div>
                         <div class="col-md-6">
                             <div class="mb-3">
                                 <label for="Email" class="form-label">Email : </label>
-                                <input id="v_Email" type="email" name="Email" class="form-control" autocomplete="off" required />
+                                <input id="v_Email" type="email" name="Email" class="form-control" autocomplete="off" readonly />
                             </div>
                         </div>
                     </div>
@@ -133,13 +221,13 @@
                         <div class="col-md-6">
                             <div class="mb-3">
                                 <label for="Contact" class="form-label">Contact : </label>
-                                <input id="v_Contact" type="text" name="Contact" class="form-control" autocomplete="off" required />
+                                <input id="v_Contact" type="text" name="Contact" class="form-control" autocomplete="off" readonly />
                             </div>
                         </div>
                         <div class="col-md-6">
                             <div class="mb-3">
                                 <label for="Address" class="form-label">Address : </label>
-                                <input id="v_Address" type="text" name="Address" class="form-control" autocomplete="off" required />
+                                <input id="v_Address" type="text" name="Address" class="form-control" autocomplete="off" readonly />
                             </div>
                         </div>
                     </div>
@@ -147,10 +235,19 @@
                     <div class="row">
                         <div class="col-md-6">
                             <div class="mb-3">
-                                <label for="ImageFile" class="form-label">IdProof : </label>
-                                @* <input id="v_ImageFile" type="file" name="ImageFile" class="form-control" onchange="previewImage(this)" autocomplete="off" required /> *@
+                                <label for="IdProofFile" class="form-label">IdProof : </label>
+                                <input id="u_IdProofFile" type="file" name="IdProofFile" class="form-control" onchange="previewIdProof(this)" autocomplete="off" hidden />
                                 <div class="mb-3" style="display: flex; flex-direction: column;">
-                                    <img id="imagePreviewUpdate" src="#" alt="Image Preview" style="max-width: 30%; max-height: 150px; margin-top: 10px; display: none;">
+                                    <img id="IdProofView" style="max-width: 50%; max-height: 150px; margin-top: 10px; display: none;">
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="mb-3">
+                                <label for="ProfileFile" class="form-label">Profile : </label>
+                                <input id="u_ProfileFile" type="file" name="ProfileFile" class="form-control" onchange="previewProfile(this)" autocomplete="off" hidden />
+                                <div class="mb-3" style="display: flex; flex-direction: column;">
+                                    <img id="ProfileView" style="max-width: 50%; max-height: 150px; margin-top: 10px; display: none;">
                                 </div>
                             </div>
                         </div>

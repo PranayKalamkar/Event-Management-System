@@ -4,10 +4,12 @@ namespace Event_Management_App.BussinessManager.IBAL
 {
     public interface IAdminBAL
     {
-        public List<AdminModel> GetAdminList();
-        public string AddAdmin(AdminModel sign);
-        public AdminModel PopulateAdminData(int ID);
-        public string UpdateAdminData(AdminModel adminmodel, int ID);
+        public List<Admin_UserModel> GetAdminList();
+        public string AddAdmin(Admin_UserModel sign, IFormFile idproof, IFormFile profile);
+        public Admin_UserModel PopulateAdminData(int ID);
+        public string UpdateAdminData(Admin_UserModel adminmodel, int ID, IFormFile idproof, IFormFile profile);
         public void DeleteAdminData(int ID);
+        public string UploadIdProof(IFormFile imageFile);
+        public string UploadProfile(IFormFile imageFile);
     }
 }

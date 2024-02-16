@@ -25,19 +25,19 @@ namespace Event_Management_App.Controllers
             return Json(_IAdminBAL.GetAdminList());
         }
 
-        public IActionResult AddAdmin(string model)
+        public IActionResult AddAdmin()
         {
             return View();
         }
 
         [HttpPost]
-        public IActionResult AddAdminPost(string model)
+        public IActionResult AddAdminPost(string model, IFormFile idproof, IFormFile profile)
         {
-            AdminModel admin = JsonSerializer.Deserialize<AdminModel>(model)!;
+            Admin_UserModel admin = JsonSerializer.Deserialize<Admin_UserModel>(model)!;
 
             if (ModelState.IsValid)
             {
-                var result = _IAdminBAL.AddAdmin(admin);
+                var result = _IAdminBAL.AddAdmin(admin, idproof, profile);
 
                 if (result == "Exist")
                 {
@@ -56,13 +56,13 @@ namespace Event_Management_App.Controllers
         }
 
         [HttpPost]
-        public IActionResult UpdateAdmin(string model, int ID)
+        public IActionResult UpdateAdmin(string model, int ID, IFormFile idproof, IFormFile profile)
         {
-            AdminModel admin = JsonSerializer.Deserialize<AdminModel>(model)!;
+            Admin_UserModel admin = JsonSerializer.Deserialize<Admin_UserModel>(model)!;
 
             if (ModelState.IsValid)
             {
-                var result = _IAdminBAL.UpdateAdminData(admin, ID);
+                var result = _IAdminBAL.UpdateAdminData(admin, ID, idproof, profile);
 
                 if (result == "Exist")
                 {

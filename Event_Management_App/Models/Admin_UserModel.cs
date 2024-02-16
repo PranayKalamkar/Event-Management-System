@@ -29,5 +29,17 @@ namespace Event_Management_App.Models
         [Required]
         public int Role { get; set; }
 
+        public string? Contact { get; set; }
+
+        public string? Address { get; set; }
+
+        public string? IdProofPath { get; set; }
+
+        public IFormFile? IdProofFile { get; set; }
+
+        public string? ProfilePath { get; set; }
+
+        public IFormFile? ProfileFile { get; set; }
+
     }
 }

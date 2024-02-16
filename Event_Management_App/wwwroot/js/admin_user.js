@@ -23,7 +23,7 @@ function getAdmin_UserList() {
                         data: null,
                         render: function (data, type, row) {
 
-                            return '<button type="button" onclick="populateadmin_userData(' + row.Id + ')" class="btn btn-warning" data-bs-toggle="modal" data-bs-target="#updateUser" style="margin-right: 10px;">Edit</button><button type="button" onclick="deleteadmin_userData(' + row.Id + ')" class="btn btn-danger" style="margin-right: 10px;" >Delete</button><button type="button" onclick="viewadmin_userData(' + row.Id + ')" class="btn btn-info d-none" data-bs-toggle="modal" data-bs-target="#viewUser">View</button>';
+                            return '<button type="button" onclick="populateadmin_userData(' + row.Id + ')" class="btn btn-warning" data-bs-toggle="modal" data-bs-target="#updateUser" style="margin-right: 10px;">Edit</button><button type="button" onclick="deleteadmin_userData(' + row.Id + ')" class="btn btn-danger" style="margin-right: 10px;" >Delete</button><button type="button" onclick="viewadmin_userData(' + row.Id + ')" class="btn btn-info" data-bs-toggle="modal" data-bs-target="#viewUser">View</button>';
 
                         }
                     },
@@ -48,10 +48,14 @@ function addUser() {
             Email: $('#Email').val(),
             SPassword: $('#SPassword').val(),
             ConfirmSPassword: $('#ConfirmSPassword').val(),
+            Contact: $('#Contact').val(),
+            Address: $('#Address').val(),
         }
 
         var formData = new FormData();
         formData.append("model", JSON.stringify(eventObj));
+        formData.append("idproof", $('#IdProofFile')[0].files[0]);
+        formData.append("profile", $('#ProfileFile')[0].files[0]);
 
         $.ajax({
             url: "/Admin_User/AddAdmin_UserPost",
@@ -91,6 +95,43 @@ function addUser() {
 }
 
 
+
+function previewIdProof(input) {
+    var file = input.files[0];
+
+    if (file) {
+        var reader = new FileReader();
+
+        reader.onload = function (e) {
+            $('#IdProofUpdate').attr('src', e.target.result).show();
+        };
+
+        reader.readAsDataURL(file);
+    } else {
+        // Clear the image preview if no file is selected
+        $('#IdProofUpdate').attr('src', '').hide();
+    }
+}
+
+
+function previewProfile(input) {
+    var file = input.files[0];
+
+    if (file) {
+        var reader = new FileReader();
+
+        reader.onload = function (e) {
+            $('#ProfileUpdate').attr('src', e.target.result).show();
+        };
+
+        reader.readAsDataURL(file);
+    } else {
+        // Clear the image preview if no file is selected
+        $('#ProfileUpdate').attr('src', '').hide();
+    }
+}
+
+
 function populateadmin_userData(ID) {
 
     $.ajax({
@@ -104,6 +145,14 @@ function populateadmin_userData(ID) {
             $('#u_Id').val(admin_user.Id);
             $('#u_Username').val(admin_user.Username);
             $('#u_Email').val(admin_user.Email);
+            $('#u_Contact').val(admin_user.Contact);
+            $('#u_Address').val(admin_user.Address);
+
+            var IdProofPreview = "/admin_useridproof/" + admin_user.IdProofPath;
+            $('#IdProofUpdate').attr('src', IdProofPreview).show();
+
+            var profilePreview = "/admin_userimage/" + admin_user.ProfilePath;
+            $('#ProfileUpdate').attr('src', profilePreview).show();
 
         },
         error: function (errormessage) {
@@ -123,11 +172,15 @@ function updateUser() {
         var admin_userData = {
             Username: $('#u_Username').val(),
             Email: $('#u_Email').val(),
+            Contact: $('#u_Contact').val(),
+            Address: $('#u_Address').val(),
         };
 
         var formData = new FormData();
         formData.append("ID", admin_userID.id);
         formData.append("model", JSON.stringify(admin_userData));
+        formData.append("idproof", $("#u_IdProofFile")[0].files[0]);
+        formData.append("profile", $("#u_ProfileFile")[0].files[0]);
 
         $.ajax({
             type: "POST",
@@ -184,8 +237,11 @@ function viewadmin_userData(ID) {
             $('#v_Contact').val(admin_user.Contact);
             $('#v_Address').val(admin_user.Address);
 
-            var imagePreview = "/adminuserimage/" + admin_user.IdProofPath;
-            $('#imagePreviewUpdate').attr('src', imagePreview).show();
+            var IdProofPreview = "/admin_useridproof/" + admin_user.IdProofPath;
+            $('#IdProofView').attr('src', IdProofPreview).show();
+
+            var profilePreview = "/admin_userimage/" + admin_user.ProfilePath;
+            $('#ProfileView').attr('src', profilePreview).show();
         },
         error: function (errormessage) {
             alert(errormessage.responseText);
