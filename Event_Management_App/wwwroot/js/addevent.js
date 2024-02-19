@@ -11,16 +11,15 @@ function getAddEventList() {
             data.forEach(function (item) {
                 var card = `
                                                                                                  <div class="col-md-4 mb-4">
-                                                                                                       <div class="card h-100 mb-4">
+                                                                                                       <div class="card h-100 mb-4" onclick="viewEventData(${item.AddEventModel.Id})" data-bs-toggle="modal" data-bs-target="#viewAddEventModal">
                                                                                                              <img src="/addeventimages/${item.AddEventModel.ImagePath}" class="card-img-top" alt="Image">
                                                                                                                    <div class="card-body">
                                                                                                                       <h5 class="card-title">${item.AddEventModel.Category}</h5>
                                                                                                                       <p class="card-text">Location: ${item.AddEventModel.Location}</p>
                                                                                                                       <p class="card-text">Amount: ${item.AddEventModel.Amount}</p>
                                                                                                                       <p class="card-text">Status: ${item.EventStatusModel.Status}</p>
-                                                                                                                                 <a class="btn btn-info" onclick="viewEventData(${item.AddEventModel.Id})" data-bs-toggle="modal" data-bs-target="#viewAddEventModal">View</a>
-                                                                                                                                 <a class="btn btn-warning" onclick="populateEventData(${item.AddEventModel.Id})" data-bs-toggle="modal" data-bs-target="#updateEvent">Edit</a>
-                                                                                                                                 <a class="btn btn-danger" onclick="deleteEventData(${item.AddEventModel.Id})">Delete</a>
+                                                                                                                      <a class="btn btn-warning" onclick="populateEventData(${item.AddEventModel.Id})" data-bs-toggle="modal" data-bs-target="#updateEvent">Edit</a>
+                                                                                                                      <a class="btn btn-danger" onclick="deleteEventData(${item.AddEventModel.Id})">Delete</a>
                                                                                                                     </div>
                                                                                                        </div>
                                                                                                   </div>

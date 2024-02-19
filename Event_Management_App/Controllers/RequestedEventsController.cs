@@ -42,9 +42,43 @@ namespace Event_Management_App.Controllers
 
             GetAllBookedDetails bookevent = new GetAllBookedDetails();
 
-            await _IEmailSenderBAL.EmailSendAsync(Email, "Booking Confirm", "Congratulation Your Booking Is confirmed!");
+            //await _IEmailSenderBAL.EmailSendAsync(Email, "Booking Confirm", "Congratulation Your Booking Is confirmed!");
 
-            bookevent.RequestedEventsModel = new RequestedEventsModel();
+            if(Status_Id == 1)
+            {
+				await _IEmailSenderBAL.EmailSendAsync(Email, "Cancelled", "Sorry for Incovinience!");
+
+			}
+            else if(Status_Id == 2)
+            {
+				await _IEmailSenderBAL.EmailSendAsync(Email, "Booking Confirm", "Congratulation Your Booking Is confirmed!");
+			}
+			else if(Status_Id == 3)
+			{
+				await _IEmailSenderBAL.EmailSendAsync(Email, "Pending", "Your Order is on Hold!");
+			}
+
+			bookevent.SignUpModel = new SignUpModel();
+
+            string? adminEmail = HttpContext.Session.GetString("Email");
+
+            bookevent.SignUpModel.Email = adminEmail;
+
+			if (Status_Id == 1)
+			{
+				await _IEmailSenderBAL.EmailSendAsync(adminEmail, "Not Available", "Place is Already Booked!");
+			}
+			else if (Status_Id == 2)
+			{
+				await _IEmailSenderBAL.EmailSendAsync(adminEmail, "New Order", "Order Booked Successfully!");
+			}
+			else if (Status_Id == 3)
+			{
+				await _IEmailSenderBAL.EmailSendAsync(adminEmail, "Pending", "Order is on Hold!");
+			}
+
+			//await _IEmailSenderBAL.EmailSendAsync(adminEmail, "New Order", "Order Booked Successfully!");
+
 
             //int? status = Status_Id;
 

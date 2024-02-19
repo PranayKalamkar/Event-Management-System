@@ -11,14 +11,13 @@ function bookEventList() {
             data.forEach(function (item) {
                 var card = `
                                                     <div class="col-md-4 mb-4">
-                                                        <div class="card h-100 p-3">
+                                                        <div class="card h-100 p-3" onclick="populateBookData(${item.AddEventModel.Id})" data-bs-toggle="modal" data-bs-target="#bookEvent">
                                                             <img src="/addeventimages/${item.AddEventModel.ImagePath}" class="card-img-top" alt="Image">
                                                             <div class="card-body">
                                                                 <h5 class="card-title">${item.AddEventModel.Category}</h5>
                                                                 <p class="card-text">Location: ${item.AddEventModel.Location}</p>
                                                                 <p class="card-text">Capacity: ${item.AddEventModel.Capacity}</p>
                                                                 <p class="card-text">Amount: ${item.AddEventModel.Amount}</p>
-                                                                <button class="btn btn-info" onclick="populateBookData(${item.AddEventModel.Id})" data-bs-toggle="modal" data-bs-target="#bookEvent">Book Now</button>
                                                             </div>
                                                         </div>
                                                     </div>

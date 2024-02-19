@@ -1,6 +1,6 @@
 ﻿$(document).ready(function () {
     getAddEventList();
-    // GetStatus();
+    GetStatus();
 });
 
 function getAddEventList() {
@@ -12,7 +12,7 @@ function getAddEventList() {
             data.forEach(function (item) {
                 var card = `
                                                                                                     <div class="col-md-4 mb-4">
-                                                                                                        <div class="card h-100 p-3">
+                                                                                                        <div class="card h-100 p-3" onclick="populateEventData(${item.RequestedEventsModel.Id})" data-bs-toggle="modal" data-bs-target="#viewbookEventModal">
                                                                                                             <img src="/addeventimages/${item.AddEventModel.ImagePath}" class="card-img-top" alt="Image">
                                                                                                             <div class="card-body">
                                                                                                                 <h5 class="card-title">${item.AddEventModel.Category}</h5>
@@ -21,7 +21,6 @@ function getAddEventList() {
                                                                                                                 <p class="card-text">Deposit: ${item.RequestedEventsModel.Deposit}</p>
                                                                                                                 <p class="card-text">Balance: ${item.RequestedEventsModel.Balance}</p>
                                                                                                                 <p class="card-text">Status: ${item.EventStatusModel.Status}</p>
-                                                                                                                <button class="btn btn-info" onclick="populateEventData(${item.RequestedEventsModel.Id})" data-bs-toggle="modal" data-bs-target="#viewbookEventModal">View</button>
                                                                                                             </div>
                                                                                                         </div>
                                                                                                     </div>
@@ -75,7 +74,7 @@ function populateEventData(Id) {
             $('#v_Balance').val(bookevent.RequestedEventsModel.Balance);
             $('#v_Date').val(bookevent.RequestedEventsModel.Date);
             $('#v_Time').val(bookevent.RequestedEventsModel.Time);
-            $('#v_Status').val(bookevent.EventStatusModel.Status);
+            $('#v_Status').val(bookevent.RequestedEventsModel.Status_Id);
 
             var imagePreview = '/addeventimages/' + bookevent.AddEventModel.ImagePath;
             $('#imagePreviewView').attr('src', imagePreview).show();
@@ -84,4 +83,92 @@ function populateEventData(Id) {
             alert(errormessage.responseText);
         }
     });
+}
+
+
+function GetStatus() {
+
+    $.ajax({
+        url: '/BookedEvents/GetStatus',
+        type: 'GET',
+        dataType: 'json', // assuming your server returns JSON
+        success: function (data) {
+
+            var dropdown = $('#v_Status');
+
+            dropdown.empty();
+
+            if (data) {
+
+                $.each(data, function (i, status) {
+                    if (status && status.EventStatusModel.Status && status.EventStatusModel.Id) {
+                        dropdown.append($('<option></option>').text(status.EventStatusModel.Status).val(status.EventStatusModel.Id));
+                    }
+                });
+
+            }
+        },
+        error: function (jqXHR, textStatus, errorThrown) {
+            console.log(textStatus, errorThrown);
+        }
+    });
+
+}
+
+
+function changeStatus() {
+
+    var statusID = {
+        Id: $('#v_Id').val(),
+        Status_Id: $('#v_Status').val(),
+    }
+
+
+    var formData = new FormData();
+    formData.append("Id", statusID.Id);
+    formData.append("Status_Id", statusID.Status_Id);
+
+    console.log(statusID);
+
+    $.ajax({
+        type: "POST",
+        url: "/BookedEvents/UpdateBookEvent",
+        data: formData,
+        contentType: false,
+        processData: false,
+        cache: false,
+
+        success: function (data) {
+
+            $('#viewbookEventModal').modal('hide');
+
+            Swal.fire({
+                title: "Do you want to save the changes?",
+                showDenyButton: true,
+                showCancelButton: true,
+                confirmButtonText: "Save",
+                denyButtonText: `Don't save`
+            }).then((result) => {
+                /* Read more about isConfirmed, isDenied below */
+                if (result.isConfirmed) {
+                    Swal.fire("Status Updated successfully!", "", "success");
+                }
+
+                // Remove all cards from the container
+                $('#cardContainer').empty();
+                getAddEventList();
+
+                window.location.href = "/Admin_CustomerBooking/Admin_CustomerBooking";
+            });
+
+        },
+        error: function (errormessage) {
+            Swal.fire({
+                title: "Error updating Status!",
+                text: "close",
+                icon: "Error"
+            });
+        }
+    });
+
 }

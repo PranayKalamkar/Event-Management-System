@@ -7,5 +7,10 @@ namespace Event_Management_App.BussinessManager.IBAL
         public List<GetAllBookedDetails> GetAllBookedEvents();
 
         public GetAllBookedDetails PopulateEventData(int ID);
+
+
+        public int UpdateEventData(int Status_Id, int Id);
+
+        public List<GetAllBookedDetails> GetStatus();
     }
 }

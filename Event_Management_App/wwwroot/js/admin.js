@@ -13,7 +13,6 @@ function getAdminList() {
         url: "/Admin/GetAdmin",
         success: function (data) {
 
-            debugger;
             datatable = $('#myTable').DataTable({
                 data: data,
                 columns: [
@@ -24,7 +23,7 @@ function getAdminList() {
                         data: null,
                         render: function (data, type, row) {
 
-                            return '<button type="button" onclick="populateadminData(' + row.Id + ')" class="btn btn-warning" data-bs-toggle="modal" data-bs-target="#updateAdmin" style="margin-right: 10px;">Edit</button><button type="button" onclick="deleteadminData(' + row.Id + ')" class="btn btn-danger" style="margin-right: 10px;" >Delete</button><button type="button" onclick="viewEventData(' + row.Id + ')" class="btn btn-info" data-bs-toggle="modal" data-bs-target="#viewAddEventModal">View</button>';
+                            return '<button type="button" onclick="populateadminData(' + row.Id + ')" class="btn btn-warning" data-bs-toggle="modal" data-bs-target="#updateAdmin" style="margin-right: 10px;">Edit</button><button type="button" onclick="deleteadminData(' + row.Id + ')" class="btn btn-danger" style="margin-right: 10px;" >Delete</button><button type="button" onclick="viewAdminData(' + row.Id + ')" class="btn btn-info" data-bs-toggle="modal" data-bs-target="#viewAdmin">View</button>';
 
                         }
                     },
@@ -222,7 +221,7 @@ function updateAdmin() {
     }
 }
 
-function viewadmin_userData(ID) {
+function viewAdminData(ID) {
 
     $.ajax({
         type: "GET",

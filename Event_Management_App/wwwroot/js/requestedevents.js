@@ -12,7 +12,7 @@ function getAddEventList() {
             data.forEach(function (item) {
                 var card = `
                                                                                                 <div class="col-md-4 mb-4">
-                                                                                                    <div class="card h-100 p-3">
+                                                                                                    <div class="card h-100 p-3" onclick="populateEventData(${item.RequestedEventsModel.Id})" data-bs-toggle="modal" data-bs-target="#requestedEventModal">
                                                                                                         <img src="/addeventimages/${item.AddEventModel.ImagePath}" class="card-img-top" alt="Image">
                                                                                                         <div class="card-body">
                                                                                                             <h5 class="card-title">${item.AddEventModel.Category}</h5>
@@ -21,7 +21,6 @@ function getAddEventList() {
                                                                                                                 <p class="card-text">Deposit: ${item.RequestedEventsModel.Deposit}</p>
                                                                                                                 <p class="card-text">Balance: ${item.RequestedEventsModel.Balance}</p>
                                                                                                             <p class="card-text">Status: ${item.EventStatusModel.Status}</p>
-                                                                                                                <button class="btn btn-info" onclick="populateEventData(${item.RequestedEventsModel.Id})" data-bs-toggle="modal" data-bs-target="#viewbookEventModal">View</button>
                                                                                                         </div>
                                                                                                     </div>
                                                                                                 </div>
@@ -144,19 +143,40 @@ function changeStatus() {
 
         success: function (data) {
 
+            $('#requestedEventModal').modal('hide');
+
             Swal.fire({
-                title: "Status Updated successfully!",
-                text: "close",
-                icon: "success"
+                title: "Do you want to save the changes?",
+                showDenyButton: true,
+                showCancelButton: true,
+                confirmButtonText: "Save",
+                denyButtonText: `Don't save`
+            }).then((result) => {
+                /* Read more about isConfirmed, isDenied below */
+                if (result.isConfirmed) {
+                    Swal.fire("Status Updated successfully!", "", "success");
+                }
+
+                // Remove all cards from the container
+                $('#cardContainer').empty();
+                getAddEventList();
+
+                window.location.href = "/BookedEvents/BookedEvents";
             });
 
-            $('#viewbookEventModal').modal('hide');
-            // datatable.destroy();
-            // Remove all cards from the container
-            $('#cardContainer').empty();
-            getAddEventList();
+            //Swal.fire({
+            //    title: "Status Updated successfully!",
+            //    text: "close",
+            //    icon: "success"
+            //});
 
-            window.location.href = "/BookedEvents/BookedEvents";
+            //$('#viewbookEventModal').modal('hide');
+            //// datatable.destroy();
+            //// Remove all cards from the container
+            //$('#cardContainer').empty();
+            //getAddEventList();
+
+            //window.location.href = "/BookedEvents/BookedEvents";
         },
         error: function (errormessage) {
             Swal.fire({

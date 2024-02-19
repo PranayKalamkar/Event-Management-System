@@ -1,4 +1,5 @@
-﻿using Event_Management_App.BussinessManager.IBAL;
+﻿using Event_Management_App.BussinessManager.BAL;
+using Event_Management_App.BussinessManager.IBAL;
 using Event_Management_App.CommonCode;
 using Event_Management_App.Models;
 using Microsoft.AspNetCore.Mvc;
@@ -9,10 +10,13 @@ namespace Event_Management_App.Controllers
     {
         ICustomerBookingBAL _ICustomerBookingBAL;
 
-        public CustomerBookingController(ICustomerBookingBAL customerbookBAL)
+		IEmailSenderBAL _IEmailSenderBAL;
+
+		public CustomerBookingController(ICustomerBookingBAL customerbookBAL, IEmailSenderBAL emailSenderBAL)
         {
             _ICustomerBookingBAL = customerbookBAL;
-        }
+			_IEmailSenderBAL = emailSenderBAL;
+		}
         public IActionResult CustomerBooking()
         {
             return View();
@@ -38,7 +42,9 @@ namespace Event_Management_App.Controllers
 
             _ICustomerBookingBAL.AddbookEventData(oData);
 
-            return Json("CustomerListEvent");
+            _IEmailSenderBAL.EmailSendAsync("pranaykalamkar07@gmail.com", "New Order", "Order Booked Successfully!");
+
+			return Json("CustomerListEvent");
         }
     }
 }
