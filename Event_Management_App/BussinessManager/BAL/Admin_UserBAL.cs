@@ -1,4 +1,5 @@
 ﻿using Event_Management_App.BussinessManager.IBAL;
+using Event_Management_App.CommonCode;
 using Event_Management_App.DataManager.DAL;
 using Event_Management_App.DataManager.IDAL;
 using Event_Management_App.Models;
@@ -60,16 +61,50 @@ namespace Event_Management_App.BussinessManager.BAL
 
             adminusermodel.IdProofFile = idproof;
 
-            if (adminusermodel.IdProofFile != null)
-            {
-                adminusermodel.IdProofPath = UploadIdProof(adminusermodel.IdProofFile);
-            }
-
             adminusermodel.ProfileFile = profile;
 
-            if (adminusermodel.ProfileFile != null)
+            adminusermodel.IdProofPath = UploadIdProof(adminusermodel.IdProofFile);
+
+            adminusermodel.ProfilePath = UploadProfile(adminusermodel.ProfileFile);
+
+            Admin_UserModel model = _IAdmin_UserDAL.GetDBImagesbyID(ID);
+
+            string existingIdProof = model.IdProofPath.ConvertDBNullToString();
+
+            string existingProfile = model.ProfilePath.ConvertDBNullToString();
+
+            if (adminusermodel.IdProofFile != null)
             {
+                if (!string.IsNullOrEmpty(existingIdProof))
+                {
+                    string oldIdPath = Path.Combine(Directory.GetCurrentDirectory(), "wwwroot", "admin_useridproof", existingIdProof);
+
+                    if (System.IO.File.Exists(oldIdPath))
+                    {
+                        System.IO.File.Delete(oldIdPath);
+                    }
+
+                }
+                adminusermodel.IdProofPath = UploadIdProof(adminusermodel.IdProofFile);
+            }
+            else if (adminusermodel.ProfileFile != null)
+            {
+                if (!string.IsNullOrEmpty(existingProfile))
+                {
+                    string oldProfilePath = Path.Combine(Directory.GetCurrentDirectory(), "wwwroot", "admin_userimage", existingProfile);
+
+                    if (System.IO.File.Exists(oldProfilePath))
+                    {
+                        System.IO.File.Delete(oldProfilePath);
+                    }
+                }
                 adminusermodel.ProfilePath = UploadProfile(adminusermodel.ProfileFile);
+            }
+            else
+            {
+                // If no new image is provided, use the existing image
+                adminusermodel.IdProofPath = existingIdProof;
+                adminusermodel.ProfilePath = existingProfile;
             }
 
             _IAdmin_UserDAL.UpdateAdmin_UserData(adminusermodel, ID);

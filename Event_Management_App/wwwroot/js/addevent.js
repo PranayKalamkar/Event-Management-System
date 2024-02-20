@@ -238,7 +238,7 @@ function deleteEventData(eventId) {
                     // datatable.destroy();
                     // Remove all cards from the container
                     $('#cardContainer').empty();
-                    getEmployeeList();
+                    getAddEventList();
 
                     Swal.fire({
                         title: "Deleted!",

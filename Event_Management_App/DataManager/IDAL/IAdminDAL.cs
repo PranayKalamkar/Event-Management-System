@@ -8,6 +8,8 @@ namespace Event_Management_App.DataManager.IDAL
 
         public Admin_UserModel AddAdmin(Admin_UserModel sign);
 
+        public Admin_UserModel GetDBImagesbyID(int ID);
+
         public bool CheckEmailExist(string emailId, int Id);
 
         public Admin_UserModel PopulateAdminData(int ID);

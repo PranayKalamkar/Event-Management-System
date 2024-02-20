@@ -23,12 +23,17 @@ function getAdmin_UserList() {
                         data: null,
                         render: function (data, type, row) {
 
-                            return '<button type="button" onclick="populateadmin_userData(' + row.Id + ')" class="btn btn-warning" data-bs-toggle="modal" data-bs-target="#updateUser" style="margin-right: 10px;">Edit</button><button type="button" onclick="deleteadmin_userData(' + row.Id + ')" class="btn btn-danger" style="margin-right: 10px;" >Delete</button><button type="button" onclick="viewadmin_userData(' + row.Id + ')" class="btn btn-info" data-bs-toggle="modal" data-bs-target="#viewUser">View</button>';
+                            return '<button type="button" onclick="populateadmin_userData(' + row.Id + '); event.stopPropagation();" class="btn btn-warning" data-bs-toggle="modal" data-bs-target="#updateUser" style="margin-right: 10px;">Edit</button><button type="button" onclick="deleteadmin_userData(' + row.Id + '); event.stopPropagation();" class="btn btn-danger" style="margin-right: 10px;" >Delete</button>';
 
                         }
                     },
 
-                ]
+                ],
+                rowCallback: function (row, data) {
+                    $(row).on('click', function () {
+                        viewadmin_userData(data.Id);
+                    });
+                }
             });
 
         },
@@ -242,6 +247,8 @@ function viewadmin_userData(ID) {
 
             var profilePreview = "/admin_userimage/" + admin_user.ProfilePath;
             $('#ProfileView').attr('src', profilePreview).show();
+
+            $('#viewUser').modal('show');
         },
         error: function (errormessage) {
             alert(errormessage.responseText);

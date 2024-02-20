@@ -60,6 +60,28 @@ namespace Event_Management_App.DataManager.DAL
             return sign;
         }
 
+        public Admin_UserModel GetDBImagesbyID(int ID)
+        {
+            Admin_UserModel adminusermodel = null;
+
+            _dBManager.InitDbCommand("GetAdmin_UserImages", CommandType.StoredProcedure);
+
+            _dBManager.AddCMDParam("@u_ID", ID);
+
+            DataSet ds = _dBManager.ExecuteDataSet();
+
+            foreach (DataRow item in ds.Tables[0].Rows)
+            {
+                adminusermodel = new Admin_UserModel();
+
+                adminusermodel.IdProofPath = item["Idproof"].ConvertJSONNullToString();
+                adminusermodel.ProfilePath = item["profile"].ConvertJSONNullToString();
+
+            }
+
+            return adminusermodel;
+        }
+
         public bool CheckEmailExist(string emailId, int Id)
         {
             _dBManager.InitDbCommand("CheckEmailExist", CommandType.StoredProcedure);
