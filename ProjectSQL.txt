@@ -583,3 +583,13 @@ IN p_Status_id INT
 BEGIN
 	INSERT INTO bookevent (Deposit, Balance, Date, Time,addevent_id,signup_id,status_id) VALUES (p_Deposit,p_Balance,p_Date,p_Time,p_addevent_id,p_signup_id_in,p_Status_id);
 END
+
+CREATE DEFINER=`root`@`localhost` PROCEDURE `GetbookEventbyId`(in p_id int)
+begin
+	select addevent.*, signup.* from bookevent
+	JOIN addevent
+	ON bookevent.addevent_Id = addevent.Id
+    JOIN signup
+    ON bookevent.signup_id = signup.Id
+    where addevent.Id = p_id;
+end
