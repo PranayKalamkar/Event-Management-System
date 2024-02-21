@@ -8,8 +8,8 @@ namespace Event_Management_App.DataManager.IDAL
 
         public GetAllBookedDetails PopulateEventData(int ID);
 
-        public bool CheckEmailExist(string emailId, int Id);
+        public GetAllBookedDetails AddbookEventData(GetAllBookedDetails oData, int ID, int Signup_Id);
 
-        public GetAllBookedDetails AddbookEventData(GetAllBookedDetails oData, int ID);
+        public List<GetAllBookedDetails> GetAdmin_UserList();
     }
 }

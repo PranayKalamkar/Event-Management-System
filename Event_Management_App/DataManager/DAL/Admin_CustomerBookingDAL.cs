@@ -65,9 +65,12 @@ namespace Event_Management_App.DataManager.DAL
             {
                 bookmodel.AddEventModel = new AddEventModel();
                 bookmodel.RequestedEventsModel = new RequestedEventsModel();
+                bookmodel.Admin_UserModel = new Admin_UserModel();
 
                 bookmodel.RequestedEventsModel.Id = item["Id"].ConvertDBNullToInt();
+                bookmodel.Admin_UserModel.Id = item["Id"].ConvertDBNullToInt();
                 bookmodel.AddEventModel.Id = item["Id"].ConvertDBNullToInt();
+                bookmodel.Admin_UserModel.Email = item["Email"].ConvertDBNullToString();
                 bookmodel.AddEventModel.Category = item["Category"].ConvertDBNullToString();
                 bookmodel.AddEventModel.Location = item["Location"].ConvertDBNullToString();
                 bookmodel.AddEventModel.Capacity = item["Capacity"].ConvertDBNullToString();
@@ -80,41 +83,49 @@ namespace Event_Management_App.DataManager.DAL
             return bookmodel;
         }
 
-        public bool CheckEmailExist(string emailId, int Id)
+
+        public GetAllBookedDetails AddbookEventData(GetAllBookedDetails oData, int ID, int Signup_Id)
         {
-            _dBManager.InitDbCommand("CheckEmailExist", CommandType.StoredProcedure);
-
-            _dBManager.AddCMDParam("@p_EmailId", emailId);
-            _dBManager.AddCMDParam("@p_Id", Id);
-
-
-            var result = _dBManager.ExecuteScalar();
-
-            bool emailExist = Convert.ToBoolean(result);
-
-            return emailExist;
-        }
-
-        public GetAllBookedDetails AddbookEventData(GetAllBookedDetails oData, int ID)
-        {
-            oData.SignUpModel.SPassword = oData.SignUpModel.SPassword + _dBManager.getSalt();
+            //oData.SignUpModel.SPassword = oData.SignUpModel.SPassword + _dBManager.getSalt();
 
             _dBManager.InitDbCommand("InsertCustomerBookData", CommandType.StoredProcedure);
 
-            _dBManager.AddCMDParam("@p_Username", oData.SignUpModel.Username);
-            _dBManager.AddCMDParam("@p_Email", oData.SignUpModel.Email);
-            _dBManager.AddCMDParam("@p_SPassword", oData.SignUpModel.SPassword);
-            _dBManager.AddCMDParam("@p_RoleId", oData.SignUpModel.Role);
             _dBManager.AddCMDParam("@p_Deposit", oData.RequestedEventsModel.Deposit);
             _dBManager.AddCMDParam("@p_Balance", oData.RequestedEventsModel.Balance);
             _dBManager.AddCMDParam("@p_Date", oData.RequestedEventsModel.Date);
             _dBManager.AddCMDParam("@p_Time", oData.RequestedEventsModel.Time);
             _dBManager.AddCMDParam("@p_addevent_id", ID);
+            _dBManager.AddCMDParam("@p_signup_id_in", Signup_Id);
             _dBManager.AddCMDParam("@p_Status_id", oData.RequestedEventsModel.Status_Id);
 
             _dBManager.ExecuteNonQuery();
 
             return oData;
+        }
+
+        public List<GetAllBookedDetails> GetAdmin_UserList()
+        {
+            List<GetAllBookedDetails> userList = new List<GetAllBookedDetails>();
+
+            _dBManager.InitDbCommand("GetAllAdmin_User", CommandType.StoredProcedure);
+
+            DataSet ds = _dBManager.ExecuteDataSet();
+
+            foreach (DataRow item in ds.Tables[0].Rows)
+            {
+                GetAllBookedDetails bookedEvents = new GetAllBookedDetails();
+
+                bookedEvents.Admin_UserModel = new Admin_UserModel();
+
+                bookedEvents.Admin_UserModel.Id = item["Id"].ConvertDBNullToInt();
+                bookedEvents.Admin_UserModel.Email = item["Email"].ConvertDBNullToString();
+
+                userList.Add(bookedEvents);
+
+            }
+
+            return userList;
+
         }
     }
 }

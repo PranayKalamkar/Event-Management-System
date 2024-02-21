@@ -29,32 +29,21 @@ namespace Event_Management_App.Controllers
         }
 
         [HttpPost]
-        public IActionResult Booked(string model, int ID)
+        public IActionResult Booked(string model, int ID, int Signup_Id)
         {
-            try
-            {
-                GetAllBookedDetails oData = JsonSerializer.Deserialize<GetAllBookedDetails>(model)!;
+            GetAllBookedDetails oData = JsonSerializer.Deserialize<GetAllBookedDetails>(model)!;
 
-                //oData.RequestedEventsModel.Addevent_id = ID;
+            _IAdmin_CustomerBookingBAL.AddbookEventData(oData, ID, Signup_Id);
 
-                if (ModelState.IsValid)
-                {
-                    var result = _IAdmin_CustomerBookingBAL.AddbookEventData(oData, ID);
+            return Json(new { status = "success", message = "User Booked successfully!" });
 
-                    if (result == "Exist")
-                    {
-                        return Json(new { status = "warning", message = "Email Id Already Exists!" });
-                    }
+        }
 
-                }
-            }
-            catch(Exception e)
-            {
-                Console.WriteLine(e);
-            }
+        public IActionResult GetUserData()
+        {
+            List<GetAllBookedDetails> status = _IAdmin_CustomerBookingBAL.GetAdmin_UserList();
 
-            return Json(new { status = "success", message = "User saved & Booked successfully!" });
-
+            return Json(status);
         }
     }
 }

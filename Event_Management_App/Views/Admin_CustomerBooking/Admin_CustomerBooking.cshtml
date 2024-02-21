@@ -101,22 +101,16 @@
                         <div class="col-12">
 
                             <div class="row">
-                                <div class="col-md-4">
+                                <div class="col-md-8">
                                     <div class="mb-3">
-                                        <label for="Username" class="form-label">Username : </label>
-                                        <input id="Username" type="text" name="Username" class="form-control" autocomplete="off" />
+                                        <label for="Description" class="form-label">Description : </label>
+                                        <input id="Description" type="text" name="Description" class="form-control" autocomplete="off" readonly />
                                     </div>
                                 </div>
                                 <div class="col-md-4">
                                     <div class="mb-3">
                                         <label for="Email" class="form-label">Email : </label>
-                                        <input id="Email" type="email" name="Email" class="form-control" autocomplete="off" />
-                                    </div>
-                                </div>
-                                <div class="col-md-4">
-                                    <div class="mb-3">
-                                        <label for="SPassword" class="form-label">Password : </label>
-                                        <input id="SPassword" type="password" name="SPassword" class="form-control" autocomplete="off" />
+                                        <select id="Email" type="text" name="Email" class="form-control" onfocus='this.size=5;' onblur='this.size=1;' onchange='this.size=1; this.blur();'></select>
                                     </div>
                                 </div>
 
@@ -145,15 +139,6 @@
 
                             </div>
 
-                        </div>
-
-                        <div class="row">
-                            <div class="col-md-12">
-                                <div class="mb-3">
-                                    <label for="Description" class="form-label">Description : </label>
-                                    <input id="Description" type="text" name="Description" class="form-control" autocomplete="off" readonly />
-                                </div>
-                            </div>
                         </div>
 
                     </div>

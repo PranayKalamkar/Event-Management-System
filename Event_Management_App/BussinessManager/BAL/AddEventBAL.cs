@@ -45,6 +45,17 @@ namespace Event_Management_App.BussinessManager.BAL
 
             if(addeventmodel.ImageFile != null)
             {
+                if (!string.IsNullOrEmpty(existingImage))
+                {
+                    string oldIdPath = Path.Combine(Directory.GetCurrentDirectory(), "wwwroot", "addeventimages", existingImage);
+
+                    if (System.IO.File.Exists(oldIdPath))
+                    {
+                        System.IO.File.Delete(oldIdPath);
+                    }
+
+                }
+
                 addeventmodel.ImagePath = UploadImage(addeventmodel.ImageFile);
             }
             else

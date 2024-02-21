@@ -63,10 +63,6 @@ namespace Event_Management_App.BussinessManager.BAL
 
             adminusermodel.ProfileFile = profile;
 
-            adminusermodel.IdProofPath = UploadIdProof(adminusermodel.IdProofFile);
-
-            adminusermodel.ProfilePath = UploadProfile(adminusermodel.ProfileFile);
-
             Admin_UserModel model = _IAdmin_UserDAL.GetDBImagesbyID(ID);
 
             string existingIdProof = model.IdProofPath.ConvertDBNullToString();
@@ -87,7 +83,7 @@ namespace Event_Management_App.BussinessManager.BAL
                 }
                 adminusermodel.IdProofPath = UploadIdProof(adminusermodel.IdProofFile);
             }
-            else if (adminusermodel.ProfileFile != null)
+            if (adminusermodel.ProfileFile != null)
             {
                 if (!string.IsNullOrEmpty(existingProfile))
                 {

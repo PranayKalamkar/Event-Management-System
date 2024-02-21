@@ -26,14 +26,8 @@ namespace Event_Management_App.BussinessManager.BAL
             return _IAdmin_CustomerBookingDAL.PopulateEventData(ID);
         }
 
-        public string AddbookEventData(GetAllBookedDetails oData, int ID)
+        public string AddbookEventData(GetAllBookedDetails oData, int ID, int Signup_Id)
         {
-            bool emailExist = _IAdmin_CustomerBookingDAL.CheckEmailExist(oData.SignUpModel.Email, oData.SignUpModel.Id);
-
-            if (emailExist)
-            {
-                return "Exist";
-            }
 
             string amount = oData.AddEventModel.Amount;
 
@@ -43,14 +37,19 @@ namespace Event_Management_App.BussinessManager.BAL
 
             oData.RequestedEventsModel.Balance = balance.ToString();
 
-            oData.SignUpModel.Role = 2;
+            //oData.SignUpModel.Role = 2;
 
             oData.RequestedEventsModel.Status_Id = 3;
 
-            _IAdmin_CustomerBookingDAL.AddbookEventData(oData, ID);
+            _IAdmin_CustomerBookingDAL.AddbookEventData(oData, ID, Signup_Id);
 
             return "Success";
 
+        }
+
+        public List<GetAllBookedDetails> GetAdmin_UserList()
+        {
+            return _IAdmin_CustomerBookingDAL.GetAdmin_UserList();
         }
     }
 }

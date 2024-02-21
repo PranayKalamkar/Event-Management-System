@@ -570,3 +570,16 @@ BEGIN
     INSERT INTO Signupinfo(Contact, Address, Idproof, Signup_Id, profile)
 	VALUES(a_Contact, a_Address, a_Idproof, last_id, a_profile);
 END
+
+CREATE DEFINER=`root`@`localhost` PROCEDURE `InsertCustomerBookData`(
+IN p_Deposit varchar(45),
+IN p_Balance varchar(45),  
+IN p_Date Date, 
+IN p_Time Time, 
+IN p_addevent_id INT,
+IN p_signup_id_in INT,
+IN p_Status_id INT
+)
+BEGIN
+	INSERT INTO bookevent (Deposit, Balance, Date, Time,addevent_id,signup_id,status_id) VALUES (p_Deposit,p_Balance,p_Date,p_Time,p_addevent_id,p_signup_id_in,p_Status_id);
+END

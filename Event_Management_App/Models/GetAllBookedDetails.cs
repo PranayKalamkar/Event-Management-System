@@ -9,5 +9,7 @@
         public RequestedEventsModel? RequestedEventsModel { get; set; }
 
         public EventStatusModel? EventStatusModel { get; set; }
+
+        public Admin_UserModel? Admin_UserModel { get; set; }
     }
 }

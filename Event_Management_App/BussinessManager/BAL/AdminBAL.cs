@@ -59,23 +59,17 @@ namespace Event_Management_App.BussinessManager.BAL
                 return "Exist";
             }
 
-            adminmodel = new Admin_UserModel();
-
             adminmodel.IdProofFile = idproof;
 
             adminmodel.ProfileFile = profile;
 
-            //adminmodel.IdProofPath = UploadIdProof(adminmodel.IdProofFile);
+            Admin_UserModel model = _IAdminDAL.GetDBImagesbyID(ID);
 
-            //adminmodel.ProfilePath = UploadProfile(adminmodel.ProfileFile);
+            string existingIdProof = model.IdProofPath.ConvertDBNullToString();
 
-            adminmodel = _IAdminDAL.GetDBImagesbyID(ID);
+            string existingProfile = model.ProfilePath.ConvertDBNullToString();
 
-            string existingIdProof = adminmodel.IdProofPath.ConvertDBNullToString();
-
-            string existingProfile = adminmodel.ProfilePath.ConvertDBNullToString();
-
-            if (adminmodel.IdProofFile != null)
+            if(adminmodel.IdProofFile != null)
             {
                 if (!string.IsNullOrEmpty(existingIdProof))
                 {
@@ -89,7 +83,7 @@ namespace Event_Management_App.BussinessManager.BAL
                 }
                 adminmodel.IdProofPath = UploadIdProof(adminmodel.IdProofFile);
             }
-            else if(adminmodel.ProfileFile != null)
+            if(adminmodel.ProfileFile != null)
             {
                 if (!string.IsNullOrEmpty(existingProfile))
                 {

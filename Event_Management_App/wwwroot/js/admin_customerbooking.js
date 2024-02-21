@@ -1,5 +1,6 @@
 ﻿$(document).ready(function () {
     bookEventList();
+    GetUserbyEmail();
 });
 
 function bookEventList() {
@@ -67,6 +68,7 @@ function populateBookData(ID) {
             $('#Contact').val(event.AddEventModel.Contact);
             $('#Address').val(event.AddEventModel.Address);
             $('#Description').val(event.AddEventModel.Description);
+            $('#Email').val(event.RequestedEventsModel.Signup_id);
 
             var imagePreview = "/addeventimages/" + event.AddEventModel.ImagePath;
             $('#imagePreviewView').attr('src', imagePreview).show();
@@ -77,26 +79,48 @@ function populateBookData(ID) {
     });
 }
 
+function GetUserbyEmail() {
+
+    $.ajax({
+        url: '/Admin_CustomerBooking/GetUserData',
+        type: 'GET',
+        dataType: 'json', // assuming your server returns JSON
+        success: function (data) {
+
+            var dropdown = $('#Email');
+
+            dropdown.empty();
+
+            if (data) {
+
+                $.each(data, function (i, status) {
+                    if (status && status.Admin_UserModel.Email && status.Admin_UserModel.Id) {
+                        dropdown.append($('<option></option>').text(status.Admin_UserModel.Email).val(status.Admin_UserModel.Id));
+                    }
+                });
+
+            }
+        },
+        error: function (jqXHR, textStatus, errorThrown) {
+            console.log(textStatus, errorThrown);
+        }
+    });
+
+}
+
 function updateBook() {
 
     if ($("#update").valid()) {
 
         var bookId = {
-
             Id: $('#Id').val(),
+            Signup_id: $('#Email').val(),
         }
 
         var bookData = {
 
             AddEventModel: {
-                // Id: $('#Id').val(),
                 Amount: $('#Amount').val(),
-            },
-
-            SignUpModel: {
-                Username: $('#Username').val(),
-                Email: $('#Email').val(),
-                SPassword: $('#SPassword').val(),
             },
 
             RequestedEventsModel: {
@@ -109,6 +133,7 @@ function updateBook() {
 
         var formData = new FormData();
         formData.append("ID", bookId.Id);
+        formData.append("Signup_Id", bookId.Signup_id);
         formData.append("model", JSON.stringify(bookData));
 
         console.log(bookData);
