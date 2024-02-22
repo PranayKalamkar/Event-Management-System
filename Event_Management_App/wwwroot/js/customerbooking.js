@@ -79,61 +79,80 @@ function populateBookData(ID) {
 
 function updateBook() {
 
-    var bookData = {
+    if ($("#update").valid()) {
 
-        AddEventModel: {
+        var bookDataId = {
             Id: $('#Id').val(),
-            Amount: $('#Amount').val(),
-        },
-
-        RequestedEventsModel: {
-            Deposit: $('#Deposit').val(),
-            Date: $('#Date').val(),
-            Time: $('#Time').val(),
-            Addevent_id: $('#Id').val(),
+            AddEvent_Id: $('#Id').val(),
         }
-    }
 
-    console.log(bookData);
+        var bookData = {
 
-    $.ajax({
-        type: "POST",
-        url: "/CustomerBooking/Booked",
-        data: JSON.stringify(bookData),
-        contentType: 'application/json',
-        processData: false,
-        cache: false,
+            AddEventModel: {
+                Amount: $('#Amount').val(),
+                Location: $('#Location').val(),
+            },
 
-        success: function (data) {
+            RequestedEventsModel: {
+                Deposit: $('#Deposit').val(),
+                Date: $('#Date').val(),
+                Time: $('#Time').val(),
+            }
+        }
 
-            $('#bookEvent').modal('hide');
+        console.log(bookData);
 
-            Swal.fire({
-                title: "Do you want to save the changes?",
-                showDenyButton: true,
-                showCancelButton: true,
-                confirmButtonText: "Save",
-                denyButtonText: `Don't save`
-            }).then((result) => {
-                /* Read more about isConfirmed, isDenied below */
-                if (result.isConfirmed) {
-                    Swal.fire("Saved!", "", "success");
+        var formData = new FormData();
+        formData.append("ID", bookDataId.Id);
+        formData.append("AddEvent_Id", bookDataId.AddEvent_Id);
+        formData.append("model", JSON.stringify(bookData));
+
+        $.ajax({
+            type: "POST",
+            url: "/CustomerBooking/Booked",
+            data: formData,
+            contentType: false,
+            processData: false,
+            cache: false,
+
+            success: function (data) {
+
+                $('#bookEvent').modal('hide');
+
+
+                if (data.status === "success") {
+
+                    Swal.fire({
+                        title: "Do you want to save the changes?",
+                        showDenyButton: true,
+                        showCancelButton: true,
+                        confirmButtonText: "Save",
+                        denyButtonText: `Don't save`
+                    }).then((result) => {
+                        /* Read more about isConfirmed, isDenied below */
+                        if (result.isConfirmed) {
+                            Swal.fire("Saved!", "", "success");
+                        }
+
+                        //Remove all cards from the container
+                        $('#cardContainer').empty();
+                        bookEventList();
+
+                        window.location.href = '/Customer/Customer';
+                    });
+                }
+                else if (data.status === "warning") {
+                    alert(data.message);
                 }
 
-                //Remove all cards from the container
-                $('#cardContainer').empty();
-                bookEventList();
-
-                window.location.href = '/Customer/Customer';
-            });
-
-        },
-        error: function (errormessage) {
-            Swal.fire({
-                title: "Error saving event!",
-                text: "close",
-                icon: "Error"
-            });
-        }
-    });
+            },
+            error: function (errormessage) {
+                Swal.fire({
+                    title: "Error saving event!",
+                    text: "close",
+                    icon: "Error"
+                });
+            }
+        });
+    }
 }

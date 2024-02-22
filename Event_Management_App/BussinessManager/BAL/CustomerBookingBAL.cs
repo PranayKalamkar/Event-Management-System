@@ -26,8 +26,15 @@ namespace Event_Management_App.BussinessManager.BAL
             return _ICustomerBookingDAL.PopulateEventData(ID);
         }
 
-        public GetAllBookedDetails AddbookEventData(GetAllBookedDetails oData)
+        public string AddbookEventData(GetAllBookedDetails oData)
         {
+            bool dateExist = _ICustomerBookingDAL.CheckDateAvailable(oData.RequestedEventsModel.Date, oData.AddEventModel.Location);
+
+            if (dateExist)
+            {
+                return "Exist";
+            }
+
             string amount = oData.AddEventModel.Amount;
 
             string deposit = oData.RequestedEventsModel.Deposit;
@@ -38,7 +45,9 @@ namespace Event_Management_App.BussinessManager.BAL
 
             oData.RequestedEventsModel.Status_Id = 3;
 
-            return _ICustomerBookingDAL.AddbookEventData(oData);
+            _ICustomerBookingDAL.AddbookEventData(oData);
+
+            return "Success";
         }
     }
 }

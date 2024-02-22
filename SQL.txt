@@ -595,3 +595,12 @@ CREATE DEFINER=`root`@`localhost` PROCEDURE `EncryptMD5`(
 begin
 	select * from SignUp where Email=existingEmail and SPassword = MD5(existingPassword);
 END
+
+CREATE DEFINER=`root`@`localhost` PROCEDURE `CheckDateAvailable`(IN newDate Date)
+BEGIN
+	DECLARE dateExists BOOLEAN;
+    SELECT EXISTS(
+		SELECT 1 FROM bookevent WHERE Date = newDate
+	) INTO dateExists;
+    SELECT dateExists AS IsExists;
+END

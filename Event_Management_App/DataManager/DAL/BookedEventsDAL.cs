@@ -80,7 +80,7 @@ namespace Event_Management_App.DataManager.DAL
 
         public GetAllBookedDetails PopulateBookedEventData(int ID)
         {
-            _dBManager.InitDbCommand("PopulateRequestedEvents", CommandType.StoredProcedure);
+            _dBManager.InitDbCommand("PopulateBookedEvents", CommandType.StoredProcedure);
 
             GetAllBookedDetails bookeventmodel = null;
 

@@ -121,6 +121,7 @@ function updateBook() {
 
             AddEventModel: {
                 Amount: $('#Amount').val(),
+                Location: $('#Location').val(),
             },
 
             RequestedEventsModel: {

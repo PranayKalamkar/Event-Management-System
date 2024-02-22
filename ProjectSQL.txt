@@ -593,3 +593,66 @@ begin
     ON bookevent.signup_id = signup.Id
     where addevent.Id = p_id;
 end
+
+
+CREATE DEFINER=`root`@`localhost` PROCEDURE `GetbookEventbyId`(in p_id int)
+begin
+		SELECT addevent.Id, addevent.Category, addevent.Location,
+		addevent.Capacity, addevent.Amount, addevent.Description,
+        addevent.Address, addevent.Contact, addevent.ImagePath
+        from addevent
+        where addevent.Id= p_id;
+end
+
+CREATE DEFINER=`root`@`localhost` PROCEDURE `CheckDateAvailable`(
+IN newDate Date, 
+IN newLocation varchar(50)
+)
+BEGIN
+	DECLARE dateExists BOOLEAN;
+    SELECT EXISTS(
+		SELECT 1 FROM bookevent
+        INNER JOIN addevent
+        on bookevent.addevent_id = addevent.Id
+        WHERE bookevent.Date = newDate and addevent.Location = newLocation
+	) INTO dateExists;
+    SELECT dateExists AS IsExists;
+END
+
+CREATE DEFINER=`root`@`localhost` PROCEDURE `GetAllBookedEvents`()
+BEGIN
+SELECT 
+	bookevent.Id, signup.Username, signup.Email, addevent.Category, addevent.Location, addevent.Capacity,
+    addevent.Amount, addevent.Contact, addevent.ImagePath, bookevent.Deposit, bookevent.Balance, 
+    bookevent.Date, bookevent.Time, eventstatus.status_name
+FROM bookevent
+INNER JOIN addevent 
+	ON bookevent.addevent_id = addevent.Id
+INNER JOIN signup 
+	ON bookevent.signup_id = signup.Id
+INNER JOIN eventstatus
+	ON bookevent.status_id = eventstatus.status_id
+    where bookevent.status_id = 2;
+END
+
+CREATE DEFINER=`root`@`localhost` PROCEDURE `DashboardData`()
+BEGIN
+	select count(bookevent.id) from bookevent where bookevent.status_id = 2;
+
+	select count(signup.id) from signup where roleid = 2;
+
+	select sum(bookevent.deposit) from bookevent where status_id = 2;
+END
+
+CREATE DEFINER=`root`@`localhost` PROCEDURE `DashboardData`(
+  OUT total_events INT,
+  OUT total_users INT,
+  OUT total_deposit Varchar(30)
+)
+BEGIN
+	select count(bookevent.id) INTO total_events from bookevent where bookevent.status_id = 2;
+
+	select count(signup.id) INTO total_users from signup where roleid = 2;
+
+	select sum(bookevent.deposit) INTO total_deposit from bookevent where status_id = 2;
+END

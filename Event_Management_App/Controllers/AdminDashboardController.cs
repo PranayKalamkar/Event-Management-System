@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Http;
+﻿using Event_Management_App.BussinessManager.IBAL;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 
 namespace Event_Management_App.Controllers
@@ -8,9 +9,13 @@ namespace Event_Management_App.Controllers
 
         private readonly ILogger<AdminDashboardController> _logger;
 
-        public AdminDashboardController(ILogger<AdminDashboardController> logger)
+        readonly IAdminDashboardBAL _IAdminDashboardBAL;
+
+
+		public AdminDashboardController(ILogger<AdminDashboardController> logger, IAdminDashboardBAL dashboard)
         {
             _logger = logger;
+            _IAdminDashboardBAL = dashboard;
         }
 
         public IActionResult Index()
@@ -26,5 +31,11 @@ namespace Event_Management_App.Controllers
 
             return View();
         }
+
+        [HttpGet]
+        public IActionResult Populate()
+        {
+			return Json(_IAdminDashboardBAL.Populate());
+		}
     }
 }

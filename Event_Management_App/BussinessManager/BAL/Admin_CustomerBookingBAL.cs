@@ -29,6 +29,13 @@ namespace Event_Management_App.BussinessManager.BAL
         public string AddbookEventData(GetAllBookedDetails oData, int ID, int Signup_Id)
         {
 
+            bool dateExist = _IAdmin_CustomerBookingDAL.CheckDateAvailable(oData.RequestedEventsModel.Date, oData.AddEventModel.Location);
+
+            if(dateExist)
+            {
+                return "Exist";
+            }
+
             string amount = oData.AddEventModel.Amount;
 
             string deposit = oData.RequestedEventsModel.Deposit;

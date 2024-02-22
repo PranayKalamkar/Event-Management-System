@@ -23,8 +23,9 @@ namespace Event_Management_App.Extension
             services.AddScoped<ICustomerBookingBAL, CustomerBookingBAL>();
             services.AddScoped<IAdmin_CustomerBookingBAL, Admin_CustomerBookingBAL>();
             services.AddScoped<IEmailSenderBAL, EmailSenderBAL>();
+            services.AddScoped<IAdminDashboardBAL, AdminDashboardBAL>();
 
-            return services;
+			return services;
         }
         internal static IDBManager AddDBManager(IServiceProvider serviceProvider)
         {

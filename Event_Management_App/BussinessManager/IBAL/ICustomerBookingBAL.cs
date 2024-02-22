@@ -8,6 +8,6 @@ namespace Event_Management_App.BussinessManager.IBAL
 
         public GetAllBookedDetails PopulateEventData(int ID);
 
-        public GetAllBookedDetails AddbookEventData(GetAllBookedDetails oData);
+        public string AddbookEventData(GetAllBookedDetails oData);
     }
 }

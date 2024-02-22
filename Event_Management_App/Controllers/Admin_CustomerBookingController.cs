@@ -33,7 +33,16 @@ namespace Event_Management_App.Controllers
         {
             GetAllBookedDetails oData = JsonSerializer.Deserialize<GetAllBookedDetails>(model)!;
 
-            _IAdmin_CustomerBookingBAL.AddbookEventData(oData, ID, Signup_Id);
+            if(ModelState.IsValid)
+            {
+                var result = _IAdmin_CustomerBookingBAL.AddbookEventData(oData, ID, Signup_Id);
+
+                if (result == "Exist")
+                {
+                    return Json(new { status = "warning", message = "Date is not Avaliable!" });
+                }
+            }
+
 
             return Json(new { status = "success", message = "User Booked successfully!" });
 

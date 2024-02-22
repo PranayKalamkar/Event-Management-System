@@ -18,7 +18,6 @@ namespace Event_Management_App.DataManager.DAL
         {
             List<GetAllBookedDetails> bookedList = new List<GetAllBookedDetails>();
 
-            //_dBManager.InitDbCommand("GetAllEvent", CommandType.StoredProcedure);
             _dBManager.InitDbCommand("GetAvailableEvent", CommandType.StoredProcedure);
 
             DataSet ds = _dBManager.ExecuteDataSet();
@@ -67,7 +66,7 @@ namespace Event_Management_App.DataManager.DAL
                 bookmodel.AddEventModel = new AddEventModel();
                 bookmodel.RequestedEventsModel = new RequestedEventsModel();
 
-                bookmodel.RequestedEventsModel.Id = item["Id"].ConvertDBNullToInt();
+                //bookmodel.RequestedEventsModel.Id = item["Id"].ConvertDBNullToInt();
                 bookmodel.AddEventModel.Id = item["Id"].ConvertDBNullToInt();
                 bookmodel.AddEventModel.Category = item["Category"].ConvertDBNullToString();
                 bookmodel.AddEventModel.Location = item["Location"].ConvertDBNullToString();
@@ -79,6 +78,20 @@ namespace Event_Management_App.DataManager.DAL
                 bookmodel.AddEventModel.ImagePath = item["ImagePath"].ConvertDBNullToString();
             }
             return bookmodel;
+        }
+
+        public bool CheckDateAvailable(string date, string location)
+        {
+            _dBManager.InitDbCommand("CheckDateAvailable", CommandType.StoredProcedure);
+
+            _dBManager.AddCMDParam("@newDate", date);
+            _dBManager.AddCMDParam("@newLocation", location);
+
+            var result = _dBManager.ExecuteScalar();
+
+            bool dateExist = Convert.ToBoolean(result);
+
+            return dateExist;
         }
 
         public GetAllBookedDetails AddbookEventData(GetAllBookedDetails oData)

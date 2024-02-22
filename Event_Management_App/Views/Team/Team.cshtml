@@ -23,29 +23,31 @@
                             <div class="row g-3">
                                 <h4 class="mb-3 mt-0">Contact detail</h4>
 
-                                <div class="col-md-6">
-                                    <label class="form-label">First Name *</label>
-                                    <input type="text" class="form-control" placeholder="First Name" aria-label="First name" />
+                                <input hidden id="u_Id" name="Id" />
+
+                                <div class="col-md-12">
+                                    <label class="form-label">Full Name *</label>
+                                    <input id="u_Username" type="text" class="form-control" placeholder="First Name" aria-label="First name" />
                                 </div>
 
-                                <div class="col-md-6">
+                               @*  <div class="col-md-6">
                                     <label class="form-label">Last Name *</label>
                                     <input type="text" class="form-control" placeholder="Last Name" aria-label="Last name" />
-                                </div>
-
-                                <div class="col-md-6">
-                                    <label class="form-label">Phone number *</label>
-                                    <input type="text" class="form-control" placeholder="Phone Number" aria-label="Phone number" />
-                                </div>
+                                </div> *@
 
                                 <div class="col-md-6">
                                     <label class="form-label">Mobile number *</label>
-                                    <input type="text" class="form-control" placeholder="Mobile number" aria-label="Mobile number" />
+                                    <input id="u_Contact" type="text" class="form-control" placeholder="Phone Number" aria-label="Phone number" />
+                                </div>
+
+                                <div class="col-md-6">
+                                    <label class="form-label">Address *</label>
+                                    <input id="u_Address"  type="text" class="form-control" placeholder="Mobile number" aria-label="Mobile number" />
                                 </div>
 
                                 <div class="col-md-6">
                                     <label for="inputEmail4" class="form-label">Email *</label>
-                                    <input type="email" class="form-control" placeholder="Email" aria-label="Email" />
+                                    <input id="u_Email" type="email" class="form-control" placeholder="Email" aria-label="Email" />
                                 </div>
 
                                 <div class="col-md-6">
@@ -63,10 +65,10 @@
                                 <div class="text-center">
 
                                     <div class="square position-relative display-2 mb-3">
-                                        <i class="fas fa-fw fa-user position-absolute top-50 start-50 translate-middle text-secondary"></i>
+                                        <img id="ProfileUpdate" class="fas fa-fw fa-user position-absolute top-50 start-50 translate-middle text-secondary" style="max-width: 50%; max-height: 150px; margin-top: 10px; display: none;">
                                     </div>
 
-                                    <input type="file" id="customFile" name="file" hidden>
+                                    <input id="u_ProfileFile" type="file" name="file" onchange="previewProfile(this)" hidden>
                                     <label class="btn btn-success-soft btn-block" for="customFile">Upload</label>
                                     <button type="button" class="btn btn-danger-soft">Remove</button>
 
@@ -166,3 +168,5 @@
         </div>
     </div>
 </div>
+
+<script src="~/js/team.js" asp-append-version="true"></script>
