@@ -1,6 +1,6 @@
 ﻿@{
-    ViewData["Title"] = "Teams";
-    Layout = "_AdminLayout";
+    ViewData["Title"] = "User Profile";
+    Layout = "_UserLayout";
 }
 
 
@@ -30,9 +30,9 @@
                                     <input id="u_Username" type="text" class="form-control" placeholder="First Name" aria-label="First name" />
                                 </div>
 
-                               @*  <div class="col-md-6">
-                                    <label class="form-label">Last Name *</label>
-                                    <input type="text" class="form-control" placeholder="Last Name" aria-label="Last name" />
+                                @*  <div class="col-md-6">
+                                <label class="form-label">Last Name *</label>
+                                <input type="text" class="form-control" placeholder="Last Name" aria-label="Last name" />
                                 </div> *@
 
                                 <div class="col-md-6">
@@ -42,7 +42,7 @@
 
                                 <div class="col-md-6">
                                     <label class="form-label">Address *</label>
-                                    <input id="u_Address"  type="text" class="form-control" placeholder="Mobile number" aria-label="Mobile number" />
+                                    <input id="u_Address" type="text" class="form-control" placeholder="Mobile number" aria-label="Mobile number" />
                                 </div>
 
                                 <div class="col-md-6">
@@ -65,7 +65,10 @@
                                 <div class="text-center">
 
                                     <div class="square position-relative display-2 mb-3">
-                                        <img id="ProfileUpdate" class="fas fa-fw fa-user position-absolute top-50 start-50 translate-middle text-secondary" style="max-width: 50%; max-height: 150px; margin-top: 10px; display: none;">
+                                        <img 
+                                            src="" id="ProfileUpdate" 
+                                            class="fas fa-fw fa-user position-absolute top-50 start-50 translate-middle text-secondary" 
+                                            style="max-width: 50%; max-height: 150px; margin-top: 10px; display: none;">
                                     </div>
 
                                     <input id="u_ProfileFile" type="file" name="file" onchange="previewProfile(this)" hidden>
@@ -169,4 +172,4 @@
     </div>
 </div>
 
-<script src="~/js/team.js" asp-append-version="true"></script>
+<script src="~/js/customerprofile.js" asp-append-version="true"></script>

@@ -7,11 +7,11 @@ namespace Event_Management_App.Controllers
     public class TeamController : Controller
     {
 
-        readonly IAdminBAL _IAdminBAL;
+        readonly ITeamBAL _ITeamBAL;
 
-        public TeamController(IAdminBAL adminBAL)
+        public TeamController(ITeamBAL teamBAL)
         {
-            _IAdminBAL = adminBAL;
+            _ITeamBAL = teamBAL;
         }
 
         public IActionResult Team()
@@ -20,13 +20,13 @@ namespace Event_Management_App.Controllers
         }
 
         [HttpGet]
-        public IActionResult PopulateAdmin()
+        public IActionResult PopulateTeam()
         {
             int? testid = HttpContext.Session.GetInt32("Id");
 
             int ID = testid.Value;
 
-            return Json(_IAdminBAL.PopulateAdminData(ID));
+            return Json(_ITeamBAL.PopulateTeamData(ID));
         }
     }
 }

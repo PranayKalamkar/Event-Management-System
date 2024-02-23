@@ -644,6 +644,7 @@ BEGIN
 	select sum(bookevent.deposit) from bookevent where status_id = 2;
 END
 
+not working
 CREATE DEFINER=`root`@`localhost` PROCEDURE `DashboardData`(
   OUT total_events INT,
   OUT total_users INT,
@@ -655,4 +656,58 @@ BEGIN
 	select count(signup.id) INTO total_users from signup where roleid = 2;
 
 	select sum(bookevent.deposit) INTO total_deposit from bookevent where status_id = 2;
+END
+
+
+CREATE DEFINER=`root`@`localhost` PROCEDURE `Updateadmin_userById`(
+    IN u_Id int,
+    IN u_Username varchar(50),
+    IN u_Email varchar(50),
+    IN u_Contact varchar(10),
+    IN u_Address varchar(100),
+    IN u_IdProof varchar(600),
+    IN u_Profile varchar(600)
+)
+BEGIN
+    IF exists (select * from signupinfo where Signup_Id = u_Id) THEN
+		UPDATE signupinfo
+        SET 
+			signupinfo.Contact = u_Contact,
+            signupinfo.Address = u_Address,
+            signupinfo.Idproof = u_IdProof,
+            signupinfo.profile = u_Profile
+		WHERE Signup_Id = u_Id;
+        
+        UPDATE signup
+        SET
+			signup.Username = u_Username,
+            signup.Email = u_Email
+		WHERE signup.Id = u_Id;
+	ELSE
+		UPDATE signup
+        SET
+			signup.Username = u_Username,
+            signup.Email = u_Email
+		WHERE signup.Id = u_Id;
+        
+		INSERT INTO signupinfo(Contact, Address, Idproof, Signup_Id, profile)
+        VALUES (u_Contact, u_Address, u_IdProof, u_Id, u_Profile);
+	END IF;
+END
+
+
+working
+CREATE DEFINER=`root`@`localhost` PROCEDURE `DashboardData`(
+  OUT total_events INT,
+  OUT total_users INT,
+  OUT total_deposit Varchar(30)
+)
+BEGIN
+	select count(bookevent.id) INTO total_events from bookevent where bookevent.status_id = 2;
+
+	select count(signup.id) INTO total_users from signup where roleid = 2;
+
+	select sum(bookevent.deposit) INTO total_deposit from bookevent where status_id = 2;
+    
+    select @total_events,@total_users,@total_deposit;
 END

@@ -25,7 +25,7 @@ function Profile() {
     $.ajax({
 
         type: "GET",
-        url: "/Team/PopulateTeam/",
+        url: "/CustomerProfile/PopulateProfile/",
 
         success: function (admin) {
             debugger;

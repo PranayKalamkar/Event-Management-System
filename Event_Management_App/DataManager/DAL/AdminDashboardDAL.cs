@@ -2,6 +2,7 @@
 using Event_Management_App.DataManager.IDAL;
 using Event_Management_App.Models;
 using System.Data;
+using static Org.BouncyCastle.Crypto.Engines.SM2Engine;
 
 namespace Event_Management_App.DataManager.DAL
 {
@@ -16,25 +17,22 @@ namespace Event_Management_App.DataManager.DAL
 
 		public GetAllBookedDetails Populate()
 		{
+			GetAllBookedDetails oModel = new GetAllBookedDetails();
+
 			_dBManager.InitDbCommand("DashboardData", CommandType.StoredProcedure);
 
-			GetAllBookedDetails dashboard = null;
+			_dBManager.AddCMDOutParam("@total_events", DbType.Int32, 0);
+			_dBManager.AddCMDOutParam("@total_users", DbType.Int32, 0);
+			_dBManager.AddCMDOutParam("@total_deposit", DbType.String, 30);
 
-			DataSet ds = _dBManager.ExecuteDataSet();
+			_dBManager.ExecuteNonQuery();
 
-			foreach (DataRow item in ds.Tables[0].Rows)
-			{
-				dashboard = new GetAllBookedDetails();
+			oModel.Total_Events = _dBManager.GetOutParam<Int32>("@total_events");
+			oModel.Total_Users = _dBManager.GetOutParam<Int32>("@total_users");
+			oModel.Total_Deposit = _dBManager.GetOutParam<string>("@total_deposit");
 
-				dashboard.SignUpModel = new SignUpModel();
-				dashboard.RequestedEventsModel = new RequestedEventsModel();
+			return oModel;
 
-				dashboard.SignUpModel.Id = item["Id"].ConvertDBNullToInt();
-				dashboard.RequestedEventsModel.Id = item["Id"].ConvertDBNullToInt();
-				dashboard.RequestedEventsModel.Deposit = item["Deposit"].ConvertDBNullToString();
-				
-			}
-			return dashboard;
 		}
 	}
 }
