@@ -37,7 +37,12 @@ namespace Event_Management_App.Controllers
 
             AddEventModel addevntmodel = JsonSerializer.Deserialize<AddEventModel>(model)!;
 
-            _IAddEventBAL.AddEvent(addevntmodel, file);
+            if (ModelState.IsValid)
+            {
+
+                _IAddEventBAL.AddEvent(addevntmodel, file);
+
+            }
 
             return Json("ListEvent");
         }
@@ -48,11 +53,16 @@ namespace Event_Management_App.Controllers
         }
 
         [HttpPost]
-        public IActionResult Update(int ID,string model, IFormFile file)
+        public IActionResult Update(int ID, string model, IFormFile file)
         {
             AddEventModel addeventmodel = JsonSerializer.Deserialize<AddEventModel>(model)!;
 
-            _IAddEventBAL.UpdateEventData(addeventmodel, ID, file);
+            if (ModelState.IsValid)
+            {
+
+                _IAddEventBAL.UpdateEventData(addeventmodel, ID, file);
+
+            }
 
             return Json("ListEvent");
         }

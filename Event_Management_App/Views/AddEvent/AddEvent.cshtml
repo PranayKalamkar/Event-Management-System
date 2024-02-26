@@ -1,4 +1,6 @@
-﻿@model IEnumerable<Event_Management_App.Models.GetAllBookedDetails>
+﻿@model GetAllBookedDetails;
+
+@* @model IEnumerable<Event_Management_App.Models.GetAllBookedDetails> *@
 
 @{
     ViewData["title"] = "Event Categories";
@@ -25,25 +27,27 @@
         <div class="modal-content">
             <div class="modal-header">
                 <h5 class="modal-title" id="addEventLabel">Add Details</h5>
-                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close" onclick="clearForm()"></button>
             </div>
 
             <div class="modal-body">
 
-                <form action="#" name="add">
+                <form id="create" action="#" name="add">
 
                     <div class="row">
                         <div class="col-md-6">
                             <div class="mb-3">
                                 <label for="Category" class="form-label">Category : </label>
-                                <input id="Category" type="text" onblur="validateField('Category')" name="Category" class="form-control" autocomplete="off" maxlength="30" required />
+                                <input id="Category" type="text" asp-for="AddEventModel.Category" class="form-control" autocomplete="off" maxlength="30" required />
                             </div>
+                            <span asp-validation-for="AddEventModel.Category" class="text-danger"></span>
                         </div>
                         <div class="col-md-6">
                             <div class="mb-3">
                                 <label for="Location" class="form-label">Location : </label>
-                                <input id="Location" type="text" onblur="validateField('Location')" name="Location" class="form-control" autocomplete="off" maxlength="30" required />
+                                <input id="Location" type="text" asp-for="AddEventModel.Location" class="form-control" autocomplete="off" maxlength="30" required />
                             </div>
+                            <span asp-validation-for="AddEventModel.Location" class="text-danger"></span>
                         </div>
                     </div>
 
@@ -51,14 +55,16 @@
                         <div class="col-md-6">
                             <div class="mb-3">
                                 <label for="Capacity" class="form-label">Capacity : </label>
-                                <input id="Capacity" type="text" onblur="validateField('Capacity')" name="Capacity" class="form-control" autocomplete="off" maxlength="30" required />
+                                <input id="Capacity" type="text" asp-for="AddEventModel.Capacity" class="form-control" autocomplete="off" maxlength="30" required />
                             </div>
+                            <span asp-validation-for="AddEventModel.Capacity" class="text-danger"></span>
                         </div>
                         <div class="col-md-6">
                             <div class="mb-3">
                                 <label for="Amount" class="form-label">Amount : </label>
-                                <input id="Amount" type="text" onblur="validateField('Amount')" name="Amount" class="form-control" autocomplete="off" maxlength="30" required />
+                                <input id="Amount" type="text" asp-for="AddEventModel.Amount" class="form-control" autocomplete="off" maxlength="30" required />
                             </div>
+                            <span asp-validation-for="AddEventModel.Amount" class="text-danger"></span>
                         </div>
                     </div>
 
@@ -66,14 +72,16 @@
                         <div class="col-md-6">
                             <div class="mb-3">
                                 <label for="Description" class="form-label">Description : </label>
-                                <input id="Description" type="text" onblur="validateField('Description')" name="Description" class="form-control" autocomplete="off" maxlength="50" required />
+                                <input id="Description" type="text" asp-for="AddEventModel.Description" class="form-control" autocomplete="off" maxlength="50" required />
                             </div>
+                            <span asp-validation-for="AddEventModel.Description" class="text-danger"></span>
                         </div>
                         <div class="col-md-6">
                             <div class="mb-3">
                                 <label for="Address" class="form-label">Address : </label>
-                                <input id="Address" type="text" onblur="validateField('Address')" name="Address" class="form-control" autocomplete="off" maxlength="30" required />
+                                <input id="Address" type="text" asp-for="AddEventModel.Address" class="form-control" autocomplete="off" maxlength="30" required />
                             </div>
+                            <span asp-validation-for="AddEventModel.Address" class="text-danger"></span>
                         </div>
                     </div>
 
@@ -81,14 +89,16 @@
                         <div class="col-md-6">
                             <div class="mb-3">
                                 <label for="Contact" class="form-label">Contact : </label>
-                                <input id="Contact" type="text" onblur="validateField('Contact')" name="Contact" class="form-control" autocomplete="off" maxlength="10" required />
+                                <input id="Contact" type="text" asp-for="AddEventModel.Contact" class="form-control" autocomplete="off" maxlength="10" required />
                             </div>
+                            <span asp-validation-for="AddEventModel.Contact" class="text-danger"></span>
                         </div>
                         <div class="col-md-6">
                             <div class="mb-3">
                                 <label for="ImageFile" class="form-label">Venue : </label>
-                                <input id="ImageFile" name="ImageFile" type="file" class="form-control" autocomplete="off" required />
+                                <input id="ImageFile" asp-for="AddEventModel.ImageFile" type="file" class="form-control" autocomplete="off" required />
                             </div>
+                            <span asp-validation-for="AddEventModel.ImageFile" class="text-danger"></span>
                         </div>
                     </div>
 
@@ -97,8 +107,8 @@
             </div>
 
             <div class="modal-footer">
-                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-                <button type="submit" onclick="addEvent()" action="#" class="btn btn-success">Save changes</button>
+                @* <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button> *@
+                <button type="submit" onclick="addEvent()" action="#" class="btn btn-success">Add Event</button>
             </div>
         </div>
     </div>
@@ -115,7 +125,7 @@
 
             <div class="modal-body">
 
-                <form>
+                <form id="update">
 
                     <input hidden id="u_Id" name="Id" />
 
@@ -123,14 +133,16 @@
                         <div class="col-md-6">
                             <div class="mb-3">
                                 <label for="Category" class="form-label">Category : </label>
-                                <input id="u_Category" type="text" name="Category" class="form-control" autocomplete="off" required />
+                                <input id="u_Category" type="text" asp-for="AddEventModel.Category" class="form-control" autocomplete="off" required />
                             </div>
+                            <span asp-validation-for="AddEventModel.Category" class="text-danger"></span>
                         </div>
                         <div class="col-md-6">
                             <div class="mb-3">
                                 <label for="Location" class="form-label">Location : </label>
-                                <input id="u_Location" type="text" name="Location" class="form-control" autocomplete="off" required />
+                                <input id="u_Location" type="text" asp-for="AddEventModel.Location" class="form-control" autocomplete="off" required />
                             </div>
+                            <span asp-validation-for="AddEventModel.Location" class="text-danger"></span>
                         </div>
                     </div>
 
@@ -138,14 +150,16 @@
                         <div class="col-md-6">
                             <div class="mb-3">
                                 <label for="Capacity" class="form-label">Capacity : </label>
-                                <input id="u_Capacity" type="text" name="Capacity" class="form-control" autocomplete="off" required />
+                                <input id="u_Capacity" type="text" asp-for="AddEventModel.Capacity" class="form-control" autocomplete="off" required />
                             </div>
+                            <span asp-validation-for="AddEventModel.Capacity" class="text-danger"></span>
                         </div>
                         <div class="col-md-6">
                             <div class="mb-3">
                                 <label for="Amount" class="form-label">Amount : </label>
-                                <input id="u_Amount" type="text" name="Amount" class="form-control" autocomplete="off" required />
+                                <input id="u_Amount" type="text" asp-for="AddEventModel.Amount" class="form-control" autocomplete="off" required />
                             </div>
+                            <span asp-validation-for="AddEventModel.Amount" class="text-danger"></span>
                         </div>
                     </div>
 
@@ -153,14 +167,16 @@
                         <div class="col-md-6">
                             <div class="mb-3">
                                 <label for="Description" class="form-label">Description : </label>
-                                <input id="u_Description" type="text" name="Description" class="form-control" autocomplete="off" required />
+                                <input id="u_Description" type="text" asp-for="AddEventModel.Description" class="form-control" autocomplete="off" required />
                             </div>
+                            <span asp-validation-for="AddEventModel.Description" class="text-danger"></span>
                         </div>
                         <div class="col-md-6">
                             <div class="mb-3">
                                 <label for="Status" class="form-label">Status : </label>
-                                <input id="u_Status" type="text" name="Status" class="form-control" autocomplete="off" required />
+                                <input id="u_Status" type="text" asp-for="EventStatusModel.Status" class="form-control" autocomplete="off" required />
                             </div>
+                            <span asp-validation-for="EventStatusModel.Status" class="text-danger"></span>
                         </div>
                     </div>
 
@@ -168,14 +184,16 @@
                         <div class="col-md-6">
                             <div class="mb-3">
                                 <label for="Address" class="form-label">Address : </label>
-                                <input id="u_Address" type="text" name="Address" class="form-control" autocomplete="off" required />
+                                <input id="u_Address" type="text" asp-for="AddEventModel.Address" class="form-control" autocomplete="off" required />
                             </div>
+                            <span asp-validation-for="AddEventModel.Address" class="text-danger"></span>
                         </div>
                         <div class="col-md-6">
                             <div class="mb-3">
                                 <label for="Contact" class="form-label">Contact : </label>
-                                <input id="u_Contact" type="text" name="Contact" class="form-control" autocomplete="off" required />
+                                <input id="u_Contact" type="text" asp-for="AddEventModel.Contact" class="form-control" autocomplete="off" maxlength="10" required />
                             </div>
+                            <span asp-validation-for="AddEventModel.Contact" class="text-danger"></span>
                         </div>
                     </div>
 
@@ -327,5 +345,10 @@
 </div>
 
 
-
 <script src="~/js/addevent.js" asp-append-version="true"></script>
+
+@section Scripts {
+    @{
+        await Html.RenderPartialAsync("_ValidationScriptsPartial");
+    }
+}

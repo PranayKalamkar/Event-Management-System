@@ -38,52 +38,52 @@ function getAddEventList() {
 //Add Data Function
 function addEvent() {
 
-    var eventObj = {
-        Category: $('#Category').val(),
-        Location: $('#Location').val(),
-        Capacity: $('#Capacity').val(),
-        Amount: $('#Amount').val(),
-        Description: $('#Description').val(),
-        Address: $('#Address').val(),
-        Contact: $('#Contact').val(),
-    }
+    if ($("#create").valid()) {
 
-    var formData = new FormData();
-    formData.append("model", JSON.stringify(eventObj));
-    formData.append("file", $('#ImageFile')[0].files[0]);
-
-    $.ajax({
-        url: "/AddEvent/Create",
-        data: formData,
-        processData: false,
-        contentType: false,
-        cache: false,
-        type: "POST",
-        success: function (data) {
-
-            $('#addEvent').modal('hide');
-
-            clearForm();
-
-
-            Swal.fire({
-                title: "Good job!",
-                text: "Event saved successfully!",
-                icon: "success",
-                button: "Ok",
-            });
-
-            // datatable.destroy();
-            // Remove all cards from the container
-            $('#cardContainer').empty();
-            getAddEventList();
-
-        },
-        error: function (errorThrown) {
-            console.log("Error saving event:", errorThrown);
-            Swal.fire("Oops", "An error occurred while saving your data, Please try again later.", "error");
+        var eventObj = {
+            Category: $('#Category').val(),
+            Location: $('#Location').val(),
+            Capacity: $('#Capacity').val(),
+            Amount: $('#Amount').val(),
+            Description: $('#Description').val(),
+            Address: $('#Address').val(),
+            Contact: $('#Contact').val(),
         }
-    });
+
+        var formData = new FormData();
+        formData.append("model", JSON.stringify(eventObj));
+        formData.append("file", $('#ImageFile')[0].files[0]);
+
+        $.ajax({
+            url: "/AddEvent/Create",
+            data: formData,
+            processData: false,
+            contentType: false,
+            cache: false,
+            type: "POST",
+            success: function (data) {
+
+                $('#addEvent').modal('hide');
+
+                Swal.fire({
+                    title: "Good job!",
+                    text: "Event saved successfully!",
+                    icon: "success",
+                    button: "Ok",
+                });
+
+                // datatable.destroy();
+                // Remove all cards from the container
+                $('#cardContainer').empty();
+                getAddEventList();
+
+            },
+            error: function (errorThrown) {
+                console.log("Error saving event:", errorThrown);
+                Swal.fire("Oops", "An error occurred while saving your data, Please try again later.", "error");
+            }
+        });
+    }
 }
 
 function previewImage(input) {
@@ -135,57 +135,60 @@ function populateEventData(Id) {
 
 function updateAddEvent() {
 
-    var eventAddID = {
-        id: $('#u_Id').val(),
-    }
+    if ($("#update").valid()) {
 
-    var addEventData = {
-        Category: $('#u_Category').val(),
-        Location: $('#u_Location').val(),
-        Capacity: $('#u_Capacity').val(),
-        Amount: $('#u_Amount').val(),
-        Description: $('#u_Description').val(),
-        Address: $('#u_Address').val(),
-        Contact: $('#u_Contact').val(),
-        Status: $('#u_Status').val(),
-    };
-
-    var formData = new FormData();
-    formData.append("ID", eventAddID.id);
-    formData.append("model", JSON.stringify(addEventData));
-    formData.append("file", $("#updateImageFile")[0].files[0]);
-
-    $.ajax({
-        type: "POST",
-        url: "/AddEvent/Update",
-        data: formData,
-        contentType: false,
-        processData: false,
-        cache: false,
-
-        success: function (data) {
-
-            $('#updateEvent').modal('hide');
-
-            Swal.fire({
-                title: "Event updated successfully!",
-                text: "close",
-                icon: "success"
-            });
-
-            // datatable.destroy();
-            // Remove all cards from the container
-            $('#cardContainer').empty();
-            getAddEventList();
-        },
-        error: function (errormessage) {
-            Swal.fire({
-                title: "Error updating event!",
-                text: "close",
-                icon: "Error"
-            });
+        var eventAddID = {
+            id: $('#u_Id').val(),
         }
-    });
+
+        var addEventData = {
+            Category: $('#u_Category').val(),
+            Location: $('#u_Location').val(),
+            Capacity: $('#u_Capacity').val(),
+            Amount: $('#u_Amount').val(),
+            Description: $('#u_Description').val(),
+            Address: $('#u_Address').val(),
+            Contact: $('#u_Contact').val(),
+            Status: $('#u_Status').val(),
+        };
+
+        var formData = new FormData();
+        formData.append("ID", eventAddID.id);
+        formData.append("model", JSON.stringify(addEventData));
+        formData.append("file", $("#updateImageFile")[0].files[0]);
+
+        $.ajax({
+            type: "POST",
+            url: "/AddEvent/Update",
+            data: formData,
+            contentType: false,
+            processData: false,
+            cache: false,
+
+            success: function (data) {
+
+                $('#updateEvent').modal('hide');
+
+                Swal.fire({
+                    title: "Event updated successfully!",
+                    text: "close",
+                    icon: "success"
+                });
+
+                // datatable.destroy();
+                // Remove all cards from the container
+                $('#cardContainer').empty();
+                getAddEventList();
+            },
+            error: function (errormessage) {
+                Swal.fire({
+                    title: "Error updating event!",
+                    text: "close",
+                    icon: "Error"
+                });
+            }
+        });
+    }
 }
 
 function viewEventData(eventId) {
@@ -263,135 +266,13 @@ function deleteEventData(eventId) {
 }
 
 function clearForm() {
-    $('#Category').val("");
-    $('#Location').val("");
-    $('#Capacity').val("");
-    $('#Amount').val("");
-    $('#Description').val("");
-    $('#Status').val("");
-    $('#Address').val("");
-    $('#Contact').val("");
-    $('#ImageFile').val("");
-}
-
-
-$(function () {
-
-    $("form[name='add']").validate({
-        // Specify validation rules
-        rules: {
-
-            Category: {
-                required: true,
-                maxlength: 30
-            },
-            Location: {
-                required: true,
-                maxlength: 30
-            },
-            Capacity: {
-                required: true,
-                maxlength: 50,
-            },
-            Amount: {
-                required: true,
-                maxlength: 50
-            },
-            Description: {
-                required: true,
-                maxlength: 200
-            },
-            Status: {
-                required: true,
-                maxlength: 30
-            },
-            Address: {
-                required: true,
-                maxlength: 100
-            },
-            Contact: {
-                required: true,
-                maxlength: 10
-            }
-        },
-        // Specify validation error messages
-        messages: {
-            Category: {
-                required: "Please provide a Category!",
-                maxlength: "Your Category must be at max 30 characters long"
-            },
-            Location: {
-                required: "Please provide a Location!",
-                maxlength: "Your Location must be at max 30 characters long"
-            },
-            Capacity: {
-                required: "Please provide a Capacity!",
-                maxlength: "Your Capacity must be at max 50 characters long"
-            },
-            Amount: {
-                required: "Please provide a Amount!",
-                maxlength: "Your Amount must be at max 30 characters long"
-            },
-            Description: {
-                required: "Please provide a Description!",
-                maxlength: "Your Description must be at max 200 characters long"
-            },
-            Status: {
-                required: "Please provide a Status!",
-                maxlength: "Your Status must be at max 30 characters long"
-            },
-            Address: {
-                required: "Please provide a Address!",
-                maxlength: "Your Address must be at max 100 characters long"
-            },
-            Contact: {
-                required: "Please provide a Contact!",
-                maxlength: "Your Contact must be at max 10 characters long"
-            }
-        },
-
-        errorClass: "error",
-        errorElement: "div",
-
-        submitHandler: function (form) {
-            form.submit();
-        }
-    });
-
-
-    $("form[name='add'] input[name='Category']").on("blur", function () {
-        $("form[name='add']").validate().element($(this));
-    });
-
-    $("form[name='add'] input[name='Location']").on("blur", function () {
-        $("form[name='add']").validate().element($(this));
-    });
-
-    $("form[name='add'] input[name='Capacity']").on("blur", function () {
-        $("form[name='add']").validate().element($(this));
-    });
-
-    $("form[name='add'] input[name='Amount']").on("blur", function () {
-        $("form[name='add']").validate().element($(this));
-    });
-
-    $("form[name='add'] input[name='Description']").on("blur", function () {
-        $("form[name='add']").validate().element($(this));
-    });
-
-    $("form[name='add'] input[name='Status']").on("blur", function () {
-        $("form[name='add']").validate().element($(this));
-    });
-
-    $("form[name='add'] input[name='Address']").on("blur", function () {
-        $("form[name='add']").validate().element($(this));
-    });
-
-    $("form[name='add'] input[name='Contact']").on("blur", function () {
-        $("form[name='add']").validate().element($(this));
-    });
-});
-
-function validateField(fieldName) {
-    $("form[name='add']").validate().element($("form[name='add'] input[name='" + fieldName + "']"));
+    $('#Category').val('');
+    $('#Location').val('');
+    $('#Capacity').val('');
+    $('#Amount').val('');
+    $('#Description').val('');
+    $('#Status').val('');
+    $('#Address').val('');
+    $('#Contact').val('');
+    $('#ImageFile').val('');
 }

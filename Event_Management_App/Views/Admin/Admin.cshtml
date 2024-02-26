@@ -1,4 +1,6 @@
-﻿@model IEnumerable<Event_Management_App.Models.Admin_UserModel>
+﻿@model Admin_UserModel;
+
+@* @model IEnumerable<Event_Management_App.Models.Admin_UserModel> *@
 
 @{
     ViewData["title"] = "Admin";
@@ -22,7 +24,7 @@
         <div class="modal-content">
             <div class="modal-header">
                 <h5 class="modal-title" id="addAdminLabel">Add Details</h5>
-                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close" onclick="clearForm()"></button>
             </div>
 
             <div class="modal-body">
@@ -33,14 +35,16 @@
                         <div class="col-md-6">
                             <div class="mb-3">
                                 <label for="Username" class="form-label">Username : </label>
-                                <input id="Username" type="text" name="Username" class="form-control" autocomplete="off" maxlength="50" required />
+                                <input id="Username" type="text" asp-for="Username" class="form-control" autocomplete="off" maxlength="50" required />
                             </div>
+                            <span asp-validation-for="Username" class="text-danger"></span>
                         </div>
                         <div class="col-md-6">
                             <div class="mb-3">
                                 <label for="Email" class="form-label">Email : </label>
-                                <input id="Email" type="email" name="Email" class="form-control" autocomplete="off" maxlength="50" required />
+                                <input id="Email" type="email" asp-for="Email" class="form-control" autocomplete="off" maxlength="50" required />
                             </div>
+                            <span asp-validation-for="Email" class="text-danger"></span>
                         </div>
                     </div>
 
@@ -48,14 +52,16 @@
                         <div class="col-md-6">
                             <div class="mb-3">
                                 <label for="SPassword" class="form-label">Password : </label>
-                                <input id="SPassword" type="password" name="SPassword" class="form-control" autocomplete="off" maxlength="30" required />
+                                <input id="SPassword" type="password" asp-for="SPassword" class="form-control" autocomplete="off" maxlength="30" required />
                             </div>
+                            <span asp-validation-for="SPassword" class="text-danger"></span>
                         </div>
                         <div class="col-md-6">
                             <div class="mb-3">
                                 <label for="ConfirmSPassword" class="form-label">Confirm Password : </label>
-                                <input id="ConfirmSPassword" type="password" name="ConfirmSPassword" class="form-control" autocomplete="off" maxlength="30" required />
+                                <input id="ConfirmSPassword" type="password" asp-for="ConfirmSPassword" class="form-control" autocomplete="off" maxlength="30" required />
                             </div>
+                            <span asp-validation-for="ConfirmSPassword" class="text-danger"></span>
                         </div>
                     </div>
 
@@ -63,14 +69,16 @@
                         <div class="col-md-6">
                             <div class="mb-3">
                                 <label for="Contact" class="form-label">Contact : </label>
-                                <input id="Contact" type="text" name="Contact" class="form-control" autocomplete="off" maxlength="10" required />
+                                <input id="Contact" type="text" asp-for="Contact" class="form-control" autocomplete="off" maxlength="10" required />
                             </div>
+                            <span asp-validation-for="Contact" class="text-danger"></span>
                         </div>
                         <div class="col-md-6">
                             <div class="mb-3">
                                 <label for="Address" class="form-label">Address : </label>
-                                <input id="Address" type="text" name="Address" class="form-control" autocomplete="off" maxlength="100" required />
+                                <input id="Address" type="text" asp-for="Address" class="form-control" autocomplete="off" maxlength="100" required />
                             </div>
+                            <span asp-validation-for="Address" class="text-danger"></span>
                         </div>
                     </div>
 
@@ -78,14 +86,16 @@
                         <div class="col-md-6">
                             <div class="mb-3">
                                 <label for="IdProofFile" class="form-label">IdProof : </label>
-                                <input id="IdProofFile" name="IdProofFile" type="file" class="form-control" autocomplete="off" required />
+                                <input id="IdProofFile" asp-for="IdProofFile" type="file" class="form-control" autocomplete="off" required />
                             </div>
+                            <span asp-validation-for="IdProofFile" class="text-danger"></span>
                         </div>
                         <div class="col-md-6">
                             <div class="mb-3">
                                 <label for="ProfileFile" class="form-label">Profile : </label>
-                                <input id="ProfileFile" name="ProfileFile" type="file" class="form-control" autocomplete="off" required />
+                                <input id="ProfileFile" asp-for="ProfileFile" type="file" class="form-control" autocomplete="off" required />
                             </div>
+                            <span asp-validation-for="ProfileFile" class="text-danger"></span>
                         </div>
                     </div>
 
@@ -94,8 +104,7 @@
             </div>
 
             <div class="modal-footer">
-                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-                <button type="submit" onclick="addAdmin()" action="#" class="btn btn-success">Save changes</button>
+                <button type="submit" onclick="addAdmin()" action="#" class="btn btn-success">Add Admin</button>
             </div>
         </div>
     </div>
@@ -120,14 +129,16 @@
                         <div class="col-md-6">
                             <div class="mb-3">
                                 <label for="Username" class="form-label">Username : </label>
-                                <input id="u_Username" type="text" name="Username" class="form-control" autocomplete="off" required />
+                                <input id="u_Username" type="text" asp-for="Username" class="form-control" autocomplete="off" required />
                             </div>
+                            <span asp-validation-for="Username" class="text-danger"></span>
                         </div>
                         <div class="col-md-6">
                             <div class="mb-3">
                                 <label for="Email" class="form-label">Email : </label>
-                                <input id="u_Email" type="email" name="Email" class="form-control" autocomplete="off" required />
+                                <input id="u_Email" type="email" asp-for="Email" class="form-control" autocomplete="off" required />
                             </div>
+                            <span asp-validation-for="Email" class="text-danger"></span>
                         </div>
                     </div>
 
@@ -135,14 +146,16 @@
                         <div class="col-md-6">
                             <div class="mb-3">
                                 <label for="Contact" class="form-label">Contact : </label>
-                                <input id="u_Contact" type="text" name="Contact" class="form-control" autocomplete="off" required />
+                                <input id="u_Contact" type="text" asp-for="Contact" class="form-control" autocomplete="off" maxlength="10" required />
                             </div>
+                            <span asp-validation-for="Contact" class="text-danger"></span>
                         </div>
                         <div class="col-md-6">
                             <div class="mb-3">
                                 <label for="Address" class="form-label">Address : </label>
-                                <input id="u_Address" type="text" name="Address" class="form-control" autocomplete="off" required />
+                                <input id="u_Address" type="text" asp-for="Address" class="form-control" autocomplete="off" required />
                             </div>
+                            <span asp-validation-for="Address" class="text-danger"></span>
                         </div>
                     </div>
 
@@ -278,11 +291,10 @@
     </div>
 </div>
 
+<script src="~/js/admin.js" asp-append-version="true"></script>
+
 @section Scripts {
     @{
         await Html.RenderPartialAsync("_ValidationScriptsPartial");
     }
 }
-
-
-<script src="~/js/admin.js" asp-append-version="true"></script>

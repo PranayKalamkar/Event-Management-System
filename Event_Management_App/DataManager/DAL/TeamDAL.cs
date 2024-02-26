@@ -38,5 +38,7 @@ namespace Event_Management_App.DataManager.DAL
             }
             return adminmodel;
         }
+
+
     }
 }

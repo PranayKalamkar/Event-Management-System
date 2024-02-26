@@ -1,4 +1,6 @@
-﻿@model IEnumerable<Event_Management_App.Models.GetAllBookedDetails>
+﻿@model GetAllBookedDetails;
+
+@* @model IEnumerable<Event_Management_App.Models.GetAllBookedDetails> *@
 
 @{
     ViewData["Title"] = "Customer Booking Event";
@@ -133,8 +135,9 @@
                                 <div class="col-md-4">
                                     <div class="mb-3">
                                         <label for="Deposit" class="form-label">Deposit : </label>
-                                        <input id="Deposit" type="text" name="Deposit" class="form-control" autocomplete="off" required />
+                                        <input id="Deposit" type="text" asp-for="RequestedEventsModel.Deposit" class="form-control" autocomplete="off" required />
                                     </div>
+                                    <span asp-validation-for="RequestedEventsModel.Deposit" class="text-danger"></span>
                                 </div>
 
                             </div>

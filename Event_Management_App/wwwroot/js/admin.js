@@ -298,3 +298,14 @@ function deleteadminData(ID) {
         }
     });
 }
+
+function clearForm() {
+    $('#Username').val('');
+    $('#Email').val('');
+    $('#SPassword').val('');
+    $('#ConfirmSPassword').val('');
+    $('#Contact').val('');
+    $('#Address').val('');
+    $('#IdProofFile').val('');
+    $('#ProfileFile').val('');
+}
