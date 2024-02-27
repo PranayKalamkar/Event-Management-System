@@ -24,12 +24,14 @@ namespace Event_Management_App.DataManager.DAL
 			_dBManager.AddCMDOutParam("@total_events", DbType.Int32, 0);
 			_dBManager.AddCMDOutParam("@total_users", DbType.Int32, 0);
 			_dBManager.AddCMDOutParam("@total_deposit", DbType.String, 30);
+			_dBManager.AddCMDOutParam("@total_events_complete", DbType.Int32, 0);
 
 			_dBManager.ExecuteNonQuery();
 
 			oModel.Total_Events = _dBManager.GetOutParam<Int32>("@total_events");
 			oModel.Total_Users = _dBManager.GetOutParam<Int32>("@total_users");
 			oModel.Total_Deposit = _dBManager.GetOutParam<string>("@total_deposit");
+			oModel.Total_Events_Completed = _dBManager.GetOutParam<Int32>("@total_events_complete");
 
 			return oModel;
 

@@ -1,6 +1,7 @@
 ﻿using Event_Management_App.BussinessManager.IBAL;
 using Event_Management_App.Models;
 using Microsoft.AspNetCore.Mvc;
+using System.Text.Json;
 
 namespace Event_Management_App.Controllers
 {
@@ -28,9 +29,11 @@ namespace Event_Management_App.Controllers
             return Json(_IBookedEventsBAL.PopulateEventData(Id));
         }
 
-        public IActionResult UpdateBookEvent(int Status_Id, int Id)
+        public IActionResult UpdateBookEvent(string model, int Status_Id, int Id)
         {
-            _IBookedEventsBAL.UpdateEventData(Status_Id, Id);
+			GetAllBookedDetails oData = JsonSerializer.Deserialize<GetAllBookedDetails>(model)!;
+
+			_IBookedEventsBAL.UpdateEventData(oData, Status_Id, Id);
 
             return Json("BookedEventsList");
         }

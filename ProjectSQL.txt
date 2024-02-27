@@ -711,3 +711,76 @@ BEGIN
     
     select @total_events,@total_users,@total_deposit;
 END
+
+
+CREATE DEFINER=`root`@`localhost` PROCEDURE `GetAllCompletedEvents`()
+BEGIN
+SELECT 
+	bookevent.Id, signup.Username, signup.Email, addevent.Category, addevent.Location, addevent.Capacity,
+    addevent.Amount, addevent.Contact, addevent.ImagePath, bookevent.Deposit, bookevent.Balance, 
+    bookevent.Date, bookevent.Time, eventstatus.status_name
+FROM bookevent
+INNER JOIN addevent 
+	ON bookevent.addevent_id = addevent.Id
+INNER JOIN signup 
+	ON bookevent.signup_id = signup.Id
+INNER JOIN eventstatus
+	ON bookevent.status_id = eventstatus.status_id
+    where bookevent.status_id = 4;
+END
+
+CREATE DEFINER=`root`@`localhost` PROCEDURE `DashboardData`(
+  OUT total_events INT,
+  OUT total_users INT,
+  OUT total_deposit Varchar(30),
+  OUT total_events_complete INT
+)
+BEGIN
+	select count(bookevent.id) INTO total_events from bookevent where bookevent.status_id = 2;
+
+	select count(signup.id) INTO total_users from signup where roleid = 2;
+
+	select sum(bookevent.deposit) INTO total_deposit from bookevent where status_id = 2;
+    
+	select count(bookevent.id) INTO total_events_complete from bookevent where bookevent.status_id = 4;
+    
+    select @total_events,@total_users,@total_deposit,@total_events_complete;
+END
+
+
+CREATE TABLE signupinfo (
+Id int AUTO_INCREMENT PRIMARY KEY,
+Contact varchar(10) ,
+Address varchar(100) ,
+Idproof varchar(600) ,
+profile varchar(600),
+Signup_Id int ,
+FOREIGN KEY (Signup_Id)
+REFERENCES signup(Id)
+ON DELETE CASCADE
+);
+
+CREATE DEFINER=`root`@`localhost` PROCEDURE `UpdateStatusById`(
+IN u_Id_in INT,
+IN u_status_id_in INT
+)
+BEGIN
+	UPDATE bookevent
+    SET status_id = u_status_id_in
+    WHERE id = u_Id_in;
+END
+
+CREATE DEFINER=`root`@`localhost` PROCEDURE `UpdateBookedStatusById`(
+IN u_Id_in INT,
+IN u_status_id_in INT,
+IN u_deposit_in varchar(50),
+IN u_balance_in varchar(50)
+)
+BEGIN
+	UPDATE bookevent
+    SET 
+    status_id = u_status_id_in,
+    Deposit = u_deposit_in,
+    Balance = u_balance_in
+    WHERE id = u_Id_in;
+END

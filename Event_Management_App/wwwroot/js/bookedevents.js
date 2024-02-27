@@ -123,10 +123,23 @@ function changeStatus() {
         Status_Id: $('#v_Status').val(),
     }
 
+    var bookData = {
+
+        AddEventModel: {
+            Amount: $('#v_Amount').val(),
+        },
+
+        RequestedEventsModel: {
+            Deposit: $('#v_Deposit').val(),
+            Balance: $('#v_Balance').val(),
+        }
+    }
+
 
     var formData = new FormData();
     formData.append("Id", statusID.Id);
     formData.append("Status_Id", statusID.Status_Id);
+    formData.append("model", JSON.stringify(bookData));
 
     console.log(statusID);
 
@@ -158,7 +171,7 @@ function changeStatus() {
                 $('#cardContainer').empty();
                 getAddEventList();
 
-                window.location.href = "/Admin_CustomerBooking/Admin_CustomerBooking";
+                window.location.href = "/EventHistory/EventHistory";
             });
 
         },

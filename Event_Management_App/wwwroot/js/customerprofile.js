@@ -46,3 +46,56 @@ function Profile() {
         }
     });
 }
+
+function updateProfile() {
+
+    if ($("#update").valid()) {
+
+        var userID = {
+            id: $('#u_Id').val(),
+        }
+
+        var userData = {
+            Username: $('#u_Username').val(),
+            Email: $('#u_Email').val(),
+            Contact: $('#u_Contact').val(),
+            Address: $('#u_Address').val(),
+        };
+
+        var formData = new FormData();
+        formData.append("ID", userID.id);
+        formData.append("model", JSON.stringify(userData));
+        formData.append("profile", $("#u_ProfileFile")[0].files[0]);
+
+        $.ajax({
+            type: "POST",
+            url: "/CustomerProfile/UpdateProfile",
+            data: formData,
+            contentType: false,
+            processData: false,
+            cache: false,
+
+            success: function (data) {
+
+                if (data.status === "success") {
+                    Swal.fire({
+                        title: "Good job!",
+                        text: "User updated successfully!",
+                        icon: "success",
+                        button: "Ok",
+                    });
+                }
+                else if (data.status === "warning") {
+                    alert(data.message);
+                }
+            },
+            error: function (errormessage) {
+                Swal.fire({
+                    title: "Error updating event!",
+                    text: "close",
+                    icon: "Error"
+                });
+            }
+        });
+    }
+}

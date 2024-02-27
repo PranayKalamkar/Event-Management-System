@@ -26,6 +26,7 @@ namespace Event_Management_App.Extension
             services.AddScoped<IAdminDashboardBAL, AdminDashboardBAL>();
             services.AddScoped<ICustomerProfileBAL, CustomerProfileBAL>();
             services.AddScoped<ITeamBAL, TeamBAL>();
+            services.AddScoped<IEventHistoryBAL, EventHistoryBAL>();
 
             return services;
         }

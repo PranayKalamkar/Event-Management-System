@@ -5,20 +5,20 @@ using System.Data;
 
 namespace Event_Management_App.DataManager.DAL
 {
-    public class BookedEventsDAL : IBookedEventsDAL
+    public class EventHistoryDAL : IEventHistoryDAL
     {
         readonly IDBManager _dBManager;
-            
-        public BookedEventsDAL(IDBManager dBManager)
+
+        public EventHistoryDAL(IDBManager dBManager)
         {
             _dBManager = dBManager;
         }
 
-        public List<GetAllBookedDetails> AllBookedEvents()
+        public List<GetAllBookedDetails> AllCompletedEvents()
         {
             List<GetAllBookedDetails> bookedList = new List<GetAllBookedDetails>();
 
-            _dBManager.InitDbCommand("GetAllBookedEvents", CommandType.StoredProcedure);
+            _dBManager.InitDbCommand("GetAllCompletedEvents", CommandType.StoredProcedure);
 
             DataSet ds = _dBManager.ExecuteDataSet();
             foreach (DataRow item in ds.Tables[0].Rows)
@@ -60,25 +60,7 @@ namespace Event_Management_App.DataManager.DAL
             return bookedList;
         }
 
-        public string GetDBImagebyID(int ID)
-        {
-            string existingImage = null;
-
-            _dBManager.InitDbCommand("GetDBImagebyID", CommandType.StoredProcedure);
-
-            _dBManager.AddCMDParam("@ID", ID);
-
-            DataSet ds = _dBManager.ExecuteDataSet();
-
-            foreach (DataRow item in ds.Tables[0].Rows)
-            {
-                existingImage = item["ImagePath"].ConvertJSONNullToString();
-            }
-
-            return existingImage;
-        }
-
-        public GetAllBookedDetails PopulateBookedEventData(int ID)
+        public GetAllBookedDetails PopulateCompletedventData(int ID)
         {
             _dBManager.InitDbCommand("PopulateBookedEvents", CommandType.StoredProcedure);
 
@@ -113,53 +95,6 @@ namespace Event_Management_App.DataManager.DAL
                 bookeventmodel.EventStatusModel.Status = item["status_name"].ConvertDBNullToString();
             }
             return bookeventmodel;
-        }
-
-        public int UpdateBookedEventData(GetAllBookedDetails oData, int Status_Id, int Id)
-        {
-
-            _dBManager.InitDbCommand("UpdateBookedStatusById", CommandType.StoredProcedure);
-
-            _dBManager.AddCMDParam("@u_Id_in", Id);
-            _dBManager.AddCMDParam("@u_status_id_in", Status_Id);
-            _dBManager.AddCMDParam("@u_deposit_in", oData.RequestedEventsModel.Deposit);
-            _dBManager.AddCMDParam("@u_balance_in", oData.RequestedEventsModel.Balance);
-
-			_dBManager.ExecuteNonQuery();
-
-
-            return Status_Id;
-        }
-
-        public List<GetAllBookedDetails> GetStatus()
-        {
-            List<GetAllBookedDetails> status = new List<GetAllBookedDetails>();
-
-            _dBManager.InitDbCommand("GetAllStatus", CommandType.StoredProcedure);
-
-            DataSet ds = _dBManager.ExecuteDataSet();
-            foreach (DataRow item in ds.Tables[0].Rows)
-            {
-
-                GetAllBookedDetails bookedEvents = new GetAllBookedDetails();
-
-                bookedEvents.EventStatusModel = new EventStatusModel();
-
-                try
-                {
-                    bookedEvents.EventStatusModel.Id = item["status_id"].ConvertDBNullToInt();
-                    bookedEvents.EventStatusModel.Status = item["status_name"].ConvertDBNullToString();
-
-                    status.Add(bookedEvents);
-                }
-                catch (Exception ex)
-                {
-                    Console.WriteLine(ex.Message);
-                }
-
-            }
-
-            return status;
         }
     }
 }

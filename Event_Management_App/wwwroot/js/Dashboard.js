@@ -21,6 +21,7 @@ function Details() {
             $('#s_Id').text(dashboard.Total_Users);
             $('#b_Id').text(dashboard.Total_Events);
             $('#b_deposit').text(dashboard.Total_Deposit);
+            $('#b_complete').text(dashboard.Total_Events_Completed);
 
         },
         error: function (errormessage) {

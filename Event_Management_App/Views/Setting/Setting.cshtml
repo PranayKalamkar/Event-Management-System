@@ -6,37 +6,6 @@
 
 <h2>@ViewData["title"]</h2>
 
-<h2>Date & Time</h2>
-
-<div class="container">
-    <div id="calendar"></div>
-    <div id="clock"></div>
-</div>
-
-<h3 class="mt-4">Billing Details</h3>
-<form id="billingForm" novalidate>
-    <div class="mb-3">
-        <label for="cardNumber" class="form-label">Card Number</label>
-        <input type="text" class="form-control" id="cardNumber" placeholder="Enter card number" required>
-        <div class="invalid-feedback">
-            Please enter your card number.
-        </div>
-    </div>
-    <div class="mb-3">
-        <label for="expiryDate" class="form-label">Expiry Date</label>
-        <input type="text" class="form-control" id="expiryDate" placeholder="MM/YY" required>
-        <div class="invalid-feedback">
-            Please enter the expiry date.
-        </div>
-    </div>
-    <div class="mb-3">
-        <label for="cvv" class="form-label">CVV</label>
-        <input type="text" class="form-control" id="cvv" placeholder="Enter CVV" required>
-        <div class="invalid-feedback">
-            Please enter the CVV.
-        </div>
-    </div>
-    <button type="submit" class="btn btn-primary">Update Billing Details</button>
-</form>
+<div class="calendar"></div>
 
 <script src="~/js/settings.js" asp-append-version="true"></script>

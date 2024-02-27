@@ -1,0 +1,186 @@
+﻿@model GetAllBookedDetails;
+
+@{
+    ViewData["title"] = "Events History";
+    Layout = "_AdminLayout";
+}
+
+<div class="col-xl-12" style=" display: flex; justify-content: space-between;">
+
+    <h2>@ViewData["title"]</h2>
+
+</div>
+
+
+<!-- Modal for View Data -->
+<div class="modal fade" id="viewcompletedEventModal" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="viewExampleModal" aria-hidden="true">
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="viewExampleModalLabel">Event View</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+
+
+            <form>
+
+                <div class="modal-body">
+
+                    <input id="v_Id" name="Id" hidden />
+
+                    <!-- Image placement -->
+                    <div class="row">
+
+                        <div class="col-4">
+                            <div class="row">
+                                <div class="col-md-6">
+                                    <div class="mb-3">
+                                        <label for="ImageFile" class="form-label">Venue : </label>
+                                        <input id="ImageFile" type="text" name="ImageFile" class="form-control" onchange="previewImage(this)" autocomplete="off" hidden />
+                                        <div class="mb-3" style="display: flex; flex-direction: column;">
+                                            <img id="imagePreviewView" src="#" alt="Image Preview" style="height: 200px; width: 200px; border-radius: 50%;">
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                        </div>
+
+                        <div class="col-8">
+
+
+                            <!-- Rest of the form -->
+
+                            <div class="row">
+                                <div class="col-md-6">
+                                    <div class="mb-3">
+                                        <label for="Username" class="form-label">Username : </label>
+                                        <input id="v_Username" type="text" name="Username" class="form-control" readonly />
+                                    </div>
+                                </div>
+                                <div class="col-md-6">
+                                    <div class="mb-3">
+                                        <label for="Email" class="form-label">Email : </label>
+                                        <input id="v_Email" type="email" name="Email" class="form-control" readonly />
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="row">
+                                <div class="col-md-6">
+                                    <div class="mb-3">
+                                        <label for="Category" class="form-label">Category : </label>
+                                        <input id="v_Category" type="text" name="Category" class="form-control" readonly />
+                                    </div>
+                                </div>
+                                <div class="col-md-6">
+                                    <div class="mb-3">
+                                        <label for="Location" class="form-label">Location : </label>
+                                        <input id="v_Location" type="text" name="Location" class="form-control" readonly />
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="row">
+                                <div class="col-md-6">
+                                    <div class="mb-3">
+                                        <label for="Capacity" class="form-label">Capacity : </label>
+                                        <input id="v_Capacity" type="text" name="Capacity" class="form-control" readonly />
+                                    </div>
+                                </div>
+                                <div class="col-md-6">
+                                    <div class="mb-3">
+                                        <label for="Amount" class="form-label">Amount : </label>
+                                        <input id="v_Amount" type="text" name="Amount" class="form-control" readonly />
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="row">
+
+                        <div class="col-12">
+
+                            <div class="row">
+                                <div class="col-md-4">
+                                    <div class="mb-3">
+                                        <label for="Contact" class="form-label">Contact : </label>
+                                        <input id="v_Contact" type="text" name="Contact" class="form-control" readonly />
+                                    </div>
+                                </div>
+                                <div class="col-md-4">
+                                    <div class="mb-3">
+                                        <label for="Deposit" class="form-label">Paid : </label>
+                                        <input id="v_Deposit" type="text" name="Deposit" class="form-control" readonly />
+                                    </div>
+                                </div>
+                                <div class="col-md-4">
+                                    <div class="mb-3">
+                                        <label for="Balance" class="form-label">Balance : </label>
+                                        <input id="v_Balance" type="text" name="Address" class="form-control" readonly />
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="row">
+                                <div class="col-md-4">
+                                    <div class="mb-3">
+                                        <label for="Date" class="form-label">Date : </label>
+                                        <input id="v_Date" type="text" name="Date" class="form-control" readonly />
+                                    </div>
+                                </div>
+                                <div class="col-md-4">
+                                    <div class="mb-3">
+                                        <label for="Time" class="form-label">Time : </label>
+                                        <input id="v_Time" type="time" name="Time" class="form-control" readonly />
+                                    </div>
+                                </div>
+                                <div class="col-md-4">
+                                    <div class="mb-3">
+                                        <label for="Status" class="form-label">Status : </label>
+                                        <input id="v_Status" type="text" name="Status" class="form-control" readonly />
+                                        @* <select id="v_Status" type="text" name="Status" class="form-control"></select> *@
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                        <button type="button" onclick="changeStatus()" class="btn btn-success">Available</button>
+                    </div>
+
+                </div>
+
+            </form>
+
+        </div>
+    </div>
+</div>
+
+
+
+<div class="card w-100 shadow-sm">
+    <div class="card-body">
+        <div class="table-responsive">
+            <table class="table table-bordered" id="myTable" style="width:100% !important">
+                <thead>
+                    <tr>
+                        <th>@Html.DisplayNameFor(model => model.RequestedEventsModel.Id)</th>
+                        <th>@Html.DisplayNameFor(model => model.Admin_UserModel.Username)</th>
+                        <th>@Html.DisplayNameFor(model => model.AddEventModel.Category)</th>
+                        <th>@Html.DisplayNameFor(model => model.AddEventModel.Amount)</th>
+                        <th>@Html.DisplayNameFor(model => model.AddEventModel.Location)</th>
+                        <th>@Html.DisplayNameFor(model => model.RequestedEventsModel.Date)</th>
+                    </tr>
+                </thead>
+            </table>
+        </div>
+    </div>
+</div>
+
+
+
+<script src="~/js/completedevents.js" asp-append-version="true"></script>

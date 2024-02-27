@@ -1,6 +1,7 @@
 ﻿using Event_Management_App.BussinessManager.IBAL;
 using Event_Management_App.Models;
 using Microsoft.AspNetCore.Mvc;
+using System.Text.Json;
 
 namespace Event_Management_App.Controllers
 {
@@ -27,6 +28,25 @@ namespace Event_Management_App.Controllers
             int ID = testid.Value;
 
             return Json(_ITeamBAL.PopulateTeamData(ID));
+        }
+
+        [HttpPost]
+        public IActionResult UpdateProfile(string model, int ID, IFormFile profile)
+        {
+            Admin_UserModel admin_user = JsonSerializer.Deserialize<Admin_UserModel>(model)!;
+
+            if (ModelState.IsValid)
+            {
+                var result = _ITeamBAL.UpdateProfileData(admin_user, ID, profile);
+
+                if (result == "Exist")
+                {
+                    return Json(new { status = "warning", message = "Email Id Already Exists!" });
+                }
+
+            }
+
+            return Json(new { status = "success", message = "User Update successfully!" });
         }
     }
 }

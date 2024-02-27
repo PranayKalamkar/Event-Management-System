@@ -10,7 +10,7 @@ namespace Event_Management_App.DataManager.IDAL
 
         public GetAllBookedDetails PopulateBookedEventData(int ID);
 
-        public int UpdateBookedEventData(int Status_Id, int Id);
+        public int UpdateBookedEventData(GetAllBookedDetails oData, int Status_Id, int Id);
 
         public List<GetAllBookedDetails> GetStatus();
     }
