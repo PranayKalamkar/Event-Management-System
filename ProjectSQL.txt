@@ -66,7 +66,7 @@ CREATE DEFINER=`root`@`localhost` PROCEDURE `AddEventInsert`(
 )
 BEGIN
 	INSERT INTO addevent(Category, Location, Capacity, Amount, Description, Address, Contact, ImagePath, status_id)
-    VALUES(a_Category,a_Location,a_Capacity, a_Amount, a_Description, a_Status, a_Address, a_Contact, a_ImagePath, a_Status_Id);
+    VALUES(a_Category,a_Location,a_Capacity, a_Amount, a_Description, a_Address, a_Contact, a_ImagePath, a_Status_Id);
 END
 
 

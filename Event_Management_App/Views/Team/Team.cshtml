@@ -15,7 +15,7 @@
                 <hr>
             </div>
 
-            <form class="file-upload">
+            <form id="update" class="file-upload">
                 <div class="row mb-2 gx-2">
 
                     <div class="col-xxl-8 mb-2 mb-xxl-0">
@@ -30,11 +30,6 @@
                                     <input id="u_Username" type="text" class="form-control" placeholder="First Name" aria-label="First name" />
                                 </div>
 
-                               @*  <div class="col-md-6">
-                                    <label class="form-label">Last Name *</label>
-                                    <input type="text" class="form-control" placeholder="Last Name" aria-label="Last name" />
-                                </div> *@
-
                                 <div class="col-md-6">
                                     <label class="form-label">Mobile number *</label>
                                     <input id="u_Contact" type="text" class="form-control" placeholder="Phone Number" aria-label="Phone number" />
@@ -42,7 +37,7 @@
 
                                 <div class="col-md-6">
                                     <label class="form-label">Address *</label>
-                                    <input id="u_Address"  type="text" class="form-control" placeholder="Mobile number" aria-label="Mobile number" />
+                                    <input id="u_Address" type="text" class="form-control" placeholder="Mobile number" aria-label="Mobile number" />
                                 </div>
 
                                 <div class="col-md-6">
@@ -50,10 +45,6 @@
                                     <input id="u_Email" type="email" class="form-control" placeholder="Email" aria-label="Email" />
                                 </div>
 
-                                <div class="col-md-6">
-                                    <label class="form-label">Skype *</label>
-                                    <input type="text" class="form-control" placeholder="Skype Id" aria-label="Skype" />
-                                </div>
                             </div>
                         </div>
                     </div>
@@ -68,9 +59,7 @@
                                         <img id="ProfileUpdate" class="fas fa-fw fa-user position-absolute top-50 start-50 translate-middle text-secondary" style="max-width: 50%; max-height: 150px; margin-top: 10px; display: none;">
                                     </div>
 
-                                    <input id="u_ProfileFile" type="file" name="file" onchange="previewProfile(this)" hidden>
-                                    <label class="btn btn-success-soft btn-block" for="customFile">Upload</label>
-                                    <button type="button" class="btn btn-danger-soft">Remove</button>
+                                    <input id="u_ProfileFile" type="file" name="file" onchange="previewProfile(this)">
 
                                     <p class="text-muted mt-3 mb-0">
                                         <span class="me-1">Note:</span>Minimum size
@@ -82,86 +71,8 @@
                     </div>
                 </div>
 
-                <div class="row mb-3 gx-3">
-                    <div class="col-xxl-6 mb-3 mb-xxl-0">
-                        <div class="bg-secondary-soft px-2 py-3 rounded">
-                            <div class="row g-3">
-                                <h4 class="mb-4 mt-0">Social media detail</h4>
-
-                                <div class="col-md-6">
-                                    <label class="form-label">
-                                        <i class="fab fa-fw fa-facebook me-2 text-facebook"></i>Facebook *
-                                    </label>
-                                    <input type="text" class="form-control" placeholder="http://www.facebook.com" aria-label="Facebook" />
-                                </div>
-
-                                <div class="col-md-6">
-                                    <label class="form-label">
-                                        <i class="fab fa-fw fa-twitter text-twitter me-2"></i>Twitter *
-                                    </label>
-                                    <input type="text" class="form-control" placeholder="http://www.twitter.com" aria-label="Twitter" />
-                                </div>
-
-                                <div class="col-md-6">
-                                    <label class="form-label">
-                                        <i class="fab fa-fw fa-linkedin-in text-linkedin me-2"></i>Linkedin
-                                        *
-                                    </label>
-                                    <input type="text" class="form-control" placeholder="http://www.linkedin.com" aria-label="Linkedin" />
-                                </div>
-
-                                <div class="col-md-6">
-                                    <label class="form-label">
-                                        <i class="fab fa-fw fa-instagram text-instagram me-2"></i>Instagram
-                                        *
-                                    </label>
-                                    <input type="text" class="form-control" placeholder="http://www.instragram.com" aria-label="Instragram" />
-                                </div>
-
-                                <div class="col-md-6">
-                                    <label class="form-label">
-                                        <i class="fas fa-fw fa-basketball-ball text-dribbble me-2"></i>Dribble
-                                        *
-                                    </label>
-                                    <input type="text" class="form-control" placeholder="http://www.dribble.com" aria-label="Dribble" />
-                                </div>
-
-                                <div class="col-md-6">
-                                    <label class="form-label">
-                                        <i class="fab fa-fw fa-pinterest text-pinterest"></i>Pinterest *
-                                    </label>
-                                    <input type="text" class="form-control" placeholder="http://www.pinterest.com" aria-label="Pinterest" />
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-
-                    <div class="col-xxl-6">
-                        <div class="bg-secondary-soft px-2 py-3 rounded">
-                            <div class="row g-3">
-                                <h4 class="my-4">Change Password</h4>
-
-                                <div class="col-md-6">
-                                    <label for="exampleInputPassword1" class="form-label">Old password *</label>
-                                    <input type="password" class="form-control" id="exampleInputPassword1">
-                                </div>
-
-                                <div class="col-md-6">
-                                    <label for="exampleInputPassword2" class="form-label">New password *</label>
-                                    <input type="password" class="form-control" id="exampleInputPassword2">
-                                </div>
-
-                                <div class="col-md-12">
-                                    <label for="exampleInputPassword3" class="form-label">Confirm Password *</label>
-                                    <input type="password" class="form-control" id="exampleInputPassword3">
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
 
                 <div class="gap-3 d-md-flex justify-content-md-end text-center">
-                    <button type="button" class="btn btn-danger btn-lg">Delete profile</button>
                     <button type="button" onclick="updateProfile()" class="btn btn-primary btn-lg">Update profile</button>
                 </div>
             </form>

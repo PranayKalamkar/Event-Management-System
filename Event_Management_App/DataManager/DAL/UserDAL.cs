@@ -20,23 +20,29 @@ namespace Event_Management_App.DataManager.DAL
         {
             List<SignUpModel> userList = new List<SignUpModel>();
 
-            //_dBManager.InitDbCommandText("select * from SignUp;");
-            _dBManager.InitDbCommand("GetAllUser",CommandType.StoredProcedure);
-
-            DataSet ds = _dBManager.ExecuteDataSet();
-
-            foreach(DataRow item in ds.Tables[0].Rows)
+            try
             {
-                SignUpModel model = new SignUpModel();
+                _dBManager.InitDbCommand("GetAllUser", CommandType.StoredProcedure);
 
-                model.Id = item["Id"].ConvertDBNullToInt();
-                model.Username = item["Username"].ConvertDBNullToString();
-                model.Email = item["Email"].ConvertDBNullToString();
-                model.SPassword = item["SPassword"].ConvertDBNullToString();
-                model.Role = item["RoleId"].ConvertDBNullToInt();
+                DataSet ds = _dBManager.ExecuteDataSet();
 
-                userList.Add(model);
+                foreach (DataRow item in ds.Tables[0].Rows)
+                {
+                    SignUpModel model = new SignUpModel();
 
+                    model.Id = item["Id"].ConvertDBNullToInt();
+                    model.Username = item["Username"].ConvertDBNullToString();
+                    model.Email = item["Email"].ConvertDBNullToString();
+                    model.SPassword = item["SPassword"].ConvertDBNullToString();
+                    model.Role = item["RoleId"].ConvertDBNullToInt();
+
+                    userList.Add(model);
+
+                }
+            }
+            catch(Exception ex)
+            {
+                Console.WriteLine(ex.ToString());
             }
 
             return userList;
@@ -45,18 +51,24 @@ namespace Event_Management_App.DataManager.DAL
 
         public SignUpModel AddUser(SignUpModel sign)
         {
-            sign.SPassword = sign.SPassword + _dBManager.getSalt();
+            try
+            {
+                sign.SPassword = sign.SPassword + _dBManager.getSalt();
 
-            //_dBManager.InitDbCommandText("Insert into SignUp(Username,Email,SPassword) values (@Username,@Email,@SPassword);");
-            _dBManager.InitDbCommand("InsertUser", CommandType.StoredProcedure);
+                _dBManager.InitDbCommand("InsertUser", CommandType.StoredProcedure);
 
-            _dBManager.AddCMDParam("@Username", sign.Username);
-            _dBManager.AddCMDParam("@Email", sign.Email);
-            _dBManager.AddCMDParam("@SPassword", sign.SPassword);
-            _dBManager.AddCMDParam("@u_RoleId", sign.Role);
+                _dBManager.AddCMDParam("@Username", sign.Username);
+                _dBManager.AddCMDParam("@Email", sign.Email);
+                _dBManager.AddCMDParam("@SPassword", sign.SPassword);
+                _dBManager.AddCMDParam("@u_RoleId", sign.Role);
 
 
-            _dBManager.ExecuteNonQuery();
+                _dBManager.ExecuteNonQuery();
+            }
+            catch(Exception ex)
+            {
+                Console.WriteLine(ex.ToString());
+            }
 
             return sign;
         }
@@ -65,14 +77,23 @@ namespace Event_Management_App.DataManager.DAL
 
         public bool CheckEmailExist(string emailId, int ID)
         {
-            _dBManager.InitDbCommand("CheckEmailExist", CommandType.StoredProcedure);
+            bool emailExist = false;
 
-            _dBManager.AddCMDParam("@p_EmailId", emailId);
-            _dBManager.AddCMDParam("@p_Id", ID);
+            try
+            {
+                _dBManager.InitDbCommand("CheckEmailExist", CommandType.StoredProcedure);
 
-            var result = _dBManager.ExecuteScalar();
+                _dBManager.AddCMDParam("@p_EmailId", emailId);
+                _dBManager.AddCMDParam("@p_Id", ID);
 
-            bool emailExist = Convert.ToBoolean(result);
+                var result = _dBManager.ExecuteScalar();
+
+                emailExist = Convert.ToBoolean(result);
+            }
+            catch(Exception ex)
+            {
+                Console.WriteLine(ex.ToString());
+            }
 
             return emailExist;
         }

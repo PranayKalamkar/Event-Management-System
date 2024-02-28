@@ -27,22 +27,17 @@
 
                                 <div class="col-md-12">
                                     <label class="form-label">Full Name *</label>
-                                    <input id="u_Username" type="text" class="form-control" placeholder="First Name" aria-label="First name" />
+                                    <input id="u_Username" type="text" class="form-control" placeholder="Full Name" aria-label="First name" />
                                 </div>
-
-                                @*  <div class="col-md-6">
-                                <label class="form-label">Last Name *</label>
-                                <input type="text" class="form-control" placeholder="Last Name" aria-label="Last name" />
-                                </div> *@
 
                                 <div class="col-md-6">
                                     <label class="form-label">Mobile number *</label>
-                                    <input id="u_Contact" type="text" class="form-control" placeholder="Phone Number" aria-label="Phone number" />
+                                    <input id="u_Contact" type="text" class="form-control" placeholder="Phone Number" aria-label="Phone number" maxlength="10" />
                                 </div>
 
                                 <div class="col-md-6">
                                     <label class="form-label">Address *</label>
-                                    <input id="u_Address" type="text" class="form-control" placeholder="Mobile number" aria-label="Mobile number" />
+                                    <input id="u_Address" type="text" class="form-control" placeholder="Address" aria-label="Mobile number" />
                                 </div>
 
                                 <div class="col-md-6">
@@ -50,10 +45,6 @@
                                     <input id="u_Email" type="email" class="form-control" placeholder="Email" aria-label="Email" />
                                 </div>
 
-                                <div class="col-md-6">
-                                    <label class="form-label">Skype *</label>
-                                    <input type="text" class="form-control" placeholder="Skype Id" aria-label="Skype" />
-                                </div>
                             </div>
                         </div>
                     </div>
@@ -71,9 +62,7 @@
                                             style="max-width: 50%; max-height: 150px; margin-top: 10px; display: none;">
                                     </div>
 
-                                    <input id="u_ProfileFile" type="file" name="file" onchange="previewProfile(this)" hidden>
-                                    <label class="btn btn-success-soft btn-block" for="customFile">Upload</label>
-                                    <button type="button" class="btn btn-danger-soft">Remove</button>
+                                    <input id="u_ProfileFile" type="file" name="file" onchange="previewProfile(this)">
 
                                     <p class="text-muted mt-3 mb-0">
                                         <span class="me-1">Note:</span>Minimum size
@@ -139,33 +128,11 @@
                         </div>
                     </div>
 
-                    <div class="col-xxl-6">
-                        <div class="bg-secondary-soft px-2 py-3 rounded">
-                            <div class="row g-3">
-                                <h4 class="my-4">Change Password</h4>
-
-                                <div class="col-md-6">
-                                    <label for="exampleInputPassword1" class="form-label">Old password *</label>
-                                    <input type="password" class="form-control" id="exampleInputPassword1">
-                                </div>
-
-                                <div class="col-md-6">
-                                    <label for="exampleInputPassword2" class="form-label">New password *</label>
-                                    <input type="password" class="form-control" id="exampleInputPassword2">
-                                </div>
-
-                                <div class="col-md-12">
-                                    <label for="exampleInputPassword3" class="form-label">Confirm Password *</label>
-                                    <input type="password" class="form-control" id="exampleInputPassword3">
-                                </div>
-                            </div>
-                        </div>
-                    </div>
                 </div>
 
                 <div class="gap-3 d-md-flex justify-content-md-end text-center">
-                    <button type="button" class="btn btn-danger btn-lg">Delete profile</button>
-                    <button type="button" onclick="updateProfile()" class="btn btn-primary btn-lg">Update profile</button>
+                    <a type="button" class="btn btn-primary btn-lg" asp-controller="Customer" asp-action="Customer">Go Back</a>
+                    <button type="button" onclick="updateProfile()" class="btn btn-success btn-lg">Update profile</button>
                 </div>
             </form>
         </div>

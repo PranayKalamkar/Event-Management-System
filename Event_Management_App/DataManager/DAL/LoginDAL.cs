@@ -15,59 +15,93 @@ namespace Event_Management_App.DataManager.DAL
 
         public string GetPassword(string pass)
         {
-            pass = pass + _dBManager.getSalt();
+            string getPassword = "";
 
-            _dBManager.InitDbCommand("GetPassword", CommandType.StoredProcedure);
+            try
+            {
+                pass = pass + _dBManager.getSalt();
 
-            _dBManager.AddCMDParam("@user_pass", pass);
+                _dBManager.InitDbCommand("GetPassword", CommandType.StoredProcedure);
 
-            var result = _dBManager.ExecuteScalar();
+                _dBManager.AddCMDParam("@user_pass", pass);
 
-            string getPassword = Convert.ToString(result);
+                var result = _dBManager.ExecuteScalar();
+
+                getPassword = Convert.ToString(result);
+            }
+            catch(Exception ex)
+            {
+                Console.WriteLine(ex.ToString());
+            }
 
             return getPassword;
         }
 
         public int GetRole(string email)
         {
-            _dBManager.InitDbCommand("GetRole", CommandType.StoredProcedure);
+            int role = 0;
 
-            _dBManager.AddCMDParam("@IEmail", email);
+            try
+            {
+                _dBManager.InitDbCommand("GetRole", CommandType.StoredProcedure);
 
-            var result = _dBManager.ExecuteScalar();
+                _dBManager.AddCMDParam("@IEmail", email);
 
-            int role = Convert.ToInt32(result);
+                var result = _dBManager.ExecuteScalar();
+
+                role = Convert.ToInt32(result);
+            }
+            catch(Exception ex)
+            {
+                Console.WriteLine(ex.ToString());
+            }
 
             return role;
         }
 
         public int GetId(string email)
         {
-            _dBManager.InitDbCommand("GetId", CommandType.StoredProcedure);
+            int id = 0;
 
-            _dBManager.AddCMDParam("@IEmail", email);
+            try
+            {
+                _dBManager.InitDbCommand("GetId", CommandType.StoredProcedure);
 
-            var result = _dBManager.ExecuteScalar();
+                _dBManager.AddCMDParam("@IEmail", email);
 
-            int id = Convert.ToInt32(result);
+                var result = _dBManager.ExecuteScalar();
+
+                id = Convert.ToInt32(result);
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine(ex.ToString());
+            }
 
             return id;
         }
 
         public string LoginUser(string email)
         {
-            string existingPassword = null;
+            string existingPassword = "";
 
-            _dBManager.InitDbCommand("GetUserPassword", CommandType.StoredProcedure);
-
-
-            _dBManager.AddCMDParam("@IEmail", email);
-
-            DataSet ds = _dBManager.ExecuteDataSet();
-
-            foreach (DataRow item in ds.Tables[0].Rows)
+            try
             {
-                existingPassword = item["SPassword"].ConvertDBNullToString();
+                _dBManager.InitDbCommand("GetUserPassword", CommandType.StoredProcedure);
+
+
+                _dBManager.AddCMDParam("@IEmail", email);
+
+                DataSet ds = _dBManager.ExecuteDataSet();
+
+                foreach (DataRow item in ds.Tables[0].Rows)
+                {
+                    existingPassword = item["SPassword"].ConvertDBNullToString();
+                }
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine(ex.ToString());
             }
 
             return existingPassword;
@@ -75,14 +109,23 @@ namespace Event_Management_App.DataManager.DAL
 
         public bool CheckEmailExist(string emailId, int ID)
         {
-            _dBManager.InitDbCommand("CheckEmailExist", CommandType.StoredProcedure);
+            bool emailExist = false;
 
-            _dBManager.AddCMDParam("@p_EmailId", emailId);
-            _dBManager.AddCMDParam("@p_Id", ID);
+            try
+            {
+                _dBManager.InitDbCommand("CheckEmailExist", CommandType.StoredProcedure);
 
-            var result = _dBManager.ExecuteScalar();
+                _dBManager.AddCMDParam("@p_EmailId", emailId);
+                _dBManager.AddCMDParam("@p_Id", ID);
 
-            bool emailExist = Convert.ToBoolean(result);
+                var result = _dBManager.ExecuteScalar();
+
+                emailExist = Convert.ToBoolean(result);
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine(ex.ToString());
+            }
 
             return emailExist;
         }

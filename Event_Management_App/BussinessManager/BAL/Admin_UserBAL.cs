@@ -33,11 +33,11 @@ namespace Event_Management_App.BussinessManager.BAL
 
             sign.IdProofFile = idproof;
 
-            sign.IdProofPath = UploadIdProof(sign.IdProofFile);
+            sign.IdProofPath = FileUpload.UploadIdProof(sign.IdProofFile);
 
             sign.ProfileFile = profile;
 
-            sign.ProfilePath = UploadProfile(sign.ProfileFile);
+            sign.ProfilePath = FileUpload.UploadProfile(sign.ProfileFile);
 
             _IAdmin_UserDAL.AddAdmin_User(sign);
 
@@ -81,8 +81,13 @@ namespace Event_Management_App.BussinessManager.BAL
                     }
 
                 }
-                adminusermodel.IdProofPath = UploadIdProof(adminusermodel.IdProofFile);
+                adminusermodel.IdProofPath = FileUpload.UploadIdProof(adminusermodel.IdProofFile);
             }
+            else
+            {
+                adminusermodel.IdProofPath = existingIdProof;
+            }
+
             if (adminusermodel.ProfileFile != null)
             {
                 if (!string.IsNullOrEmpty(existingProfile))
@@ -94,12 +99,11 @@ namespace Event_Management_App.BussinessManager.BAL
                         System.IO.File.Delete(oldProfilePath);
                     }
                 }
-                adminusermodel.ProfilePath = UploadProfile(adminusermodel.ProfileFile);
+                adminusermodel.ProfilePath = FileUpload.UploadProfile(adminusermodel.ProfileFile);
             }
             else
             {
                 // If no new image is provided, use the existing image
-                adminusermodel.IdProofPath = existingIdProof;
                 adminusermodel.ProfilePath = existingProfile;
             }
 
@@ -113,90 +117,5 @@ namespace Event_Management_App.BussinessManager.BAL
             _IAdmin_UserDAL.DeleteAdmin_UserData(ID);
         }
 
-
-        public string UploadIdProof(IFormFile imageFile)
-        {
-
-            try
-            {
-                string uniqueFileName = null;
-
-                if (imageFile != null)
-                {
-                    string uploadFolder = Path.Combine(Directory.GetCurrentDirectory(), "wwwroot", "admin_useridproof");
-
-                    Console.WriteLine(Directory.GetCurrentDirectory());
-
-                    if (!Directory.Exists(uploadFolder))
-                    {
-                        Directory.CreateDirectory(uploadFolder);
-                    }
-
-                    uniqueFileName = Guid.NewGuid().ToString() + "_" + imageFile.FileName;
-                    string filePath = Path.Combine(uploadFolder, uniqueFileName);
-
-                    using (var stream = new FileStream(filePath, FileMode.Create))
-                    {
-                        imageFile.CopyTo(stream);
-                    }
-
-                }
-                else
-                {
-                    Console.WriteLine("Image file path is null");
-                }
-
-                Console.WriteLine(uniqueFileName);
-
-                return uniqueFileName;
-            }
-            catch (Exception ex)
-            {
-                return ex.StackTrace;
-            }
-        }
-
-
-        public string UploadProfile(IFormFile imageFile)
-        {
-
-            try
-            {
-                string uniqueFileName = null;
-
-                if (imageFile != null)
-                {
-                    string uploadFolder = Path.Combine(Directory.GetCurrentDirectory(), "wwwroot", "admin_userimage");
-
-                    Console.WriteLine(Directory.GetCurrentDirectory());
-
-                    if (!Directory.Exists(uploadFolder))
-                    {
-                        Directory.CreateDirectory(uploadFolder);
-                    }
-
-                    uniqueFileName = Guid.NewGuid().ToString() + "_" + imageFile.FileName;
-                    string filePath = Path.Combine(uploadFolder, uniqueFileName);
-
-                    using (var stream = new FileStream(filePath, FileMode.Create))
-                    {
-                        imageFile.CopyTo(stream);
-                    }
-
-                }
-                else
-                {
-                    Console.WriteLine("Image file path is null");
-                }
-
-                Console.WriteLine(uniqueFileName);
-
-                return uniqueFileName;
-            }
-            catch (Exception ex)
-            {
-                return ex.StackTrace;
-            }
-        }
     }
 }

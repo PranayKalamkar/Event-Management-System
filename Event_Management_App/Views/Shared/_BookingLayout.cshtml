@@ -26,9 +26,14 @@
 
     <div class="container-fluid px-0">
         <h1 class="text-center" style="color: #fff; padding: 15px;">Event Booking</h1>
-            <main role="main">
-                @RenderBody()
-            </main>
+        <main role="main">
+            @RenderBody()
+        </main>
+    </div>
+
+    <div class="container text-center">
+        <span><a asp-controller="Customer" asp-action="Customer">Home</a></span>
+        <span><a asp-controller="CustomerProfile" asp-action="CustomerProfile">Profile</a></span>
     </div>
 
     <script src="~/lib/jquery/dist/jquery.min.js"></script>

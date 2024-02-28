@@ -38,52 +38,49 @@ function getAddEventList() {
 //Add Data Function
 function addEvent() {
 
-    if ($("#create").valid()) {
-
-        var eventObj = {
-            Category: $('#Category').val(),
-            Location: $('#Location').val(),
-            Capacity: $('#Capacity').val(),
-            Amount: $('#Amount').val(),
-            Description: $('#Description').val(),
-            Address: $('#Address').val(),
-            Contact: $('#Contact').val(),
-        }
-
-        var formData = new FormData();
-        formData.append("model", JSON.stringify(eventObj));
-        formData.append("file", $('#ImageFile')[0].files[0]);
-
-        $.ajax({
-            url: "/AddEvent/Create",
-            data: formData,
-            processData: false,
-            contentType: false,
-            cache: false,
-            type: "POST",
-            success: function (data) {
-
-                $('#addEvent').modal('hide');
-
-                Swal.fire({
-                    title: "Good job!",
-                    text: "Event saved successfully!",
-                    icon: "success",
-                    button: "Ok",
-                });
-
-                // datatable.destroy();
-                // Remove all cards from the container
-                $('#cardContainer').empty();
-                getAddEventList();
-
-            },
-            error: function (errorThrown) {
-                console.log("Error saving event:", errorThrown);
-                Swal.fire("Oops", "An error occurred while saving your data, Please try again later.", "error");
-            }
-        });
+    var eventObj = {
+        Category: $('#Category').val(),
+        Location: $('#Location').val(),
+        Capacity: $('#Capacity').val(),
+        Amount: $('#Amount').val(),
+        Description: $('#Description').val(),
+        Address: $('#Address').val(),
+        Contact: $('#Contact').val(),
     }
+
+    var formData = new FormData();
+    formData.append("model", JSON.stringify(eventObj));
+    formData.append("file", $('#ImageFile')[0].files[0]);
+
+    $.ajax({
+        url: "/AddEvent/Create",
+        data: formData,
+        processData: false,
+        contentType: false,
+        cache: false,
+        type: "POST",
+        success: function (data) {
+
+            $('#addEvent').modal('hide');
+
+            Swal.fire({
+                title: "Good job!",
+                text: "Event saved successfully!",
+                icon: "success",
+                button: "Ok",
+            });
+
+            // datatable.destroy();
+            // Remove all cards from the container
+            $('#cardContainer').empty();
+            getAddEventList();
+
+        },
+        error: function (errorThrown) {
+            console.log("Error saving event:", errorThrown);
+            Swal.fire("Oops", "An error occurred while saving your data, Please try again later.", "error");
+        }
+    });
 }
 
 function previewImage(input) {
@@ -131,64 +128,63 @@ function populateEventData(Id) {
             alert(errormessage.responseText);
         }
     });
+
 }
 
 function updateAddEvent() {
 
-    if ($("#update").valid()) {
-
-        var eventAddID = {
-            id: $('#u_Id').val(),
-        }
-
-        var addEventData = {
-            Category: $('#u_Category').val(),
-            Location: $('#u_Location').val(),
-            Capacity: $('#u_Capacity').val(),
-            Amount: $('#u_Amount').val(),
-            Description: $('#u_Description').val(),
-            Address: $('#u_Address').val(),
-            Contact: $('#u_Contact').val(),
-            Status: $('#u_Status').val(),
-        };
-
-        var formData = new FormData();
-        formData.append("ID", eventAddID.id);
-        formData.append("model", JSON.stringify(addEventData));
-        formData.append("file", $("#updateImageFile")[0].files[0]);
-
-        $.ajax({
-            type: "POST",
-            url: "/AddEvent/Update",
-            data: formData,
-            contentType: false,
-            processData: false,
-            cache: false,
-
-            success: function (data) {
-
-                $('#updateEvent').modal('hide');
-
-                Swal.fire({
-                    title: "Event updated successfully!",
-                    text: "close",
-                    icon: "success"
-                });
-
-                // datatable.destroy();
-                // Remove all cards from the container
-                $('#cardContainer').empty();
-                getAddEventList();
-            },
-            error: function (errormessage) {
-                Swal.fire({
-                    title: "Error updating event!",
-                    text: "close",
-                    icon: "Error"
-                });
-            }
-        });
+    var eventAddID = {
+        id: $('#u_Id').val(),
     }
+
+    var addEventData = {
+        Category: $('#u_Category').val(),
+        Location: $('#u_Location').val(),
+        Capacity: $('#u_Capacity').val(),
+        Amount: $('#u_Amount').val(),
+        Description: $('#u_Description').val(),
+        Address: $('#u_Address').val(),
+        Contact: $('#u_Contact').val(),
+        Status: $('#u_Status').val(),
+    };
+
+    var formData = new FormData();
+    formData.append("ID", eventAddID.id);
+    formData.append("model", JSON.stringify(addEventData));
+    formData.append("file", $("#updateImageFile")[0].files[0]);
+
+    $.ajax({
+        type: "POST",
+        url: "/AddEvent/Update",
+        data: formData,
+        contentType: false,
+        processData: false,
+        cache: false,
+
+        success: function (data) {
+
+            $('#updateEvent').modal('hide');
+
+            Swal.fire({
+                title: "Event updated successfully!",
+                text: "close",
+                icon: "success"
+            });
+
+            // datatable.destroy();
+            // Remove all cards from the container
+            $('#cardContainer').empty();
+            getAddEventList();
+        },
+        error: function (errormessage) {
+            Swal.fire({
+                title: "Error updating event!",
+                text: "close",
+                icon: "Error"
+            });
+        }
+    });
+
 }
 
 function viewEventData(eventId) {

@@ -69,7 +69,7 @@ function updateProfile() {
 
         $.ajax({
             type: "POST",
-            url: "/Team/UpdateAdmin_User",
+            url: "/Team/UpdateProfile",
             data: formData,
             contentType: false,
             processData: false,

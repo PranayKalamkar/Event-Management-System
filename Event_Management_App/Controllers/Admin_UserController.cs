@@ -34,11 +34,11 @@ namespace Event_Management_App.Controllers
         {
             Admin_UserModel admin_user = JsonSerializer.Deserialize<Admin_UserModel>(model)!;
 
-            if(ModelState.IsValid) 
+            if (ModelState.IsValid)
             {
                 var result = _IAdmin_UserBAL.AddAdmin_User(admin_user, idproof, profile);
 
-                if(result == "Exist")
+                if (result == "Exist")
                 {
                     return Json(new { status = "warning", message = "Email Id Already Exists!" });
                 }
@@ -59,8 +59,10 @@ namespace Event_Management_App.Controllers
         {
             Admin_UserModel admin_user = JsonSerializer.Deserialize<Admin_UserModel>(model)!;
 
+
             if (ModelState.IsValid)
             {
+
                 var result = _IAdmin_UserBAL.UpdateAdmin_UserData(admin_user, ID, idproof, profile);
 
                 if (result == "Exist")

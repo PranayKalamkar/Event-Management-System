@@ -37,12 +37,7 @@ namespace Event_Management_App.Controllers
 
             AddEventModel addevntmodel = JsonSerializer.Deserialize<AddEventModel>(model)!;
 
-            if (ModelState.IsValid)
-            {
-
-                _IAddEventBAL.AddEvent(addevntmodel, file);
-
-            }
+            _IAddEventBAL.AddEvent(addevntmodel, file);
 
             return Json("ListEvent");
         }
@@ -57,12 +52,7 @@ namespace Event_Management_App.Controllers
         {
             AddEventModel addeventmodel = JsonSerializer.Deserialize<AddEventModel>(model)!;
 
-            if (ModelState.IsValid)
-            {
-
-                _IAddEventBAL.UpdateEventData(addeventmodel, ID, file);
-
-            }
+            _IAddEventBAL.UpdateEventData(addeventmodel, ID, file);
 
             return Json("ListEvent");
         }

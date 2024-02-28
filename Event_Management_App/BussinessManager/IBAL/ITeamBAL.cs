@@ -8,6 +8,5 @@ namespace Event_Management_App.BussinessManager.IBAL
 
         public string UpdateProfileData(Admin_UserModel adminusermodel, int ID, IFormFile profile);
 
-        public string UploadProfile(IFormFile imageFile);
     }
 }
