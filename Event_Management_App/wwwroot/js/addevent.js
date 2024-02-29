@@ -12,7 +12,7 @@ function getAddEventList() {
                 var card = `
                                                                                                  <div class="col-md-4 mb-4">
                                                                                                        <div class="card h-100 mb-4" onclick="viewEventData(${item.AddEventModel.Id})" data-bs-toggle="modal" data-bs-target="#viewAddEventModal">
-                                                                                                             <img src="/addeventimages/${item.AddEventModel.ImagePath}" class="card-img-top" alt="Image">
+                                                                                                             <img src="/addeventimages/${item.AddEventModel.ImagePath}" class="card-img-top" alt="Image" style="height: 200px; width: 335px;">
                                                                                                                    <div class="card-body">
                                                                                                                       <h5 class="card-title">${item.AddEventModel.Category}</h5>
                                                                                                                       <p class="card-text">Location: ${item.AddEventModel.Location}</p>

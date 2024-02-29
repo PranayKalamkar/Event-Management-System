@@ -22,6 +22,7 @@ namespace Event_Management_App.Controllers
             return Json(_IEventHistoryBAL.GetAllCompletedEvents());
         }
 
+        [HttpGet]
         public IActionResult PopulateCompletedEvent(int ID)
         {
             return Json(_IEventHistoryBAL.PopulateCompletedEventData(ID));

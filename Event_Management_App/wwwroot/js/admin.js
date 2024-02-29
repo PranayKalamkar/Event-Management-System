@@ -13,7 +13,7 @@ function getAdminList() {
         url: "/Admin/GetAdmin",
         success: function (data) {
 
-            datatable = $('#myTable').DataTable({
+            datatable = $('#myTable1').DataTable({
                 data: data,
                 columns: [
                     { data: 'Id' },

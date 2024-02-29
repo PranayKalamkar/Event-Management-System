@@ -33,7 +33,15 @@ namespace Event_Management_App.Controllers
         {
 			GetAllBookedDetails oData = JsonSerializer.Deserialize<GetAllBookedDetails>(model)!;
 
-			_IBookedEventsBAL.UpdateEventData(oData, Status_Id, Id);
+            int? testid = HttpContext.Session.GetInt32("Id");
+
+            int ID = testid.Value;
+
+            oData.RequestedEventsModel.UpdatedBy = ID;
+
+            oData.RequestedEventsModel.UpdatedAt = DateTime.Now;
+
+            _IBookedEventsBAL.UpdateEventData(oData, Status_Id, Id);
 
             return Json("BookedEventsList");
         }

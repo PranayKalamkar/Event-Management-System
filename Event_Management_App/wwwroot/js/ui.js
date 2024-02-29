@@ -68,3 +68,40 @@ var swiper = new Swiper(".review-slider", {
         disableOnInteraction: false,
     },
 });
+
+// Custom JS
+
+//Add Data Function
+function AddMessage() {
+
+    var messageObj = {
+        Location: $('#Location').val(),
+        Capacity: $('#Capacity').val(),
+        Budget: $('#Budget').val(),
+        Occassion: $('#Occassion').val(),
+        Description: $('#Description').val(),
+    }
+
+    var formData = new FormData();
+    formData.append("model", JSON.stringify(messageObj));
+
+    $.ajax({
+        url: "/Customer/Create",
+        data: formData,
+        processData: false,
+        contentType: false,
+        cache: false,
+        type: "POST",
+        success: function (data) {
+
+            alert(data.message);
+
+            window.location.reload();
+
+        },
+        error: function (errorThrown) {
+            console.log("Error saving message:", errorThrown);
+            Swal.fire("Oops", "An error occurred while saving your data, Please try again later.", "error");
+        }
+    });
+}

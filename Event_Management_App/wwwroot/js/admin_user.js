@@ -13,7 +13,7 @@ function getAdmin_UserList() {
         url: "/Admin_User/GetAdmin_User",
         success: function (data) {
 
-            datatable = $('#myTable').DataTable({
+            datatable = $('#myTable2').DataTable({
                 data: data,
                 columns: [
                     { data: 'Id' },

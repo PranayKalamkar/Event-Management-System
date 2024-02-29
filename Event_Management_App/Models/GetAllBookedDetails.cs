@@ -12,6 +12,8 @@
 
         public Admin_UserModel? Admin_UserModel { get; set; }
 
+        public MessageModel? MessageModel { get; set; }
+
         public int Total_Events { get; set; }
 
         public int Total_Users { get; set; }

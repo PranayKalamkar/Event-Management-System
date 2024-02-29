@@ -42,6 +42,8 @@ namespace Event_Management_App.Controllers
 
             GetAllBookedDetails bookevent = new GetAllBookedDetails();
 
+            bookevent.RequestedEventsModel = new RequestedEventsModel();
+
             //await _IEmailSenderBAL.EmailSendAsync(Email, "Booking Confirm", "Congratulation Your Booking Is confirmed!");
 
             if(Status_Id == 1)
@@ -77,16 +79,17 @@ namespace Event_Management_App.Controllers
 				await _IEmailSenderBAL.EmailSendAsync(adminEmail, "Pending", "Order is on Hold!");
 			}
 
-			//await _IEmailSenderBAL.EmailSendAsync(adminEmail, "New Order", "Order Booked Successfully!");
+            bookevent.RequestedEventsModel.Status_Id = Status_Id;
 
+            int? testid = HttpContext.Session.GetInt32("Id");
 
-            //int? status = Status_Id;
+            int ID = testid.Value;
 
-            //bookevent.BookedEventsModel = new BookedEventsModel();
+            bookevent.RequestedEventsModel.UpdatedBy = ID;
 
-            //bookevent.RequestedEventsModel.Status_Id = Status_Id;
+            bookevent.RequestedEventsModel.UpdatedAt = DateTime.Now;
 
-            _IRequestedEventsBAL.UpdateEventData(Status_Id, Id);
+            _IRequestedEventsBAL.UpdateEventData(bookevent, Id);
 
             return Json("BookedEventsList");
         }

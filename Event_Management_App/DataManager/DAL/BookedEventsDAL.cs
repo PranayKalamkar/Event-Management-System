@@ -141,6 +141,8 @@ namespace Event_Management_App.DataManager.DAL
                 _dBManager.AddCMDParam("@u_status_id_in", Status_Id);
                 _dBManager.AddCMDParam("@u_deposit_in", oData.RequestedEventsModel.Deposit);
                 _dBManager.AddCMDParam("@u_balance_in", oData.RequestedEventsModel.Balance);
+                _dBManager.AddCMDParam("@u_upadtedby_in", oData.RequestedEventsModel.UpdatedBy);
+                _dBManager.AddCMDParam("@u_updatedat_in", oData.RequestedEventsModel.UpdatedAt);
 
                 _dBManager.ExecuteNonQuery();
             }

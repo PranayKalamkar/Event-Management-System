@@ -34,6 +34,12 @@ namespace Event_Management_App.Controllers
         {
             Admin_UserModel admin_user = JsonSerializer.Deserialize<Admin_UserModel>(model)!;
 
+            int? testid = HttpContext.Session.GetInt32("Id");
+
+            admin_user.CreatedBy = testid.Value;
+
+            admin_user.CreatedAt = DateTime.Now;
+
             if (ModelState.IsValid)
             {
                 var result = _IAdmin_UserBAL.AddAdmin_User(admin_user, idproof, profile);
@@ -59,6 +65,11 @@ namespace Event_Management_App.Controllers
         {
             Admin_UserModel admin_user = JsonSerializer.Deserialize<Admin_UserModel>(model)!;
 
+            int? testid = HttpContext.Session.GetInt32("Id");
+
+            admin_user.UpdatedBy = testid.Value;
+
+            admin_user.UpdatedAt = DateTime.Now;
 
             if (ModelState.IsValid)
             {

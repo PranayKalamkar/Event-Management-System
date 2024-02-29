@@ -35,6 +35,14 @@ namespace Event_Management_App.Controllers
         {
             Admin_UserModel admin_user = JsonSerializer.Deserialize<Admin_UserModel>(model)!;
 
+            int? testid = HttpContext.Session.GetInt32("Id");
+
+            int Id = testid.Value;
+
+            admin_user.UpdatedBy = Id;
+
+            admin_user.UpdatedAt = DateTime.Now;
+
             if (ModelState.IsValid)
             {
                 var result = _ITeamBAL.UpdateProfileData(admin_user, ID, profile);

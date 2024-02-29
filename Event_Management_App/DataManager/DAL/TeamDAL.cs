@@ -112,6 +112,8 @@ namespace Event_Management_App.DataManager.DAL
                 _dBManager.AddCMDParam("u_Address", adminusermodel.Address);
                 _dBManager.AddCMDParam("u_IdProof", adminusermodel.IdProofPath);
                 _dBManager.AddCMDParam("u_Profile", adminusermodel.ProfilePath);
+                _dBManager.AddCMDParam("u_updateby", adminusermodel.UpdatedBy);
+                _dBManager.AddCMDParam("u_updatedat", adminusermodel.UpdatedAt);
 
                 _dBManager.ExecuteNonQuery();
             }

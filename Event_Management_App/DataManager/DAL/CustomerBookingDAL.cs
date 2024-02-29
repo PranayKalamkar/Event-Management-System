@@ -115,15 +115,17 @@ namespace Event_Management_App.DataManager.DAL
         {
             try
             {
-                _dBManager.InitDbCommand("InsertbookEvent", CommandType.StoredProcedure);
+                _dBManager.InitDbCommand("InsertCustomerBookData", CommandType.StoredProcedure);
 
-                _dBManager.AddCMDParam("@a_Deposit", oData.RequestedEventsModel.Deposit);
-                _dBManager.AddCMDParam("@a_Balance", oData.RequestedEventsModel.Balance);
-                _dBManager.AddCMDParam("@a_Date", oData.RequestedEventsModel.Date);
-                _dBManager.AddCMDParam("@a_Time", oData.RequestedEventsModel.Time);
-                _dBManager.AddCMDParam("@a_addEvent_id", oData.RequestedEventsModel.Addevent_id);
-                _dBManager.AddCMDParam("@a_signup_id", oData.RequestedEventsModel.Signup_id);
-                _dBManager.AddCMDParam("@a_Status_id", oData.RequestedEventsModel.Status_Id);
+                _dBManager.AddCMDParam("@p_Deposit_in", oData.RequestedEventsModel.Deposit);
+                _dBManager.AddCMDParam("@p_Balance_in", oData.RequestedEventsModel.Balance);
+                _dBManager.AddCMDParam("@p_Date_in", oData.RequestedEventsModel.Date);
+                _dBManager.AddCMDParam("@p_Time_in", oData.RequestedEventsModel.Time);
+                _dBManager.AddCMDParam("@p_addevent_id_in", oData.RequestedEventsModel.Addevent_id);
+                _dBManager.AddCMDParam("@p_signup_id_in", oData.RequestedEventsModel.Signup_id);
+                _dBManager.AddCMDParam("@p_Status_id_in", oData.RequestedEventsModel.Status_Id);
+                _dBManager.AddCMDParam("@p_createdby_in", oData.RequestedEventsModel.CreatedBy);
+                _dBManager.AddCMDParam("@p_createdat_in", oData.RequestedEventsModel.CreatedAt);
 
 
                 _dBManager.ExecuteNonQuery();

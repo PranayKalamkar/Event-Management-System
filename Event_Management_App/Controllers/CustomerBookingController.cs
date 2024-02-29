@@ -47,6 +47,10 @@ namespace Event_Management_App.Controllers
 
             oData.RequestedEventsModel.Addevent_id = ID;
 
+            oData.RequestedEventsModel.CreatedBy = testid.Value;
+
+            oData.RequestedEventsModel.CreatedAt = DateTime.Now;
+
             if(ModelState.IsValid)
             {
                 var result = _ICustomerBookingBAL.AddbookEventData(oData);

@@ -47,6 +47,7 @@ namespace Event_Management_App.DataManager.DAL
 
         public Admin_UserModel AddAdmin_User(Admin_UserModel sign)
         {
+            int isDelete = 0;
 
             try
             {
@@ -62,6 +63,9 @@ namespace Event_Management_App.DataManager.DAL
                 _dBManager.AddCMDParam("@a_Address", sign.Address);
                 _dBManager.AddCMDParam("@a_Idproof", sign.IdProofPath);
                 _dBManager.AddCMDParam("@a_profile", sign.ProfilePath);
+                _dBManager.AddCMDParam("@a_createdby", sign.CreatedBy);
+                _dBManager.AddCMDParam("@a_createdat", sign.CreatedAt);
+                _dBManager.AddCMDParam("@a_deletevalue", isDelete);
 
 
                 _dBManager.ExecuteNonQuery();
@@ -172,6 +176,8 @@ namespace Event_Management_App.DataManager.DAL
                 _dBManager.AddCMDParam("u_Address", adminusermodel.Address);
                 _dBManager.AddCMDParam("u_IdProof", adminusermodel.IdProofPath);
                 _dBManager.AddCMDParam("u_Profile", adminusermodel.ProfilePath);
+                _dBManager.AddCMDParam("u_updateby", adminusermodel.UpdatedBy);
+                _dBManager.AddCMDParam("u_updatedat", adminusermodel.UpdatedAt);
 
                 _dBManager.ExecuteNonQuery();
             }
@@ -185,11 +191,14 @@ namespace Event_Management_App.DataManager.DAL
 
         public void DeleteAdmin_UserData(int ID)
         {
+            int isDelete = 1;
+
             try
             {
                 _dBManager.InitDbCommand("Deleteadmin_userById", CommandType.StoredProcedure);
 
-                _dBManager.AddCMDParam("@deleteId", ID);
+                _dBManager.AddCMDParam("@deleteId_in", ID);
+                _dBManager.AddCMDParam("@deleteValue_in", isDelete);
 
                 _dBManager.ExecuteNonQuery();
             }

@@ -131,7 +131,7 @@ namespace Event_Management_App.DataManager.DAL
             return bookeventmodel;
         }
 
-        public int UpdateRequestedEventData(int Status_Id, int Id)
+        public GetAllBookedDetails UpdateRequestedEventData(GetAllBookedDetails bookevent, int Id)
         {
 
             try
@@ -139,7 +139,9 @@ namespace Event_Management_App.DataManager.DAL
                 _dBManager.InitDbCommand("UpdateStatusById", CommandType.StoredProcedure);
 
                 _dBManager.AddCMDParam("@u_Id_in", Id);
-                _dBManager.AddCMDParam("@u_status_id_in", Status_Id);
+                _dBManager.AddCMDParam("@u_status_id_in", bookevent.RequestedEventsModel.Status_Id);
+                _dBManager.AddCMDParam("@u_updatedby_in", bookevent.RequestedEventsModel.UpdatedBy);
+                _dBManager.AddCMDParam("@u_updatedat_in", bookevent.RequestedEventsModel.UpdatedAt);
 
                 _dBManager.ExecuteNonQuery();
             }
@@ -148,7 +150,7 @@ namespace Event_Management_App.DataManager.DAL
                 Console.WriteLine(ex.ToString());
             }
 
-            return Status_Id;
+            return bookevent;
         }
 
         public List<GetAllBookedDetails> GetStatus()

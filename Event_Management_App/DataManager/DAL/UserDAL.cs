@@ -61,6 +61,7 @@ namespace Event_Management_App.DataManager.DAL
                 _dBManager.AddCMDParam("@Email", sign.Email);
                 _dBManager.AddCMDParam("@SPassword", sign.SPassword);
                 _dBManager.AddCMDParam("@u_RoleId", sign.Role);
+                _dBManager.AddCMDParam("@createdat", sign.CreatedAt);
 
 
                 _dBManager.ExecuteNonQuery();

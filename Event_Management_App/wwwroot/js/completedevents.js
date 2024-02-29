@@ -13,7 +13,7 @@ function getEventList() {
         url: "/EventHistory/EventHistoryList",
         success: function (data) {
 
-            datatable = $('#myTable').DataTable({
+            datatable = $('#myTable3').DataTable({
                 data: data,
                 columns: [
                     { data: 'RequestedEventsModel.Id' },

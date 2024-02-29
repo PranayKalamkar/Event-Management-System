@@ -37,6 +37,14 @@ namespace Event_Management_App.Controllers
 
             AddEventModel addevntmodel = JsonSerializer.Deserialize<AddEventModel>(model)!;
 
+            int? testid = HttpContext.Session.GetInt32("Id");
+
+            int ID = testid.Value;
+
+            addevntmodel.CreatedBy = ID;
+
+            addevntmodel.CreatedAt = DateTime.Now;
+
             _IAddEventBAL.AddEvent(addevntmodel, file);
 
             return Json("ListEvent");
@@ -52,6 +60,14 @@ namespace Event_Management_App.Controllers
         {
             AddEventModel addeventmodel = JsonSerializer.Deserialize<AddEventModel>(model)!;
 
+            int? testid = HttpContext.Session.GetInt32("Id");
+
+            int Id = testid.Value;
+
+            addeventmodel.UpdatedBy = Id;
+
+            addeventmodel.UpdatedAt = DateTime.Now;
+
             _IAddEventBAL.UpdateEventData(addeventmodel, ID, file);
 
             return Json("ListEvent");
@@ -59,6 +75,7 @@ namespace Event_Management_App.Controllers
 
         public IActionResult Delete(int ID)
         {
+
             _IAddEventBAL.DeleteEventData(ID);
 
             return Json("ListEvent");

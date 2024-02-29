@@ -24,9 +24,9 @@ namespace Event_Management_App.BussinessManager.BAL
             return _IBookedEventDAL.PopulateRequestedEventData(ID);
         }
 
-        public int UpdateEventData(int Status_Id, int Id)
+        public GetAllBookedDetails UpdateEventData(GetAllBookedDetails bookevent, int Id)
         {
-            return _IBookedEventDAL.UpdateRequestedEventData(Status_Id, Id);
+            return _IBookedEventDAL.UpdateRequestedEventData(bookevent, Id);
         }
 
         public List<GetAllBookedDetails> GetStatus()

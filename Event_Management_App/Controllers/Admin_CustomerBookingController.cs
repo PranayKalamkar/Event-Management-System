@@ -33,7 +33,15 @@ namespace Event_Management_App.Controllers
         {
             GetAllBookedDetails oData = JsonSerializer.Deserialize<GetAllBookedDetails>(model)!;
 
-            if(ModelState.IsValid)
+            int? testid = HttpContext.Session.GetInt32("Id");
+
+            int Id = testid.Value;
+
+            oData.RequestedEventsModel.CreatedBy = Id;
+
+            oData.RequestedEventsModel.CreatedAt = DateTime.Now;
+
+            if (ModelState.IsValid)
             {
                 var result = _IAdmin_CustomerBookingBAL.AddbookEventData(oData, ID, Signup_Id);
 

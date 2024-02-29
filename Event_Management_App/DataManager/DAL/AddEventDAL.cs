@@ -67,6 +67,8 @@ namespace Event_Management_App.DataManager.DAL
                 _dBManager.AddCMDParam("@a_Contact", addeventmodel.Contact);
                 _dBManager.AddCMDParam("@a_ImagePath", addeventmodel.ImagePath);
                 _dBManager.AddCMDParam("@a_Status_Id", addeventmodel.Status_Id);
+                _dBManager.AddCMDParam("@a_createdby_in", addeventmodel.CreatedBy);
+                _dBManager.AddCMDParam("@a_createdat_in", addeventmodel.CreatedAt);
 
 
                 _dBManager.ExecuteNonQuery();
@@ -159,6 +161,8 @@ namespace Event_Management_App.DataManager.DAL
                 _dBManager.AddCMDParam("u_Contact", addeventmodel.Contact);
                 _dBManager.AddCMDParam("u_ImagePath", addeventmodel.ImagePath);
                 _dBManager.AddCMDParam("u_Status_id", addeventmodel.Status_Id);
+                _dBManager.AddCMDParam("u_updatedby_in", addeventmodel.UpdatedBy);
+                _dBManager.AddCMDParam("u_updatedat_in", addeventmodel.UpdatedAt);
 
                 _dBManager.ExecuteNonQuery();
             }
@@ -172,11 +176,14 @@ namespace Event_Management_App.DataManager.DAL
 
         public void DeleteEventData(int ID)
         {
+            int isDelete = 1;
+
             try
             {
                 _dBManager.InitDbCommand("DeleteAddEventById", CommandType.StoredProcedure);
 
-                _dBManager.AddCMDParam("@deleteId", ID);
+                _dBManager.AddCMDParam("@deleteId_in", ID);
+                _dBManager.AddCMDParam("@deleteValue_in", isDelete);
 
                 _dBManager.ExecuteNonQuery();
             }

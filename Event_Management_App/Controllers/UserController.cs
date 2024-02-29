@@ -37,6 +37,8 @@ namespace Event_Management_App.Controllers
         {
             SignUpModel sign = JsonSerializer.Deserialize<SignUpModel>(model)!;
 
+            sign.CreatedAt = DateTime.Now;
+
            if(ModelState.IsValid)
             {
                 var result = _IUserBAL.SignUp(sign);

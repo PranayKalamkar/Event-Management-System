@@ -11,7 +11,7 @@ namespace Event_Management_App.Models
 
         [Required]
         [StringLength(50)]
-        [RegularExpression(@"^[a-zA-Z]+$", ErrorMessage = "Username must contain only letters.")]
+        [RegularExpression(@"^[a-zA-Z\s]+$", ErrorMessage = "Username must contain only letters.")]
         public string? Username { get; set; }
 
         [Required]
@@ -37,5 +37,9 @@ namespace Event_Management_App.Models
         [Required]
         [JsonNumberHandling(JsonNumberHandling.AllowReadingFromString)]
         public int Role { get; set; }
+
+        public int CreatedBy { get; set; }
+
+        public DateTime CreatedAt { get; set; }
     }
 }
