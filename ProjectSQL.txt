@@ -1204,3 +1204,22 @@ begin
 	select * from SignUp
     where RoleId = 2 and IsDelete = 0;
 end
+
+CREATE DEFINER=`root`@`localhost` PROCEDURE `AddEventInsert`(
+    IN a_Category varchar(50),
+    IN a_Location varchar(50),
+    IN a_Capacity varchar(10),
+    IN a_Amount varchar(50),
+    IN a_Description varchar(200),    	
+	IN a_Address varchar(100),	
+	IN a_Contact varchar(10),
+    IN a_ImagePath varchar(600),
+	IN a_Status_Id INT,
+    IN a_createdby_in INT,
+    IN a_createdat_in datetime,
+    IN a_isdelete_in int
+)
+BEGIN
+	INSERT INTO addevent(Category, Location, Capacity, Amount, Description, Address, Contact, ImagePath, statusID, CreatedBy, CreatedAt, IsDelete)
+    VALUES(a_Category,a_Location,a_Capacity, a_Amount, a_Description, a_Address, a_Contact, a_ImagePath, a_Status_Id, a_createdby_in, a_createdat_in, a_isdelete_in);
+END

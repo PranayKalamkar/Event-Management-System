@@ -53,6 +53,7 @@ namespace Event_Management_App.DataManager.DAL
 
         public AddEventModel AddEvent(AddEventModel addeventmodel)
         {
+            int isDelete = 0;
 
             try
             {
@@ -69,6 +70,7 @@ namespace Event_Management_App.DataManager.DAL
                 _dBManager.AddCMDParam("@a_Status_Id", addeventmodel.Status_Id);
                 _dBManager.AddCMDParam("@a_createdby_in", addeventmodel.CreatedBy);
                 _dBManager.AddCMDParam("@a_createdat_in", addeventmodel.CreatedAt);
+                _dBManager.AddCMDParam("@a_isdelete_in", isDelete);
 
 
                 _dBManager.ExecuteNonQuery();
