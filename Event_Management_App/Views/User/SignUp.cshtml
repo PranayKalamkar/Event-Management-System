@@ -37,16 +37,16 @@
                         @Html.ValidationMessageFor(model => model.ConfirmSPassword, "", new { @class = "text-danger" })
                     </div>
 
-                    <div class="form-group pb-3">
-                        <div class="input-field">
-                            @Html.DropDownListFor(model => model.Role, new SelectList(new List<Object>()
-                            {
-                            new { value = 1 , text = "Admin" },
-                            new { value = 2 , text = "User"  }
-                            }, "value", "text"), "Select Role", new { @class = "w-100 border-0" })
-                        </div>
+                    @*                     <div class="form-group pb-3">
+                    <div class="input-field">
+                    @Html.DropDownListFor(model => model.Role, new SelectList(new List<Object>()
+                    {
+                    new { value = 1 , text = "Admin" },
+                    new { value = 2 , text = "User"  }
+                    }, "value", "text"), "Select Role", new { @class = "w-100 border-0" })
                     </div>
-                    @Html.ValidationMessageFor(model => model.Role, "", new { @class = "text-danger" })
+                    </div>
+                    @Html.ValidationMessageFor(model => model.Role, "", new { @class = "text-danger" }) *@
 
 
                     <button type="button" id="registerBtn" class="btn btn-success" onclick="SignUp()">Register</button>

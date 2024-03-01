@@ -9,10 +9,12 @@ namespace Event_Management_App.BussinessManager.BAL
     public class TeamBAL : ITeamBAL
     {
         ITeamDAL _ITeamDAL;
+        ICommonDAL _ICommonDAL;
 
         public TeamBAL(IDBManager dBManager)
         {
             _ITeamDAL = new TeamDAL(dBManager);
+            _ICommonDAL = new CommonDAL(dBManager);
         }
 
         public Admin_UserModel PopulateTeamData(int ID)
@@ -23,7 +25,7 @@ namespace Event_Management_App.BussinessManager.BAL
         public string UpdateProfileData(Admin_UserModel adminusermodel, int ID, IFormFile profile)
         {
 
-            bool emailExist = _ITeamDAL.CheckEmailExist(adminusermodel.Email, ID);
+            bool emailExist = _ICommonDAL.CheckEmailExist(adminusermodel.Email, ID);
 
             if (emailExist)
             {
@@ -33,7 +35,7 @@ namespace Event_Management_App.BussinessManager.BAL
 
             adminusermodel.ProfileFile = profile;
 
-            Admin_UserModel model = _ITeamDAL.GetDBImagesbyID(ID);
+            Admin_UserModel model = _ICommonDAL.GetDBImagesbyID(ID);
 
             string existingIdProof = model.IdProofPath.ConvertDBNullToString();
 

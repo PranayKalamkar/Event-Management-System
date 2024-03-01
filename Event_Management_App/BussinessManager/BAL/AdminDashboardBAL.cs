@@ -14,6 +14,7 @@ namespace Event_Management_App.BussinessManager.BAL
 			_IAdminDashboardDAL = new AdminDashboardDAL(dBManager);
 		}
 
+
 		public GetAllBookedDetails Populate()
 		{
 			return _IAdminDashboardDAL.Populate();

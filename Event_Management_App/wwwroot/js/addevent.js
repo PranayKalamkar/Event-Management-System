@@ -19,7 +19,6 @@ function getAddEventList() {
                                                                                                                       <p class="card-text">Amount: ${item.AddEventModel.Amount}</p>
                                                                                                                       <p class="card-text">Status: ${item.EventStatusModel.Status}</p>
                                                                                                                       <a class="btn btn-warning" onclick="populateEventData(${item.AddEventModel.Id})" data-bs-toggle="modal" data-bs-target="#updateEvent">Edit</a>
-                                                                                                                      <a class="btn btn-danger" onclick="deleteEventData(${item.AddEventModel.Id})">Delete</a>
                                                                                                                     </div>
                                                                                                        </div>
                                                                                                   </div>
@@ -234,6 +233,7 @@ function deleteEventData(eventId) {
                 url: "/AddEvent/Delete/" + eventId,
                 success: function (result) {
 
+                    $('#updateEvent').modal('hide');
                     // datatable.destroy();
                     // Remove all cards from the container
                     $('#cardContainer').empty();

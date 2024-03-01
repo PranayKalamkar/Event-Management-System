@@ -51,17 +51,20 @@ namespace Event_Management_App.DataManager.DAL
 
         public SignUpModel AddUser(SignUpModel sign)
         {
+            int isDelete = 0;
+
             try
             {
                 sign.SPassword = sign.SPassword + _dBManager.getSalt();
 
                 _dBManager.InitDbCommand("InsertUser", CommandType.StoredProcedure);
 
-                _dBManager.AddCMDParam("@Username", sign.Username);
-                _dBManager.AddCMDParam("@Email", sign.Email);
-                _dBManager.AddCMDParam("@SPassword", sign.SPassword);
-                _dBManager.AddCMDParam("@u_RoleId", sign.Role);
-                _dBManager.AddCMDParam("@createdat", sign.CreatedAt);
+                _dBManager.AddCMDParam("@UserName_in", sign.Username);
+                _dBManager.AddCMDParam("@Email_in", sign.Email);
+                _dBManager.AddCMDParam("@SPassword_in", sign.SPassword);
+                _dBManager.AddCMDParam("@RoleId_in", sign.Role);
+                _dBManager.AddCMDParam("@createdat_in", sign.CreatedAt);
+                _dBManager.AddCMDParam("@deletevalue_in", isDelete);
 
 
                 _dBManager.ExecuteNonQuery();
@@ -74,29 +77,5 @@ namespace Event_Management_App.DataManager.DAL
             return sign;
         }
 
-        
-
-        public bool CheckEmailExist(string emailId, int ID)
-        {
-            bool emailExist = false;
-
-            try
-            {
-                _dBManager.InitDbCommand("CheckEmailExist", CommandType.StoredProcedure);
-
-                _dBManager.AddCMDParam("@p_EmailId", emailId);
-                _dBManager.AddCMDParam("@p_Id", ID);
-
-                var result = _dBManager.ExecuteScalar();
-
-                emailExist = Convert.ToBoolean(result);
-            }
-            catch(Exception ex)
-            {
-                Console.WriteLine(ex.ToString());
-            }
-
-            return emailExist;
-        }
     }
 }

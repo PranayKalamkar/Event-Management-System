@@ -76,7 +76,17 @@ namespace Event_Management_App.Controllers
         public IActionResult Delete(int ID)
         {
 
-            _IAddEventBAL.DeleteEventData(ID);
+            AddEventModel oModel = new AddEventModel();
+
+			int? testid = HttpContext.Session.GetInt32("Id");
+
+			int Id = testid.Value;
+
+            oModel.DeletedBy = Id;
+
+            oModel.DeletedAt = DateTime.Now;
+
+			_IAddEventBAL.DeleteEventData(oModel, ID);
 
             return Json("ListEvent");
         }

@@ -48,7 +48,7 @@ function viewMessageData(ID) {
             // Populate the form with the received employee details
             $('#v_Id').val(message.MessageModel.Id);
             $('#v_Username').val(message.Admin_UserModel.Username);
-            $('#v_Email').val(message.Admin_UserModel.Username);
+            $('#v_Email').val(message.Admin_UserModel.Email);
             $('#v_Location').val(message.MessageModel.Location);
             $('#v_Capacity').val(message.MessageModel.Capacity);
             $('#v_Occassion').val(message.MessageModel.Occassion);

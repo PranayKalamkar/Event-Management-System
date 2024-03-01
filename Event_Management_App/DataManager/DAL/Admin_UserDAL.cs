@@ -78,57 +78,6 @@ namespace Event_Management_App.DataManager.DAL
             return sign;
         }
 
-        public Admin_UserModel GetDBImagesbyID(int ID)
-        {
-            Admin_UserModel adminusermodel = null;
-
-            try
-            {
-                _dBManager.InitDbCommand("GetAdmin_UserImages", CommandType.StoredProcedure);
-
-                _dBManager.AddCMDParam("@u_ID", ID);
-
-                DataSet ds = _dBManager.ExecuteDataSet();
-
-                foreach (DataRow item in ds.Tables[0].Rows)
-                {
-                    adminusermodel = new Admin_UserModel();
-
-                    adminusermodel.IdProofPath = item["Idproof"].ConvertJSONNullToString();
-                    adminusermodel.ProfilePath = item["profile"].ConvertJSONNullToString();
-
-                }
-            }
-            catch (Exception ex)
-            {
-                Console.WriteLine(ex.ToString());
-            }
-
-            return adminusermodel;
-        }
-
-        public bool CheckEmailExist(string emailId, int Id)
-        {
-            bool emailExist = false;
-
-            try
-            {
-                _dBManager.InitDbCommand("CheckEmailExist", CommandType.StoredProcedure);
-
-                _dBManager.AddCMDParam("@p_EmailId", emailId);
-                _dBManager.AddCMDParam("@p_Id", Id);
-
-                var result = _dBManager.ExecuteScalar();
-
-                emailExist = Convert.ToBoolean(result);
-            }
-            catch(Exception ex)
-            {
-                Console.WriteLine(ex.ToString());
-            }
-
-            return emailExist;
-        }
 
         public Admin_UserModel PopulateAdmin_UserData(int ID)
         {
@@ -149,6 +98,7 @@ namespace Event_Management_App.DataManager.DAL
                     adminusermodel.Id = item["Id"].ConvertDBNullToInt();
                     adminusermodel.Username = item["Username"].ConvertDBNullToString();
                     adminusermodel.Email = item["Email"].ConvertDBNullToString();
+                    adminusermodel.Role = item["RoleId"].ConvertDBNullToInt();
                     adminusermodel.Contact = item["Contact"].ConvertDBNullToString();
                     adminusermodel.Address = item["Address"].ConvertDBNullToString();
                     adminusermodel.IdProofPath = item["Idproof"].ConvertDBNullToString();
@@ -172,6 +122,7 @@ namespace Event_Management_App.DataManager.DAL
                 _dBManager.AddCMDParam("u_Id", ID);
                 _dBManager.AddCMDParam("u_Username", adminusermodel.Username);
                 _dBManager.AddCMDParam("u_Email", adminusermodel.Email);
+                _dBManager.AddCMDParam("u_Role", adminusermodel.Role);
                 _dBManager.AddCMDParam("u_Contact", adminusermodel.Contact);
                 _dBManager.AddCMDParam("u_Address", adminusermodel.Address);
                 _dBManager.AddCMDParam("u_IdProof", adminusermodel.IdProofPath);
@@ -189,7 +140,7 @@ namespace Event_Management_App.DataManager.DAL
             return adminusermodel;
         }
 
-        public void DeleteAdmin_UserData(int ID)
+        public void DeleteAdmin_UserData(Admin_UserModel oModel, int ID)
         {
             int isDelete = 1;
 
@@ -199,8 +150,10 @@ namespace Event_Management_App.DataManager.DAL
 
                 _dBManager.AddCMDParam("@deleteId_in", ID);
                 _dBManager.AddCMDParam("@deleteValue_in", isDelete);
+                _dBManager.AddCMDParam("@deletedby_in", oModel.DeletedBy);
+                _dBManager.AddCMDParam("@deletedat_in", oModel.DeletedAt);
 
-                _dBManager.ExecuteNonQuery();
+				_dBManager.ExecuteNonQuery();
             }
             catch (Exception ex)
             {

@@ -1,4 +1,6 @@
-﻿@{
+﻿@model GetAllBookedDetails;
+
+@{
     ViewData["Title"] = "Dashboard";
     Layout = "_AdminLayout";
 }
@@ -60,96 +62,23 @@
 	</li>
 </ul>
 
-
-<div class="table-data">
-	<div class="order">
-		<div class="head">
-			<h3>Recent Orders</h3>
-			<i class='bx bx-search'></i>
-			<i class='bx bx-filter'></i>
+<div class="card w-100 shadow">
+	<div class="card-body">
+		<div class="table-responsive">
+			<table class="table table-bordered" id="myTableDashboard" style="width:100% !important">
+				<thead>
+					<tr>
+						<th>@Html.DisplayNameFor(model => model.RequestedEventsModel.Id)</th>
+						<th>@Html.DisplayNameFor(model => model.SignUpModel.Username)</th>
+						<th>@Html.DisplayNameFor(model => model.AddEventModel.Amount)</th>
+						<th>@Html.DisplayNameFor(model => model.RequestedEventsModel.Deposit)</th>
+						<th>@Html.DisplayNameFor(model => model.RequestedEventsModel.Balance)</th>
+						<th>@Html.DisplayNameFor(model => model.RequestedEventsModel.Date)</th>
+					</tr>
+				</thead>
+			</table>
 		</div>
-		<table>
-			<thead>
-				<tr>
-					<th>User</th>
-					<th>Date Order</th>
-					<th>Status</th>
-				</tr>
-			</thead>
-			<tbody>
-				<tr>
-					<td>
-						<img src="/images/infinity.jpg">
-						<p>Suraj Kanse</p>
-					</td>
-					<td>01-10-2021</td>
-					<td><span class="status completed">Completed</span></td>
-				</tr>
-				<tr>
-					<td>
-						<img src="/images/profile.png">
-						<p>Vedant Patil</p>
-					</td>
-					<td>01-10-2021</td>
-					<td><span class="status pending">Pending</span></td>
-				</tr>
-				<tr>
-					<td>
-						<img src="/images/ani.jpg">
-						<p>Ashish Joshi</p>
-					</td>
-					<td>01-10-2021</td>
-					<td><span class="status process">Process</span></td>
-				</tr>
-				<tr>
-					<td>
-						<img src="/images/cartoon.jpg">
-						<p>Prathmesh Bangar</p>
-					</td>
-					<td>01-10-2021</td>
-					<td><span class="status pending">Pending</span></td>
-				</tr>
-				<tr>
-					<td>
-						<img src="/images/img4.jpg">
-						<p>Denis Mahajan</p>
-					</td>
-					<td>01-10-2021</td>
-					<td><span class="status completed">Completed</span></td>
-				</tr>
-			</tbody>
-		</table>
-	</div>
-	<div class="todo">
-		<div class="head">
-			<h3>Todos</h3>
-			<i class='bx bx-plus'></i>
-			<i class='bx bx-filter'></i>
-		</div>
-		<ul class="todo-list">
-			<li class="completed">
-				<p>Todo List</p>
-				<i class='bx bx-dots-vertical-rounded'></i>
-			</li>
-			<li class="completed">
-				<p>Todo List</p>
-				<i class='bx bx-dots-vertical-rounded'></i>
-			</li>
-			<li class="not-completed">
-				<p>Todo List</p>
-				<i class='bx bx-dots-vertical-rounded'></i>
-			</li>
-			<li class="completed">
-				<p>Todo List</p>
-				<i class='bx bx-dots-vertical-rounded'></i>
-			</li>
-			<li class="not-completed">
-				<p>Todo List</p>
-				<i class='bx bx-dots-vertical-rounded'></i>
-			</li>
-		</ul>
 	</div>
 </div>
-
 
 <script src="~/js/Dashboard.js" asp-append-version="true"></script>

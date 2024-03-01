@@ -12,7 +12,7 @@ namespace Event_Management_App.BussinessManager.IBAL
 
         public AddEventModel UpdateEventData(AddEventModel addeventmodel, int ID, IFormFile file);
 
-        public void DeleteEventData(int ID);
+        public void DeleteEventData(AddEventModel oModel, int ID);
 
         public string UploadImage(IFormFile imageFile);
     }

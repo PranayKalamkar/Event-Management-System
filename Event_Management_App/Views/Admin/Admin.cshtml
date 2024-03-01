@@ -13,7 +13,7 @@
 
     <p>
         <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#addAdmin">
-            AddUser
+            AddAdmin
         </button>
     </p>
 </div>
@@ -104,7 +104,7 @@
             </div>
 
             <div class="modal-footer">
-                <button type="submit" onclick="addAdmin()" action="#" class="btn btn-success">Add Admin</button>
+                <button type="submit" onclick="addAdmin()" action="#" class="btn btn-success">Add</button>
             </div>
         </div>
     </div>
@@ -187,9 +187,20 @@
                         </div>
                     </div>
 
+
+                    <div class="form-group pb-3 mt-2">
+                        <div class="input-field">
+                            @Html.DropDownListFor(model => model.Role, new SelectList(new List<Object>()
+                            {
+                            new { value = 1 , text = "Admin" },
+                            new { value = 2 , text = "User"  }
+                            }, "value", "text"), "Select Role", new { @class = "w-100 border-0" })
+                        </div>
+                    </div>
+                    @Html.ValidationMessageFor(model => model.Role, "", new { @class = "text-danger" })
+
                     <div class="modal-footer">
-                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-                        <button type="button" onclick="updateAdmin()" class="btn btn-success">Save changes</button>
+                        <button type="button" onclick="updateAdmin()" class="btn btn-success">Update</button>
                     </div>
 
                 </form>
@@ -274,7 +285,7 @@
     </div>
 </div>
 
-<div class="card w-100 shadow-sm">
+<div class="card w-100 shadow">
     <div class="card-body">
         <div class="table-responsive">
             <table class="table table-bordered" id="myTable1" style="width:100% !important">

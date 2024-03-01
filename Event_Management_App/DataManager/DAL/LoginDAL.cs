@@ -107,27 +107,5 @@ namespace Event_Management_App.DataManager.DAL
             return existingPassword;
         }
 
-        public bool CheckEmailExist(string emailId, int ID)
-        {
-            bool emailExist = false;
-
-            try
-            {
-                _dBManager.InitDbCommand("CheckEmailExist", CommandType.StoredProcedure);
-
-                _dBManager.AddCMDParam("@p_EmailId", emailId);
-                _dBManager.AddCMDParam("@p_Id", ID);
-
-                var result = _dBManager.ExecuteScalar();
-
-                emailExist = Convert.ToBoolean(result);
-            }
-            catch (Exception ex)
-            {
-                Console.WriteLine(ex.ToString());
-            }
-
-            return emailExist;
-        }
     }
 }

@@ -9,10 +9,12 @@ namespace Event_Management_App.BussinessManager.BAL
     public class Admin_UserBAL : IAdmin_UserBAL
     {
         IAdmin_UserDAL _IAdmin_UserDAL;
+        ICommonDAL _ICommonDAL;
 
         public Admin_UserBAL(IDBManager dBManager)
         {
             _IAdmin_UserDAL = new Admin_UserDAL(dBManager);
+            _ICommonDAL = new CommonDAL(dBManager);
         }
 
         public List<Admin_UserModel> GetAdmin_UserList()
@@ -24,7 +26,7 @@ namespace Event_Management_App.BussinessManager.BAL
         {
             sign.Role = 2;
 
-            bool emailExist = _IAdmin_UserDAL.CheckEmailExist(sign.Email, sign.Id);
+            bool emailExist = _ICommonDAL.CheckEmailExist(sign.Email, sign.Id);
 
             if (emailExist)
             {
@@ -52,7 +54,7 @@ namespace Event_Management_App.BussinessManager.BAL
         public string UpdateAdmin_UserData(Admin_UserModel adminusermodel, int ID, IFormFile idproof, IFormFile profile)
         {
 
-            bool emailExist = _IAdmin_UserDAL.CheckEmailExist(adminusermodel.Email, ID);
+            bool emailExist = _ICommonDAL.CheckEmailExist(adminusermodel.Email, ID);
 
             if (emailExist)
             {
@@ -63,7 +65,7 @@ namespace Event_Management_App.BussinessManager.BAL
 
             adminusermodel.ProfileFile = profile;
 
-            Admin_UserModel model = _IAdmin_UserDAL.GetDBImagesbyID(ID);
+            Admin_UserModel model = _ICommonDAL.GetDBImagesbyID(ID);
 
             string existingIdProof = model.IdProofPath.ConvertDBNullToString();
 
@@ -112,9 +114,9 @@ namespace Event_Management_App.BussinessManager.BAL
             return "Success";
         }
 
-        public void DeleteAdmin_UserData(int ID)
+        public void DeleteAdmin_UserData(Admin_UserModel oModel, int ID)
         {
-            _IAdmin_UserDAL.DeleteAdmin_UserData(ID);
+            _IAdmin_UserDAL.DeleteAdmin_UserData(oModel, ID);
         }
 
     }

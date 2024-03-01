@@ -11,12 +11,16 @@ namespace Event_Management_App.Controllers
 
         readonly IAdminDashboardBAL _IAdminDashboardBAL;
 
+        readonly IBookedEventsBAL _IBookedEventsBAL;
 
-		public AdminDashboardController(ILogger<AdminDashboardController> logger, IAdminDashboardBAL dashboard)
+
+		public AdminDashboardController(ILogger<AdminDashboardController> logger, IAdminDashboardBAL dashboard, IBookedEventsBAL bookedeventsBAL)
         {
             _logger = logger;
             _IAdminDashboardBAL = dashboard;
-        }
+			_IBookedEventsBAL = bookedeventsBAL;
+
+		}
 
         public IActionResult Index()
         {
@@ -32,7 +36,12 @@ namespace Event_Management_App.Controllers
             return View();
         }
 
-        [HttpGet]
+		public IActionResult BookedEventsList()
+		{
+			return Json(_IBookedEventsBAL.GetAllBookedEvents());
+		}
+
+		[HttpGet]
         public IActionResult Populate()
         {
 			return Json(_IAdminDashboardBAL.Populate());

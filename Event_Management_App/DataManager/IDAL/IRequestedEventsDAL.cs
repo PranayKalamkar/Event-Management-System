@@ -6,8 +6,6 @@ namespace Event_Management_App.DataManager.IDAL
     {
         public List<GetAllBookedDetails> GetRequestedEvents();
 
-        public string GetDBImagebyID(int ID);
-
         public GetAllBookedDetails PopulateRequestedEventData(int ID);
 
         public GetAllBookedDetails UpdateRequestedEventData(GetAllBookedDetails bookevent, int Id);

@@ -8,12 +8,13 @@ namespace Event_Management_App.BussinessManager.BAL
     public class CustomerBookingBAL : ICustomerBookingBAL
     {
         ICustomerBookingDAL _ICustomerBookingDAL;
+        ICommonDAL _ICommonDAL;
 
 
         public CustomerBookingBAL(IDBManager dBManager)
         {
             _ICustomerBookingDAL = new CustomerBookingDAL(dBManager);
-
+            _ICommonDAL = new CommonDAL(dBManager);
         }
 
         public List<GetAllBookedDetails> GetBookedEvents()
@@ -28,7 +29,7 @@ namespace Event_Management_App.BussinessManager.BAL
 
         public string AddbookEventData(GetAllBookedDetails oData)
         {
-            bool dateExist = _ICustomerBookingDAL.CheckDateAvailable(oData.RequestedEventsModel.Date, oData.AddEventModel.Location);
+            bool dateExist = _ICommonDAL.CheckDateAvailable(oData.RequestedEventsModel.Date, oData.AddEventModel.Location);
 
             if (dateExist)
             {

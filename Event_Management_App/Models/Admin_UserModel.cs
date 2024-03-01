@@ -52,5 +52,9 @@ namespace Event_Management_App.Models
 
         public DateTime UpdatedAt { get; set; }
 
-    }
+		public int DeletedBy { get; set; }
+
+		public DateTime DeletedAt { get; set; }
+
+	}
 }

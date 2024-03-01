@@ -62,9 +62,11 @@ namespace Event_Management_App.Controllers
         }
 
         [HttpPost]
-        public IActionResult UpdateAdmin(string model, int ID, IFormFile idproof, IFormFile profile)
+        public IActionResult UpdateAdmin(string model, int ID, int Role, IFormFile idproof, IFormFile profile)
         {
             Admin_UserModel admin = JsonSerializer.Deserialize<Admin_UserModel>(model)!;
+
+            admin.Role = Role;
 
             int? testid = HttpContext.Session.GetInt32("Id");
 
@@ -88,7 +90,15 @@ namespace Event_Management_App.Controllers
 
         public IActionResult DeleteAdmin(int ID)
         {
-            _IAdminBAL.DeleteAdminData(ID);
+            Admin_UserModel oModel = new Admin_UserModel();
+
+			int? testid = HttpContext.Session.GetInt32("Id");
+
+			oModel.DeletedBy = testid.Value;
+
+            oModel.DeletedAt = DateTime.Now;
+
+			_IAdminBAL.DeleteAdminData(oModel,ID);
 
             return Json("Admin");
         }

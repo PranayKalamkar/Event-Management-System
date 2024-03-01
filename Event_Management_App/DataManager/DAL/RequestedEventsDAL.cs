@@ -61,31 +61,6 @@ namespace Event_Management_App.DataManager.DAL
             return bookedList;
         }
 
-        public string GetDBImagebyID(int ID)
-        {
-            string existingImage = "";
-
-            try
-            {
-                _dBManager.InitDbCommand("GetDBImagebyID", CommandType.StoredProcedure);
-
-                _dBManager.AddCMDParam("@ID", ID);
-
-                DataSet ds = _dBManager.ExecuteDataSet();
-
-                foreach (DataRow item in ds.Tables[0].Rows)
-                {
-                    existingImage = item["ImagePath"].ConvertJSONNullToString();
-                }
-            }
-            catch (Exception ex)
-            {
-                Console.WriteLine(ex.ToString());
-            }
-
-            return existingImage;
-        }
-
         public GetAllBookedDetails PopulateRequestedEventData(int ID)
         {
             GetAllBookedDetails bookeventmodel = null;

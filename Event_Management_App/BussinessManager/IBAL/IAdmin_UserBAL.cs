@@ -8,6 +8,6 @@ namespace Event_Management_App.BussinessManager.IBAL
         public string AddAdmin_User(Admin_UserModel sign, IFormFile idproof, IFormFile profile);
         public Admin_UserModel PopulateAdmin_UserData(int ID);
         public string UpdateAdmin_UserData(Admin_UserModel adminusermodel, int ID, IFormFile idproof, IFormFile profile);
-        public void DeleteAdmin_UserData(int ID);
+        public void DeleteAdmin_UserData(Admin_UserModel oModel, int ID);
     }
 }

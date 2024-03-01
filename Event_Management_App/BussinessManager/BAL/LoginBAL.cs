@@ -8,17 +8,19 @@ namespace Event_Management_App.BussinessManager.BAL
     public class LoginBAL : ILoginBAL
     {
         ILoginDAL _ILoginDAL;
+        ICommonDAL _ICommonDAL;
 
         public LoginBAL(IDBManager dBManager)
         {
             _ILoginDAL = new LoginDAL(dBManager);
+            _ICommonDAL = new CommonDAL(dBManager);
         }
 
         public LoginModel LoginUser(string email, string pass, int Id)
         {
             LoginModel login = new LoginModel();
 
-            login.EmailExist = _ILoginDAL.CheckEmailExist(email, Id);
+            login.EmailExist = _ICommonDAL.CheckEmailExist(email, Id);
 
             login.GetPassword = _ILoginDAL.GetPassword(pass);
 

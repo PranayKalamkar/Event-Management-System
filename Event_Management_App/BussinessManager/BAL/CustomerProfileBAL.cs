@@ -9,10 +9,12 @@ namespace Event_Management_App.BussinessManager.BAL
     public class CustomerProfileBAL : ICustomerProfileBAL
     {
         ICustomerProfileDAL _ICustomerProfileDAL;
+        ICommonDAL _ICommonDAL;
 
         public CustomerProfileBAL(IDBManager dBManager)
         {
             _ICustomerProfileDAL = new CustomerProfileDAL(dBManager);
+            _ICommonDAL = new CommonDAL(dBManager);
         }
 
         public Admin_UserModel PopulateProfileData(int ID)
@@ -23,7 +25,7 @@ namespace Event_Management_App.BussinessManager.BAL
         public string UpdateProfileData(Admin_UserModel adminusermodel, int ID, IFormFile profile)
         {
 
-            bool emailExist = _ICustomerProfileDAL.CheckEmailExist(adminusermodel.Email, ID);
+            bool emailExist = _ICommonDAL.CheckEmailExist(adminusermodel.Email, ID);
 
             if (emailExist)
             {
@@ -32,7 +34,7 @@ namespace Event_Management_App.BussinessManager.BAL
 
             adminusermodel.ProfileFile = profile;
 
-            Admin_UserModel model = _ICustomerProfileDAL.GetDBImagesbyID(ID);
+            Admin_UserModel model = _ICommonDAL.GetDBImagesbyID(ID);
 
             string existingIdProof = model.IdProofPath.ConvertDBNullToString();
 

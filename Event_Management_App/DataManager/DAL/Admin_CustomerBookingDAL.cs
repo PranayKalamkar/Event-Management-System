@@ -91,29 +91,6 @@ namespace Event_Management_App.DataManager.DAL
             return bookmodel;
         }
 
-        public bool CheckDateAvailable(string date, string location)
-        {
-            bool dateExist = false;
-
-            try
-            {
-                _dBManager.InitDbCommand("CheckDateAvailable", CommandType.StoredProcedure);
-
-                _dBManager.AddCMDParam("@newDate", date);
-                _dBManager.AddCMDParam("@newLocation", location);
-
-                var result = _dBManager.ExecuteScalar();
-
-                dateExist = Convert.ToBoolean(result);
-            }
-            catch(Exception ex)
-            {
-                Console.WriteLine(ex.ToString());
-            }
-
-            return dateExist;
-        }
-
 
         public GetAllBookedDetails AddbookEventData(GetAllBookedDetails oData, int ID, int Signup_Id)
         {

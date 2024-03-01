@@ -8,8 +8,6 @@ namespace Event_Management_App.DataManager.IDAL
 
         public GetAllBookedDetails PopulateEventData(int ID);
 
-        public bool CheckDateAvailable(string date, string location);
-
         public GetAllBookedDetails AddbookEventData(GetAllBookedDetails oData, int ID, int Signup_Id);
 
         public List<GetAllBookedDetails> GetAdmin_UserList();

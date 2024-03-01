@@ -150,6 +150,7 @@ function populateadminData(ID) {
             $('#u_Id').val(admin.Id);
             $('#u_Username').val(admin.Username);
             $('#u_Email').val(admin.Email);
+            $('#Role').val(admin.Role);
             $('#u_Contact').val(admin.Contact);
             $('#u_Address').val(admin.Address);
 
@@ -172,6 +173,7 @@ function updateAdmin() {
 
         var adminID = {
             id: $('#u_Id').val(),
+            Role: $('#Role').val(),
         }
 
         var adminData = {
@@ -183,6 +185,7 @@ function updateAdmin() {
 
         var formData = new FormData();
         formData.append("ID", adminID.id);
+        formData.append("Role", adminID.Role);
         formData.append("model", JSON.stringify(adminData));
         formData.append("idproof", $("#u_IdProofFile")[0].files[0]);
         formData.append("profile", $("#u_ProfileFile")[0].files[0]);

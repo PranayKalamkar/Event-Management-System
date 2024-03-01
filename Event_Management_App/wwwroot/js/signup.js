@@ -5,8 +5,8 @@
             Username: $('#Username').val(),
             Email: $('#Email').val(),
             SPassword: $('#SPassword').val(),
-            SPassword: $('#ConfirmSPassword').val(),
-            Role: $('#Role').val()
+            SPassword: $('#ConfirmSPassword').val()
+/*            Role: $('#Role').val()*/
         }
 
         console.log(loginFormData);

@@ -2,6 +2,7 @@
 using Event_Management_App.DataManager.IDAL;
 using Event_Management_App.Models;
 using System.Data;
+using static Org.BouncyCastle.Crypto.Engines.SM2Engine;
 
 namespace Event_Management_App.DataManager.DAL
 {
@@ -83,31 +84,6 @@ namespace Event_Management_App.DataManager.DAL
             return addeventmodel;
         }
 
-        public string GetDBImagebyID(int ID)
-        {
-            string existingImage = "";
-
-            try
-            {
-                _dBManager.InitDbCommand("GetDBImagebyID", CommandType.StoredProcedure);
-
-                _dBManager.AddCMDParam("@u_ID", ID);
-
-                DataSet ds = _dBManager.ExecuteDataSet();
-
-                foreach (DataRow item in ds.Tables[0].Rows)
-                {
-                    existingImage = item["ImagePath"].ConvertJSONNullToString();
-                }
-            }
-            catch(Exception ex)
-            {
-                Console.WriteLine(ex.ToString());
-            }
-
-            return existingImage;
-        }
-
         public GetAllBookedDetails PopulateEventData(int ID)
         {
             GetAllBookedDetails addeventmodel = null;
@@ -176,8 +152,9 @@ namespace Event_Management_App.DataManager.DAL
             return addeventmodel;
         }
 
-        public void DeleteEventData(int ID)
+        public void DeleteEventData(AddEventModel oModel, int ID)
         {
+
             int isDelete = 1;
 
             try
@@ -185,9 +162,11 @@ namespace Event_Management_App.DataManager.DAL
                 _dBManager.InitDbCommand("DeleteAddEventById", CommandType.StoredProcedure);
 
                 _dBManager.AddCMDParam("@deleteId_in", ID);
-                _dBManager.AddCMDParam("@deleteValue_in", isDelete);
+				_dBManager.AddCMDParam("@deleteValue_in", isDelete);
+                _dBManager.AddCMDParam("@deleteby_in", oModel.DeletedBy);
+                _dBManager.AddCMDParam("@deleteat_in", oModel.DeletedAt);
 
-                _dBManager.ExecuteNonQuery();
+				_dBManager.ExecuteNonQuery();
             }
             catch(Exception ex)
             {

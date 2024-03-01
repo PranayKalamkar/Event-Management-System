@@ -9,10 +9,12 @@ namespace Event_Management_App.BussinessManager.BAL
     public class UserBAL : IUserBAL
     {
         IUserDAL _IEventDAL;
+        ICommonDAL _ICommonDAL;
 
         public UserBAL(IDBManager dBManager)
         {
             _IEventDAL = new UserDAL(dBManager);
+            _ICommonDAL = new CommonDAL(dBManager);
         }
 
         public List<SignUpModel> GetUserList()
@@ -22,9 +24,11 @@ namespace Event_Management_App.BussinessManager.BAL
 
         public string SignUp(SignUpModel sign)
         {
+            sign.Role = 2;
+
             // sign.SPassword = PasswordHash.ComputeMD5(sign.SPassword);
 
-            bool emailExist = _IEventDAL.CheckEmailExist(sign.Email, sign.Id);
+            bool emailExist = _ICommonDAL.CheckEmailExist(sign.Email, sign.Id);
 
             if (emailExist)
             {

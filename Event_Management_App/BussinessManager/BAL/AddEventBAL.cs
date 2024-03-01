@@ -8,10 +8,12 @@ namespace Event_Management_App.BussinessManager.BAL
     public class AddEventBAL : IAddEventBAL
     {
         IAddEventDAL _IAddEventDAL;
+        ICommonDAL _ICommonDAL;
 
         public AddEventBAL(IDBManager dBManager)
         {
             _IAddEventDAL = new AddEventDAL(dBManager);
+            _ICommonDAL = new CommonDAL(dBManager);
         }
 
         public List<GetAllBookedDetails> AddEventList()
@@ -41,7 +43,7 @@ namespace Event_Management_App.BussinessManager.BAL
 
             addeventmodel.ImageFile = file;
 
-            string existingImage = _IAddEventDAL.GetDBImagebyID(ID);
+            string existingImage = _ICommonDAL.GetDBAddEventImagebyID(ID);
 
             if(addeventmodel.ImageFile != null)
             {
@@ -67,9 +69,9 @@ namespace Event_Management_App.BussinessManager.BAL
 
         }
 
-        public void DeleteEventData(int ID)
+        public void DeleteEventData(AddEventModel oModel, int ID)
         {
-            string existingImage = _IAddEventDAL.GetDBImagebyID(ID);
+            string existingImage = _ICommonDAL.GetDBAddEventImagebyID(ID);
 
             if(!string.IsNullOrEmpty(existingImage))
             {
@@ -81,7 +83,7 @@ namespace Event_Management_App.BussinessManager.BAL
                 }
             }
 
-            _IAddEventDAL.DeleteEventData(ID);
+            _IAddEventDAL.DeleteEventData(oModel, ID);
         }
 
         public string UploadImage(IFormFile imageFile)

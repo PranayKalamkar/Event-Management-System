@@ -1,7 +1,36 @@
 ﻿$(document).ready(function () {
     Details();
+    getBookedEventList();
 });
 
+var datatable;
+
+function getBookedEventList() {
+    $.ajax({
+
+        type: "Get",
+        url: "/AdminDashboard/BookedEventsList",
+        success: function (data) {
+
+            datatable = $('#myTableDashboard').DataTable({
+                data: data,
+                columns: [
+                    { data: 'RequestedEventsModel.Id' },
+                    { data: 'SignUpModel.Username' },
+                    { data: 'AddEventModel.Amount' },
+                    { data: 'RequestedEventsModel.Deposit' },
+                    { data: 'RequestedEventsModel.Balance' },
+                    { data: 'RequestedEventsModel.Date' },
+                ]
+            });
+
+        },
+        error: function (textStatus, errorThrown) {
+            Success = false;
+        }
+
+    });
+}
 
 
 function Details() {
