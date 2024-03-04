@@ -177,7 +177,9 @@ function updateBook() {
                 else if (data.status === "warning") {
                     alert(data.message);
                 }
-
+                else if (data.status === "warning") {
+                    alert(data.message);
+                }
             },
             error: function (errormessage) {
                 Swal.fire({

@@ -59,11 +59,12 @@ namespace Event_Management_App.Controllers
                 {
                     return Json(new { status = "warning", message = "Date is not Avaliable!" });
                 }
+
+                else if (result == "Less")
+                {
+                    return Json(new { status = "warning", message = "Please Enter Deposit 40% or above of Amount!" });
+                }
             }
-
-            //bookmodel.BookedEventsModel.Signup_id = id.ConvertDBNullToInt();
-
-            //_ICustomerBookingBAL.AddbookEventData(oData);
 
             _IEmailSenderBAL.EmailSendAsync("pranaykalamkar07@gmail.com", "New Order", "Order Booked Successfully!");
 

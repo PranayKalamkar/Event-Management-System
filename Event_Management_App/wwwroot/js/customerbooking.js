@@ -12,7 +12,7 @@ function bookEventList() {
                 var card = `
                                                     <div class="col-md-4 mb-4">
                                                         <div class="card h-100 p-3" onclick="populateBookData(${item.AddEventModel.Id})" data-bs-toggle="modal" data-bs-target="#bookEvent">
-                                                            <img src="/addeventimages/${item.AddEventModel.ImagePath}" class="card-img-top" alt="Image">
+                                                            <img src="/addeventimages/${item.AddEventModel.ImagePath}" class="card-img-top" alt="Image" style="height: 250px; width: 390px;">
                                                             <div class="card-body">
                                                                 <h5 class="card-title">${item.AddEventModel.Category}</h5>
                                                                 <p class="card-text">Location: ${item.AddEventModel.Location}</p>
@@ -144,7 +144,9 @@ function updateBook() {
                 else if (data.status === "warning") {
                     alert(data.message);
                 }
-
+                else if (data.status === "warning") {
+                    alert(data.message);
+                }
             },
             error: function (errormessage) {
                 Swal.fire({

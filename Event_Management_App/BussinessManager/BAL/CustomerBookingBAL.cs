@@ -40,6 +40,11 @@ namespace Event_Management_App.BussinessManager.BAL
 
             string deposit = oData.RequestedEventsModel.Deposit;
 
+            if (double.Parse(deposit) < 0.4 * double.Parse(amount))
+            {
+                return "Less";
+            }
+
             double balance = double.Parse(amount) - double.Parse(deposit);
 
             oData.RequestedEventsModel.Balance = balance.ToString();
